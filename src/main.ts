@@ -6,9 +6,8 @@ import { createPinia } from 'pinia'
 import App from './App.vue'
 import router from './router'
 import axios from 'axios'
-import * as process from 'node:process'
 
-axios.defaults.baseURL = process?.env?.API_URL || import.meta.env.VITE_API_URL
+axios.defaults.baseURL = import.meta.env.VITE_API_URL
 
 const app = createApp(App)
 
