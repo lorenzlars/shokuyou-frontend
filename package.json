@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vite --mode development",
     "build": "run-p type-check \"build-only {@}\" --",
-    "start": "http-server dist --port $PORT",
+    "start": "http-server dist --proxy https://shokuyou.larslorenz.dev:$PORT --port $PORT",
     "preview": "vite preview",
     "test:unit": "vitest",
     "test:e2e": "start-server-and-test preview http://localhost:4173 'cypress run --e2e'",
