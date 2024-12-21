@@ -5,6 +5,7 @@
     <div>
       <div v-for="recipe in recipes">
         {{recipe.name}} {{recipe.description}}
+        <button @click="removeRecipe(recipe.id)">Delete</button>
       </div>
 
       <button @click="addRecipe">Create</button>
@@ -17,7 +18,7 @@
 </template>
 
 <script lang="ts" setup>
-import { createRecipe, type CreateRecipeDto, getRecipes } from '@/api'
+import { createRecipe, type CreateRecipeDto, getRecipes, removeRecipeById } from '@/api'
 import { shallowRef } from 'vue'
 
 const recipes = shallowRef<CreateRecipeDto[]>([])
@@ -29,6 +30,16 @@ async function addRecipe() {
     body: {
       name: 'Name',
       description: 'Description',
+    }
+  })
+
+  await loadRecipes()
+}
+
+async function removeRecipe(id: string) {
+  await removeRecipeById ({
+    path: {
+      id
     }
   })
 
