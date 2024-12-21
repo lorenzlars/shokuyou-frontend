@@ -5,9 +5,13 @@ import { createPinia } from 'pinia'
 
 import App from './App.vue'
 import router from './router'
-import axios from 'axios'
+import { client } from '@/api'
 
-axios.defaults.baseURL = import.meta.env.VITE_API_URL
+// axios.defaults.baseURL = import.meta.env.VITE_API_URL
+
+client.setConfig({
+  baseURL: import.meta.env.VITE_API_URL,
+});
 
 const app = createApp(App)
 

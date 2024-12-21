@@ -1,13 +1,13 @@
 <script setup lang="ts">
 import TheWelcome from '../components/TheWelcome.vue'
 
-import axios from 'axios'
 import { shallowRef } from 'vue'
+import { getHello } from '@/api'
 
 const testData = shallowRef()
 
 try {
-  const { data } = await axios.get('/v1')
+  const { data } = await getHello()
 
   testData.value = data
 } catch {
