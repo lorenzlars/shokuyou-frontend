@@ -38,7 +38,7 @@ async function addRecipe() {
 async function loadRecipes() {
   const {data} = await getRecipes()
 
-  recipes.value = data
+  recipes.value = data as CreateRecipeDto[]
 }
 </script>
 
