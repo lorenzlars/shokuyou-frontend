@@ -5,7 +5,7 @@
     <div>
       <div v-for="recipe in recipes">
         {{recipe.name}} {{recipe.description}}
-        <button @click="removeRecipe(recipe.id)">Delete</button>
+        <button @click="removeRecipe(recipe?.id as string)">Delete</button>
       </div>
 
       <button @click="addRecipe">Create</button>
