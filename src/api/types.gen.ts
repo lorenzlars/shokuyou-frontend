@@ -54,3 +54,11 @@ export type RemoveRecipeByIdData = {
 export type RemoveRecipeByIdResponse = (unknown);
 
 export type RemoveRecipeByIdError = unknown;
+
+export type SignInResponse = (unknown);
+
+export type SignInError = unknown;
+
+export type GetProfileResponse = (unknown);
+
+export type GetProfileError = unknown;

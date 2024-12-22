@@ -1,19 +1,13 @@
 <template>
-  <div class="about">
-    <h1>This is an about page</h1>
+  <div>
+    <h1>Recipes</h1>
 
-    <div>
-      <div v-for="recipe in recipes">
-        {{recipe.name}} {{recipe.description}}
-        <button @click="removeRecipe(recipe?.id as string)">Delete</button>
-      </div>
-
-      <button @click="addRecipe">Create</button>
-
+    <div v-for="recipe in recipes">
+      {{ recipe.name }} {{ recipe.description }}
+      <button @click="removeRecipe(recipe?.id as string)">Delete</button>
     </div>
 
-
-
+    <button @click="addRecipe">Create</button>
   </div>
 </template>
 
@@ -30,35 +24,25 @@ async function addRecipe() {
     body: {
       name: 'Name',
       description: 'Description',
-    }
+    },
   })
 
   await loadRecipes()
 }
 
 async function removeRecipe(id: string) {
-  await removeRecipeById ({
+  await removeRecipeById({
     path: {
-      id
-    }
+      id,
+    },
   })
 
   await loadRecipes()
 }
 
 async function loadRecipes() {
-  const {data} = await getRecipes()
+  const { data } = await getRecipes()
 
   recipes.value = data as CreateRecipeDto[]
 }
 </script>
-
-<style>
-@media (min-width: 1024px) {
-  .about {
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-  }
-}
-</style>
