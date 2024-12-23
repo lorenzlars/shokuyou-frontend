@@ -12,8 +12,8 @@ importers:
         specifier: ^0.3.4
         version: 0.3.4(axios@1.7.9)
       '@kitbag/router':
-        specifier: ^0.14.2
-        version: 0.14.2(vue@3.5.13(typescript@5.6.3))
+        specifier: ^0.15.0
+        version: 0.15.0(vue@3.5.13(typescript@5.6.3))
       '@vee-validate/zod':
         specifier: ^4.14.7
         version: 4.14.7(vue@3.5.13(typescript@5.6.3))
@@ -833,8 +833,8 @@ packages:
   '@juggle/resize-observer@3.4.0':
     resolution: {integrity: sha512-dfLbk+PwWvFzSxwk3n5ySL0hfBog779o8h68wK/7/APo/7cgyWp5jcXockbxdk5kFRkbeXWm4Fbi9FrdN381sA==}
 
-  '@kitbag/router@0.14.2':
-    resolution: {integrity: sha512-MCmpM6u5tFgctHWtSetNsh+hC/k0fw2oGjbGpMlF93D05YS2Flvnc8BlNYIxh2CkYO9LmK60n1uJ9hWi9pEGBQ==}
+  '@kitbag/router@0.15.0':
+    resolution: {integrity: sha512-f0sf8jXBsbpgptqf6ETkz6di0GUlGm91icxTwAes+y+nnQmNmicWABMSevKVHwAsjSPD6l0t2sTbn3x4xrh5IA==}
     peerDependencies:
       vue: ^3.5.0
 
@@ -4132,7 +4132,7 @@ snapshots:
 
   '@juggle/resize-observer@3.4.0': {}
 
-  '@kitbag/router@0.14.2(vue@3.5.13(typescript@5.6.3))':
+  '@kitbag/router@0.15.0(vue@3.5.13(typescript@5.6.3))':
     dependencies:
       history: 5.3.0
       vue: 3.5.13(typescript@5.6.3)
