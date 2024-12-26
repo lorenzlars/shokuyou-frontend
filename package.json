@@ -20,7 +20,7 @@
   "dependencies": {
     "@hey-api/client-axios": "^0.3.4",
     "@kitbag/router": "^0.14.2",
-    "@vee-validate/zod": "^4.14.7",
+    "@vee-validate/zod": "^4.15.0",
     "axios": "^1.7.9",
     "http-server": "^14.1.1",
     "localforage": "^1.10.0",
