@@ -33,8 +33,8 @@ importers:
         specifier: ^2.2.6
         version: 2.3.0(typescript@5.6.3)(vue@3.5.13(typescript@5.6.3))
       vee-validate:
-        specifier: ^4.14.7
-        version: 4.14.7(vue@3.5.13(typescript@5.6.3))
+        specifier: ^4.15.0
+        version: 4.15.0(vue@3.5.13(typescript@5.6.3))
       vfonts:
         specifier: ^0.0.3
         version: 0.0.3
@@ -3255,6 +3255,11 @@ packages:
 
   vee-validate@4.14.7:
     resolution: {integrity: sha512-XVb1gBFJR57equ11HEI8uxNqFJkwvCP/b+p+saDPQYaW7k45cdF5jsYPEJud1o29GD6h2y7Awm7Qfm89yKi74A==}
+    peerDependencies:
+      vue: ^3.4.26
+
+  vee-validate@4.15.0:
+    resolution: {integrity: sha512-PGJh1QCFwCBjbHu5aN6vB8macYVWrajbDvgo1Y/8fz9n/RVIkLmZCJDpUgu7+mUmCOPMxeyq7vXUOhbwAqdXcA==}
     peerDependencies:
       vue: ^3.4.26
 
@@ -6783,6 +6788,12 @@ snapshots:
       vue: 3.5.13(typescript@5.6.3)
 
   vee-validate@4.14.7(vue@3.5.13(typescript@5.6.3)):
+    dependencies:
+      '@vue/devtools-api': 7.6.8
+      type-fest: 4.30.2
+      vue: 3.5.13(typescript@5.6.3)
+
+  vee-validate@4.15.0(vue@3.5.13(typescript@5.6.3)):
     dependencies:
       '@vue/devtools-api': 7.6.8
       type-fest: 4.30.2
