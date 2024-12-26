@@ -4,8 +4,38 @@ export type CreateRecipeDto = {
     [key: string]: unknown;
 };
 
+export type CreateUserDto = {
+    /**
+     * Username of the user
+     */
+    username: string;
+    /**
+     * Password of the user
+     */
+    password: string;
+};
+
+export type LoginResponseDto = {
+    accessToken: string;
+};
+
+export type LoginUserDto = {
+    /**
+     * Username of the user
+     */
+    username: string;
+    /**
+     * Password of the user
+     */
+    password: string;
+};
+
 export type UpdateRecipeDto = {
     [key: string]: unknown;
+};
+
+export type UserResponseDto = {
+    username: string;
 };
 
 export type GetHelloResponse = (unknown);
@@ -55,10 +85,22 @@ export type RemoveRecipeByIdResponse = (unknown);
 
 export type RemoveRecipeByIdError = unknown;
 
-export type SignInResponse = (unknown);
+export type LoginData = {
+    body: LoginUserDto;
+};
 
-export type SignInError = unknown;
+export type LoginResponse = (LoginResponseDto);
 
-export type GetProfileResponse = (unknown);
+export type LoginError = unknown;
 
-export type GetProfileError = unknown;
+export type RegisterData = {
+    body: CreateUserDto;
+};
+
+export type RegisterResponse = (unknown);
+
+export type RegisterError = unknown;
+
+export type ProfileResponse = (UserResponseDto);
+
+export type ProfileError = unknown;

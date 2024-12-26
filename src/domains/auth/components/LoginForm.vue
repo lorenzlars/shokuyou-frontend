@@ -5,6 +5,9 @@
       <NInput v-model:value="password" type="password" placeholder="Password" />
       <NButton type="primary" attr-type="submit">Submit</NButton>
     </NForm>
+    <NButton type="default" @click="register({ body: { username: 'test', password: 'test' } })"
+      >Register</NButton
+    >
   </NCard>
 </template>
 
@@ -12,8 +15,7 @@
 import { NButton, NInput, NCard, NForm } from 'naive-ui'
 import { useLoginForm } from '@/domains/auth/composables/useLoginForm.ts'
 import { useField } from 'vee-validate'
-import { signIn } from '@/api'
-import { storeToRefs } from 'pinia'
+import { type LoginUserDto, register } from '@/api'
 import { useAuthStore } from '@/domains/auth/stores/authStore.ts'
 const { handleSubmit } = useLoginForm()
 
@@ -21,16 +23,12 @@ const emit = defineEmits<{
   success: []
 }>()
 
-const { isAuthenticated } = storeToRefs(useAuthStore())
+const { login } = useAuthStore()
 const { value: email } = useField<string>('email')
 const { value: password } = useField<string>('password')
 
 const onSubmit = handleSubmit(async (values) => {
-  const { data } = await signIn({
-    body: values,
-  })
-
-  isAuthenticated.value = true
+  await login(values as LoginUserDto)
 
   emit('success')
 })

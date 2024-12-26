@@ -6,12 +6,8 @@ import { createPinia } from 'pinia'
 
 import App from './App.vue'
 import router from './router'
-import { client } from '@/api'
-
-client.setConfig({
-  baseURL: import.meta.env.VITE_API_URL,
-})
+import AuthPlugin from '@/domains/auth/plugins/authPlugin.ts'
 
 const app = createApp(App)
 
-app.use(createPinia()).use(router).mount('#app')
+app.use(createPinia()).use(router).use(AuthPlugin).mount('#app')
