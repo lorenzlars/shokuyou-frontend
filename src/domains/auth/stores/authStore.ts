@@ -1,11 +1,6 @@
 import { defineStore } from 'pinia'
 import { computed, shallowRef } from 'vue'
-import {
-  login as apiLogin,
-  profile as getProfile,
-  type LoginUserDto,
-  type ProfileResponse,
-} from '@/api'
+import { login as apiLogin, type LoginUserDto, type ProfileResponse } from '@/api'
 import * as localforage from 'localforage'
 
 export const useAuthStore = defineStore('auth', () => {

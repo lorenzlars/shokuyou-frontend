@@ -2,7 +2,7 @@
   <div>
     <h1>Recipes</h1>
 
-    <div v-for="recipe in recipes">
+    <div v-for="(recipe, key) in recipes" :key>
       {{ recipe.name }} {{ recipe.description }}
       <button @click="removeRecipe(recipe?.id as string)">Delete</button>
     </div>
