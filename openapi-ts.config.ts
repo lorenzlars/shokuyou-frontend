@@ -20,9 +20,5 @@ export default defineConfig({
       validator: true,
       asClass: true,
     },
-    {
-      name: '@hey-api/schemas',
-      type: 'json',
-    },
   ],
 })

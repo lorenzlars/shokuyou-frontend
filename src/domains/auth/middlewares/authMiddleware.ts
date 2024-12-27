@@ -6,7 +6,7 @@ export function useAuthMiddleware(): NavigationGuard {
     const { isAuthenticated } = useAuthStore()
 
     if (to.name !== 'login' && !isAuthenticated) {
-      next({ name: 'login' })
+      return next({ name: 'login' })
     }
 
     return next()
