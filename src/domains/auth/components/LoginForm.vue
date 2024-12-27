@@ -12,7 +12,7 @@
       </div>
 
       <div class="flex justify-between">
-        <NButton type="default" @click="register"> Register </NButton>
+        <NButton type="default" @click="register" :loading> Register </NButton>
 
         <NButton type="primary" attr-type="submit" :loading="isSubmitting">Submit</NButton>
       </div>
@@ -27,6 +27,7 @@ import { AuthService, type LoginUserDto } from '@/api'
 import { useAuthStore } from '@/domains/auth/stores/authStore.ts'
 import type { LazyInputBindsConfig, PublicPathState } from 'vee-validate'
 import { useMessage } from 'naive-ui'
+import { useAsyncPromise } from '@/composables/useAsyncPromise'
 
 type FieldValidation = {
   validationStatus: 'error' | undefined
@@ -61,6 +62,11 @@ function naiveConfig(label: string): NaiveConfig {
 const [username, usernameProps] = defineField<string>('username', naiveConfig('Username'))
 const [password, passwordProps] = defineField<string>('password', naiveConfig('Password'))
 const { login } = useAuthStore()
+const { execute, loading } = useAsyncPromise(() =>
+  AuthService.postRegister({
+    body: { username: 'test', password: 'test' },
+  }),
+)
 
 const onSubmit = handleSubmit(async (values) => {
   await login(values as LoginUserDto)
@@ -70,9 +76,7 @@ const onSubmit = handleSubmit(async (values) => {
 
 async function register() {
   try {
-    const { status } = await AuthService.postRegister({
-      body: { username: 'test', password: 'test' },
-    })
+    const { status } = await execute()
 
     if (status && status > 300) {
       message.error('Registration failed')
