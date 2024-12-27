@@ -1,6 +1,7 @@
 import { client } from '@/api'
 import { useAuthStore } from '@/domains/auth/stores/authStore.ts'
 import { storeToRefs } from 'pinia'
+import { AxiosError } from 'axios'
 
 export default {
   install: () => {

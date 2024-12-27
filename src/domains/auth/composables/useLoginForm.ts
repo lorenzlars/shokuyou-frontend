@@ -1,12 +1,13 @@
 import { toTypedSchema } from '@vee-validate/zod'
-import { object, string } from 'zod'
+import { object } from 'zod'
 import { useForm } from 'vee-validate'
 import type { LoginUserDto } from '@/api'
+import { zLoginUserDto } from '@/api/zod.gen.ts'
 
 export function useLoginForm(): ReturnType<typeof useForm> {
   const schema = object({
-    email: string().default('test'),
-    password: string().default('test'),
+    username: zLoginUserDto.shape.username.default('test'),
+    password: zLoginUserDto.shape.password.default('test'),
   })
 
   const form = useForm<LoginUserDto>({

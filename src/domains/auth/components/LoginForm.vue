@@ -1,37 +1,88 @@
 <template>
-  <NCard class="w-64" title="Login">
-    <NForm class="flex flex-col gap-2" @submit="onSubmit">
-      <NInput v-model:value="email" type="text" placeholder="E-Mail" />
-      <NInput v-model:value="password" type="password" placeholder="Password" />
-      <NButton type="primary" attr-type="submit">Submit</NButton>
+  <NCard class="w-128" title="Login">
+    <NForm @submit="onSubmit">
+      <div class="flex gap-2 mb-5">
+        <NFormItem class="w-full" v-bind="usernameProps">
+          <NInput v-model:value="username" type="text" placeholder="Input username" />
+        </NFormItem>
+
+        <NFormItem class="w-full" v-bind="passwordProps">
+          <NInput v-model:value="password" type="password" placeholder="Input password" />
+        </NFormItem>
+      </div>
+
+      <div class="flex justify-between">
+        <NButton type="default" @click="register"> Register </NButton>
+
+        <NButton type="primary" attr-type="submit" :loading="isSubmitting">Submit</NButton>
+      </div>
     </NForm>
-    <NButton type="default" @click="register({ body: { username: 'test', password: 'test' } })"
-      >Register</NButton
-    >
   </NCard>
 </template>
 
 <script setup lang="ts">
-import { NButton, NInput, NCard, NForm } from 'naive-ui'
+import { NButton, NInput, NCard, NForm, NFormItem } from 'naive-ui'
 import { useLoginForm } from '@/domains/auth/composables/useLoginForm.ts'
-import { useField } from 'vee-validate'
-import { type LoginUserDto, register } from '@/api'
+import { AuthService, type LoginUserDto } from '@/api'
 import { useAuthStore } from '@/domains/auth/stores/authStore.ts'
-const { handleSubmit } = useLoginForm()
+import type { LazyInputBindsConfig, PublicPathState } from 'vee-validate'
+import { useMessage } from 'naive-ui'
+
+type FieldValidation = {
+  validationStatus: 'error' | undefined
+  feedback: string
+}
+
+type InputBindings = {
+  props: Record<string, unknown> & FieldValidation
+}
+
+type NaiveConfig = (state: PublicPathState) => ReturnType<LazyInputBindsConfig> & InputBindings
+
+const message = useMessage()
+const { handleSubmit, defineField, isSubmitting } = useLoginForm()
 
 const emit = defineEmits<{
   success: []
 }>()
 
+function naiveConfig(label: string): NaiveConfig {
+  return (state: PublicPathState) => ({
+    props: {
+      validationStatus: state.errors[0] ? 'error' : undefined,
+      feedback: state.errors[0],
+      showRequireMark: state.required,
+      label,
+      path: state.path,
+    },
+  })
+}
+
+const [username, usernameProps] = defineField<string>('username', naiveConfig('Username'))
+const [password, passwordProps] = defineField<string>('password', naiveConfig('Password'))
 const { login } = useAuthStore()
-const { value: email } = useField<string>('email')
-const { value: password } = useField<string>('password')
 
 const onSubmit = handleSubmit(async (values) => {
   await login(values as LoginUserDto)
 
   emit('success')
 })
-</script>
 
-<style scoped></style>
+async function register() {
+  try {
+    const { status } = await AuthService.postRegister({
+      body: { username: 'test', password: 'test' },
+    })
+
+    if (status && status > 300) {
+      message.error('Registration failed')
+    }
+  } catch (error) {
+    // TODO: Is not working because postRegister is not throwing an error
+
+    if (error instanceof Error) {
+      message.warning(error.message)
+    }
+  }
+}
+</script>

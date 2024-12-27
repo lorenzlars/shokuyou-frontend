@@ -12,15 +12,15 @@
 </template>
 
 <script lang="ts" setup>
-import { createRecipe, type CreateRecipeDto, getRecipes, removeRecipeById } from '@/api'
+import { type Recipe, RecipesService } from '@/api'
 import { shallowRef } from 'vue'
 
-const recipes = shallowRef<CreateRecipeDto[]>([])
+const recipes = shallowRef<Recipe[]>([])
 
 await loadRecipes()
 
 async function addRecipe() {
-  await createRecipe({
+  await RecipesService.createRecipe({
     body: {
       name: 'Name',
       description: 'Description',
@@ -31,7 +31,7 @@ async function addRecipe() {
 }
 
 async function removeRecipe(id: string) {
-  await removeRecipeById({
+  await RecipesService.deleteRecipe({
     path: {
       id,
     },
@@ -41,8 +41,8 @@ async function removeRecipe(id: string) {
 }
 
 async function loadRecipes() {
-  const { data } = await getRecipes()
+  const { data } = await RecipesService.getRecipes()
 
-  recipes.value = data as CreateRecipeDto[]
+  recipes.value = data ?? []
 }
 </script>

@@ -1,11 +1,11 @@
 import { defineStore } from 'pinia'
 import { computed, shallowRef } from 'vue'
-import { login as apiLogin, type LoginUserDto, type ProfileResponse } from '@/api'
+import { type LoginUserDto, AuthService } from '@/api'
 import * as localforage from 'localforage'
 
 export const useAuthStore = defineStore('auth', () => {
   const token = shallowRef<string | null | undefined>()
-  const user = shallowRef<ProfileResponse>()
+  const user = shallowRef()
   const isAuthenticated = computed(() => !!token.value)
 
   // TODO: This needs to run synchronously
@@ -15,7 +15,7 @@ export const useAuthStore = defineStore('auth', () => {
 
   async function login(loginUserDto: LoginUserDto) {
     try {
-      const { data } = await apiLogin({
+      const { data } = await AuthService.postLogin({
         body: loginUserDto,
       })
 
