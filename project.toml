@@ -1,9 +1,0 @@
-[[io.buildpacks.group]]
-id = "heroku/static-web-server"
-
-[com.heroku.phase.release-build]
-command = "sh"
-args = ["-c", "pnpm run build"]
-
-[com.heroku.static-web-server]
-root = "dist"
