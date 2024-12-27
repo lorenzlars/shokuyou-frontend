@@ -1,1 +1,1 @@
-web: heroku-php-nginx dist/
+web: heroku-php-nginx -C rewrite.conf dist/
