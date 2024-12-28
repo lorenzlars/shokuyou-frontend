@@ -8,7 +8,7 @@ const { push } = useRouter()
 
 function handleLogout() {
   logout()
-  push({ name: 'auth' })
+  push('login')
 }
 </script>
 
@@ -18,11 +18,7 @@ function handleLogout() {
   </header>
 
   <main class="container">
-    <NMessageProvider placement="bottom-left">
-      <Suspense>
-        <RouterView />
-      </Suspense>
-    </NMessageProvider>
+    <RouterView />
   </main>
 
   <footer></footer>
