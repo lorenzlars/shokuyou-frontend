@@ -1,18 +1,21 @@
-import type { RouteRecordRaw } from 'vue-router'
-import { useAuthMiddleware } from '@/domains/auth/middlewares/authMiddleware.ts'
+import { createRoute } from '@kitbag/router'
+import { defineAsyncComponent } from 'vue'
 import BaseLayout from '@/layouts/BaseLayout.vue'
+import { useAuthMiddleware } from '../auth/middlewares/authMiddleware'
 
-export const RecipesRoutes: RouteRecordRaw[] = [
-  {
+const baseRoute = createRoute({
+  name: 'recipes-layout',
+  onBeforeRouteEnter: useAuthMiddleware(),
+  component: BaseLayout,
+})
+
+
+export const recipesRoute = [
+  baseRoute,
+  createRoute({
+    parent: baseRoute,
+    name: 'recipes',
     path: '/',
-    component: BaseLayout,
-    beforeEnter: useAuthMiddleware(),
-    children: [
-      {
-        path: '',
-        name: 'recipes',
-        component: () => import('./pages/RecipesPage.vue'),
-      },
-    ],
-  },
+    component: defineAsyncComponent(() => import('./pages/RecipesPage.vue')),
+  })
 ]

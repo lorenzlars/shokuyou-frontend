@@ -1,19 +1,19 @@
-import { createRouter, createWebHistory } from 'vue-router'
-import App from '@/App.vue'
+import { createRoute, createRouter, path } from '@kitbag/router'
 
-import { AuthRoutes } from '@/domains/auth/routes.ts'
-import { RecipesRoutes } from '@/domains/recipes/routes.ts'
+import { authRoute } from '@/domains/auth/routes.ts'
+import { recipesRoute } from '@/domains/recipes/routes.ts'
 
-const router = createRouter({
-  history: createWebHistory(),
-  routes: [
-    ...AuthRoutes,
-    ...RecipesRoutes,
-    {
-      path: '/:catchAll(.*)',
-      redirect: '/',
-    },
-  ],
-})
+const router = createRouter([
+  ...authRoute,
+  ...recipesRoute,
+
+  createRoute({
+    name: 'catch-all',
+    path: path('/[pattern]', { pattern: /.*/g }),
+    onBeforeRouteEnter: (to, { replace }) => {
+      replace('recipes')
+    }
+  }),
+])
 
 export default router

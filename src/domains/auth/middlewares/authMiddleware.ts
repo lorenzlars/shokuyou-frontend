@@ -1,14 +1,12 @@
 import { useAuthStore } from '@/domains/auth/stores/authStore.ts'
-import type { NavigationGuard } from 'vue-router'
+import type { BeforeRouteHook } from '@kitbag/router'
 
-export function useAuthMiddleware(): NavigationGuard {
-  return (to, _from, next) => {
+export function useAuthMiddleware(): BeforeRouteHook {
+  return (to, { replace }) => {
     const { isAuthenticated } = useAuthStore()
 
     if (to.name !== 'login' && !isAuthenticated) {
-      return next({ name: 'login' })
+      replace('login')
     }
-
-    return next()
   }
 }

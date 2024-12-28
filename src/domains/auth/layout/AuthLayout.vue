@@ -1,14 +1,9 @@
 <script setup lang="ts">
-import { RouterView } from 'vue-router'
-import { NMessageProvider } from 'naive-ui'
+import { RouterView } from '@kitbag/router'
 </script>
 
 <template>
   <main class="container">
-    <NMessageProvider placement="bottom-left">
-      <Suspense>
-        <RouterView />
-      </Suspense>
-    </NMessageProvider>
+    <RouterView />
   </main>
 </template>
