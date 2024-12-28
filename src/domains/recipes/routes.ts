@@ -1,17 +1,11 @@
 import { createRoute } from '@kitbag/router'
-import { useAuthStore } from '../auth/stores/authStore'
 import { defineAsyncComponent } from 'vue'
 import BaseLayout from '@/layouts/BaseLayout.vue'
+import { useAuthMiddleware } from '../auth/middlewares/authMiddleware'
 
 const baseRoute = createRoute({
   name: 'recipes-layout',
-  onBeforeRouteEnter: (to, { replace }) => {
-    const { isAuthenticated } = useAuthStore()
-
-    if (to.name !== 'login' && !isAuthenticated) {
-      replace('login')
-    }
-  },
+  onBeforeRouteEnter: useAuthMiddleware(),
   component: BaseLayout,
 })
 

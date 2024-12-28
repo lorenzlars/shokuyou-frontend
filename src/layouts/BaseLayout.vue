@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { RouterView, useRouter } from '@kitbag/router'
-import { NButton, NMessageProvider } from 'naive-ui'
+import { NButton } from 'naive-ui'
 import { useAuthStore } from '@/domains/auth/stores/authStore.ts'
 
 const { logout } = useAuthStore()
