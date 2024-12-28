@@ -1,21 +1,54 @@
 <template>
   <div>
-    <h1>Recipes</h1>
+    <div class="flex justify-between items-center">
+      <h1>Recipes</h1>
 
-    <div v-for="(recipe, key) in recipes" :key>
-      {{ recipe.name }} {{ recipe.description }}
-      <button @click="removeRecipe(recipe?.id as string)">Delete</button>
+      <NButton type="primary" @click="push('recipe-create')">Create</NButton>
     </div>
 
-    <button @click="addRecipe">Create</button>
+    <NDataTable :pagination :row-props="rowProps" :data="recipes" :columns="columns" />
   </div>
 </template>
 
 <script lang="ts" setup>
-import { type Recipe, RecipesService } from '@/api'
-import { shallowRef } from 'vue'
+import { type GetRecipeResponse, type Recipe, RecipesService } from '@/api'
+import { reactive, shallowRef } from 'vue'
+import { NDataTable, NButton } from 'naive-ui'
+import { useRouter } from '@kitbag/router'
 
 const recipes = shallowRef<Recipe[]>([])
+const { push } = useRouter()
+const columns = [
+  {
+    title: 'Name',
+    key: 'name'
+  },
+  {
+    title: 'Description',
+    key: 'description'
+  },
+]
+const pagination = reactive({
+  page: 2,
+  pageSize: 5,
+  showSizePicker: true,
+  pageSizes: [3, 5, 7],
+  onChange: (page: number) => {
+    pagination.page = page
+  },
+  onUpdatePageSize: (pageSize: number) => {
+    pagination.pageSize = pageSize
+    pagination.page = 1
+  }
+})
+const rowProps = (row: GetRecipeResponse) => {
+  return {
+    style: 'cursor: pointer;',
+    onClick: () => {
+      push(`/recipes/${row.id}`)
+    }
+  }
+}
 
 await loadRecipes()
 

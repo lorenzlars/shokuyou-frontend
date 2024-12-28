@@ -9,8 +9,8 @@ const router = createRouter([
 
   createRoute({
     name: 'catch-all',
-    path: path('/[pattern]', { pattern: /.*/g }),
-    onBeforeRouteEnter: (to, { replace }) => {
+    path: path('[pattern]', { pattern: /.*/g }),
+    onBeforeRouteEnter: (_, { replace }) => {
       replace('recipes')
     }
   }),

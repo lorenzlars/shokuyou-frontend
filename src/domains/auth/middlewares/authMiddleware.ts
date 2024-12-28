@@ -8,5 +8,9 @@ export function useAuthMiddleware(): BeforeRouteHook {
     if (to.name !== 'login' && !isAuthenticated) {
       replace('login')
     }
+
+    if (to.name === 'login' && isAuthenticated) {
+      replace('recipes')
+    }
   }
 }
