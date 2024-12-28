@@ -1,35 +1,41 @@
 import { defineStore } from 'pinia'
 import { computed, shallowRef } from 'vue'
 import { type LoginUserDto, AuthService } from '@/api'
-import * as localforage from 'localforage'
 
 export const useAuthStore = defineStore('auth', () => {
-  const token = shallowRef<string | null | undefined>()
+  const token = shallowRef(localStorage.getItem('token') ?? sessionStorage.getItem('token'))
   const user = shallowRef()
   const isAuthenticated = computed(() => !!token.value)
 
-  // TODO: This needs to run synchronously
-  localforage.getItem<string>('token').then((value) => {
-    token.value = value
-  })
-
-  async function login(loginUserDto: LoginUserDto) {
+  async function login(loginUserDto: LoginUserDto, rememberMe: boolean = false) {
     try {
       const { data } = await AuthService.postLogin({
         body: loginUserDto,
       })
 
       if (data) {
-        token.value = data?.accessToken
-        localStorage.setItem('token', token.value)
+        token.value = data.accessToken
+
+        if (rememberMe) {
+          localStorage.setItem('token', data.accessToken)
+        } else {
+          sessionStorage.setItem('token', data.accessToken)
+        }
       }
     } catch {
       throw new Error('Unable to authenticate user')
     }
   }
 
+  function logout() {
+    token.value = null
+    localStorage.removeItem('token')
+    sessionStorage.removeItem('token')
+  }
+
   return {
     login,
+    logout,
     user,
     token,
     isAuthenticated,

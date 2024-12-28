@@ -4,15 +4,9 @@ import { NMessageProvider } from 'naive-ui'
 </script>
 
 <template>
-  <header></header>
-
-  <main class="container">
-    <NMessageProvider placement="bottom-left">
-      <Suspense>
-        <RouterView />
-      </Suspense>
-    </NMessageProvider>
-  </main>
-
-  <footer></footer>
+  <NMessageProvider placement="bottom-left">
+    <Suspense>
+      <RouterView />
+    </Suspense>
+  </NMessageProvider>
 </template>

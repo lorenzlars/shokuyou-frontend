@@ -7,11 +7,8 @@ import { RecipesRoutes } from '@/domains/recipes/routes.ts'
 const router = createRouter({
   history: createWebHistory(),
   routes: [
-    {
-      path: '/',
-      component: App,
-      children: [...AuthRoutes, ...RecipesRoutes],
-    },
+    ...AuthRoutes,
+    ...RecipesRoutes,
     {
       path: '/:catchAll(.*)',
       redirect: '/',

@@ -1,7 +1,7 @@
 <template>
   <NCard class="w-128" title="Login">
     <NForm @submit="onSubmit">
-      <div class="flex gap-2 mb-5">
+      <div class="flex gap-2">
         <NFormItem class="w-full" v-bind="usernameProps">
           <NInput v-model:value="username" type="text" placeholder="Input username" />
         </NFormItem>
@@ -10,6 +10,8 @@
           <NInput v-model:value="password" type="password" placeholder="Input password" />
         </NFormItem>
       </div>
+
+      <NCheckbox class="mb-5" v-model:checked="rememberMe"> Remember </NCheckbox>
 
       <div class="flex justify-between">
         <NButton type="default" @click="register" :loading> Register </NButton>
@@ -21,13 +23,14 @@
 </template>
 
 <script setup lang="ts">
-import { NButton, NInput, NCard, NForm, NFormItem } from 'naive-ui'
+import { NButton, NInput, NCard, NForm, NFormItem, NCheckbox } from 'naive-ui'
 import { useLoginForm } from '@/domains/auth/composables/useLoginForm.ts'
 import { AuthService, type LoginUserDto } from '@/api'
 import { useAuthStore } from '@/domains/auth/stores/authStore.ts'
 import type { LazyInputBindsConfig, PublicPathState } from 'vee-validate'
 import { useMessage } from 'naive-ui'
 import { useAsyncPromise } from '@/composables/useAsyncPromise'
+import { shallowRef } from 'vue'
 
 type FieldValidation = {
   validationStatus: 'error' | undefined
@@ -41,6 +44,7 @@ type InputBindings = {
 type NaiveConfig = (state: PublicPathState) => ReturnType<LazyInputBindsConfig> & InputBindings
 
 const message = useMessage()
+const rememberMe = shallowRef(false)
 const { handleSubmit, defineField, isSubmitting } = useLoginForm()
 
 const emit = defineEmits<{
@@ -69,7 +73,7 @@ const { execute, loading } = useAsyncPromise(() =>
 )
 
 const onSubmit = handleSubmit(async (values) => {
-  await login(values as LoginUserDto)
+  await login(values as LoginUserDto, rememberMe.value)
 
   emit('success')
 })
