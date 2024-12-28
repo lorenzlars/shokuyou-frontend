@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { RouterView, useRouter } from 'vue-router'
+import { RouterView, useRouter } from '@kitbag/router'
 import { NButton, NMessageProvider } from 'naive-ui'
 import { useAuthStore } from '@/domains/auth/stores/authStore.ts'
 
@@ -8,7 +8,7 @@ const { push } = useRouter()
 
 function handleLogout() {
   logout()
-  push({ name: 'login' })
+  push({ name: 'auth' })
 }
 </script>
 
