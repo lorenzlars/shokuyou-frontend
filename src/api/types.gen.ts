@@ -2,13 +2,13 @@
 
 export type CreateRecipeDto = {
     /**
-     * The name of the recipe
+     * Name of the recipe
      */
     name: string;
     /**
-     * The description of the recipe
+     * Description of the recipe
      */
-    description: string;
+    description?: string;
 };
 
 export type Recipe = {
@@ -34,7 +34,7 @@ export type UpdateRecipeDto = {
     /**
      * Der eindeutige Benutzername
      */
-    description: string;
+    description?: string;
 };
 
 export type LoginUserDto = {

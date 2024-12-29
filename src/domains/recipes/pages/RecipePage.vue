@@ -1,11 +1,7 @@
 <template>
   <div class="container">
-    <NCard v-if="recipe" :title="recipe.name" class="my-5">
-      <p>{{ recipe.description }}</p>
-
-      <div class="flex gap-2 mt-4">
-        <NButton type="error" @click="deleteRecipe">Löschen</NButton>
-      </div>
+    <NCard v-if="recipe" class="my-5">
+      <RecipeForm :initial-values="recipe" @submit="onSubmit" @delete="deleteRecipe" />
     </NCard>
   </div>
 </template>
@@ -13,39 +9,35 @@
 <script lang="ts" setup>
 import { shallowRef } from 'vue'
 import { useRoute, useRouter } from '@kitbag/router'
-import { RecipesService, type Recipe } from '@/api'
-import { NCard, NButton, useMessage } from 'naive-ui'
+import { RecipesService, type CreateRecipeDto, type Recipe } from '@/api'
+import { NCard, useMessage } from 'naive-ui'
+import RecipeForm from '../components/RecipeForm.vue'
 
-const route = useRoute()
-const router = useRouter()
+const { params } = useRoute()
+const { push } = useRouter()
 const recipe = shallowRef<Recipe>()
 const message = useMessage()
 
-const loadRecipe = async () => {
-  const { id } = route.params as Record<string, string>
+const { id } = params as Record<string, string>
+const { data } = await RecipesService.getRecipe({ path: { id } })
 
-  if (typeof id !== 'string') {
-    message.error('Ungültige Rezept-ID')
-
-    return
-  }
-
-  const response = await RecipesService.getRecipe({ path: { id } })
-
-  recipe.value = response.data
-}
+recipe.value = data
 
 const deleteRecipe = async () => {
   if (!recipe.value) return
 
   try {
-    await RecipesService.deleteRecipe({ path: { id: recipe.value.id } })
+    await RecipesService.deleteRecipe({ path: { id } })
     message.success('Rezept erfolgreich gelöscht.')
-    router.push('/recipes')
+    push('recipes')
   } catch {
     message.error('Rezept konnte nicht gelöscht werden.')
   }
 }
 
-await loadRecipe()
+const onSubmit = async (values: CreateRecipeDto) => {
+  await RecipesService.updateRecipe({ path: { id }, body: values })
+  message.success('Rezept erfolgreich aktualisiert.')
+  push('recipes')
+}
 </script>

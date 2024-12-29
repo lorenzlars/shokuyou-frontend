@@ -4,7 +4,7 @@ import { z } from 'zod';
 
 export const zCreateRecipeDto = z.object({
     name: z.string(),
-    description: z.string()
+    description: z.string().optional()
 });
 
 export const zRecipe = z.object({
@@ -15,7 +15,7 @@ export const zRecipe = z.object({
 
 export const zUpdateRecipeDto = z.object({
     name: z.string(),
-    description: z.string()
+    description: z.string().optional()
 });
 
 export const zLoginUserDto = z.object({

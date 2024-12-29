@@ -27,21 +27,10 @@ import { NButton, NInput, NCard, NForm, NFormItem, NCheckbox } from 'naive-ui'
 import { useLoginForm } from '@/domains/auth/composables/useLoginForm.ts'
 import { AuthService, type LoginUserDto } from '@/api'
 import { useAuthStore } from '@/domains/auth/stores/authStore.ts'
-import type { LazyInputBindsConfig, PublicPathState } from 'vee-validate'
 import { useMessage } from 'naive-ui'
 import { useAsyncPromise } from '@/composables/useAsyncPromise'
 import { shallowRef } from 'vue'
-
-type FieldValidation = {
-  validationStatus: 'error' | undefined
-  feedback: string
-}
-
-type InputBindings = {
-  props: Record<string, unknown> & FieldValidation
-}
-
-type NaiveConfig = (state: PublicPathState) => ReturnType<LazyInputBindsConfig> & InputBindings
+import { useNaiveUiFieldConfig } from '@/composables/useNaiveUiFieldConfig'
 
 const message = useMessage()
 const rememberMe = shallowRef(false)
@@ -51,20 +40,8 @@ const emit = defineEmits<{
   success: []
 }>()
 
-function naiveConfig(label: string): NaiveConfig {
-  return (state: PublicPathState) => ({
-    props: {
-      validationStatus: state.errors[0] ? 'error' : undefined,
-      feedback: state.errors[0],
-      showRequireMark: state.required,
-      label,
-      path: state.path,
-    },
-  })
-}
-
-const [username, usernameProps] = defineField<string>('username', naiveConfig('Username'))
-const [password, passwordProps] = defineField<string>('password', naiveConfig('Password'))
+const [username, usernameProps] = defineField<'username'>('username', useNaiveUiFieldConfig('Username'))
+const [password, passwordProps] = defineField<'password'>('password', useNaiveUiFieldConfig('Password'))
 const { login } = useAuthStore()
 const { execute, loading } = useAsyncPromise(() =>
   AuthService.postRegister({

@@ -1,5 +1,6 @@
 import { client } from '@/api'
 import { useAuthStore } from '@/domains/auth/stores/authStore.ts'
+import { useRouter } from '@kitbag/router'
 
 export default {
   install: () => {
@@ -13,6 +14,20 @@ export default {
       config.headers.Authorization = `Bearer ${token}`
 
       return config
+    })
+
+    client.instance.interceptors.response.use(function (response) {
+      return response
+    }, function (error) {
+      const { logout } = useAuthStore()
+      const { replace } = useRouter()
+
+      if (error.response.status === 401) {
+        logout()
+        replace('login')
+      }
+
+      return Promise.reject(error)
     })
   },
 }

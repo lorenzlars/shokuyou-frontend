@@ -27,6 +27,6 @@ export const recipesRoute = [
     parent: baseRoute,
     name: 'recipe-create',
     path: '/recipes/create',
-    component: defineAsyncComponent(() => import('./pages/RecipePage.vue')),
+    component: defineAsyncComponent(() => import('./pages/CreateRecipePage.vue')),
   }),
 ]
