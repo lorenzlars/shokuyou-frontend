@@ -4,18 +4,21 @@ import { z } from 'zod';
 
 export const zCreateRecipeDto = z.object({
     name: z.string(),
-    description: z.string().optional()
+    description: z.string().optional(),
+    image: z.string().optional()
 });
 
 export const zRecipe = z.object({
     id: z.string(),
     name: z.string(),
-    description: z.string()
+    description: z.string(),
+    url: z.string()
 });
 
 export const zUpdateRecipeDto = z.object({
     name: z.string(),
-    description: z.string().optional()
+    description: z.string().optional(),
+    image: z.string().optional()
 });
 
 export const zLoginUserDto = z.object({

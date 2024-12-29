@@ -9,6 +9,10 @@ export type CreateRecipeDto = {
      * Description of the recipe
      */
     description?: string;
+    /**
+     * Base64 Image of the recipe
+     */
+    image?: string;
 };
 
 export type Recipe = {
@@ -24,6 +28,10 @@ export type Recipe = {
      * The description of the recipe
      */
     description: string;
+    /**
+     * The URL of the recipe image
+     */
+    url: string;
 };
 
 export type UpdateRecipeDto = {
@@ -35,6 +43,10 @@ export type UpdateRecipeDto = {
      * Der eindeutige Benutzername
      */
     description?: string;
+    /**
+     * Base64 Image of the recipe
+     */
+    image?: string;
 };
 
 export type LoginUserDto = {
