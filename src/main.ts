@@ -7,7 +7,11 @@ import { createPinia } from 'pinia'
 import App from './App.vue'
 import router from './router'
 import AuthPlugin from '@/domains/auth/plugins/authPlugin.ts'
+import { setupI18n } from './i18n'
 
-const app = createApp(App)
-
-app.use(createPinia()).use(router).use(AuthPlugin).mount('#app')
+createApp(App)
+  .use(setupI18n({ locale: 'en' }))
+  .use(createPinia())
+  .use(router)
+  .use(AuthPlugin)
+  .mount('#app')

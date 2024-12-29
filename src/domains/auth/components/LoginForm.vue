@@ -25,7 +25,7 @@
 <script setup lang="ts">
 import { NButton, NInput, NCard, NForm, NFormItem, NCheckbox } from 'naive-ui'
 import { useLoginForm } from '@/domains/auth/composables/useLoginForm.ts'
-import { AuthService, type LoginUserDto } from '@/api'
+import { AuthService } from '@/api'
 import { useAuthStore } from '@/domains/auth/stores/authStore.ts'
 import { useMessage } from 'naive-ui'
 import { useAsyncPromise } from '@/composables/useAsyncPromise'
@@ -50,7 +50,7 @@ const { execute, loading } = useAsyncPromise(() =>
 )
 
 const onSubmit = handleSubmit(async (values) => {
-  await login(values as LoginUserDto, rememberMe.value)
+  await login(values, rememberMe.value)
 
   emit('success')
 })
