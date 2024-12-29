@@ -1,6 +1,5 @@
 import { client } from '@/api'
 import { useAuthStore } from '@/domains/auth/stores/authStore.ts'
-import { useRouter } from '@kitbag/router'
 
 export default {
   install: () => {
@@ -17,14 +16,20 @@ export default {
     })
 
     client.instance.interceptors.response.use(function (response) {
+      const { logout } = useAuthStore()
+
+      if (response.status === 401) {
+        logout()
+        window.location.href = '/login'
+      }
+
       return response
     }, function (error) {
       const { logout } = useAuthStore()
-      const { replace } = useRouter()
 
       if (error.response.status === 401) {
         logout()
-        replace('login')
+        window.location.href = '/login'
       }
 
       return Promise.reject(error)

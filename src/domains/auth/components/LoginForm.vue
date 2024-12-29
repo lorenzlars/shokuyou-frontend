@@ -1,22 +1,22 @@
 <template>
-  <NCard class="w-128" title="Login">
+  <NCard class="w-128" :title="t('titles.login')">
     <NForm @submit="onSubmit">
       <div class="flex gap-2">
         <NFormItem class="w-full" v-bind="usernameProps">
-          <NInput v-model:value="username" type="text" placeholder="Input username" />
+          <NInput v-model:value="username" type="text" :placeholder="t('placeholders.username')" />
         </NFormItem>
 
         <NFormItem class="w-full" v-bind="passwordProps">
-          <NInput v-model:value="password" type="password" placeholder="Input password" />
+          <NInput v-model:value="password" type="password" :placeholder="t('placeholders.password')" />
         </NFormItem>
       </div>
 
-      <NCheckbox class="mb-5" v-model:checked="rememberMe"> Remember </NCheckbox>
+      <NCheckbox class="mb-5" v-model:checked="rememberMe"> {{ t('checkbox.remember') }} </NCheckbox>
 
       <div class="flex justify-between">
-        <NButton type="default" @click="register" :loading> Register </NButton>
+        <NButton type="default" @click="register" :loading> {{ t('buttons.register') }} </NButton>
 
-        <NButton type="primary" attr-type="submit" :loading="isSubmitting">Submit</NButton>
+        <NButton type="primary" attr-type="submit" :loading="isSubmitting"> {{ t('buttons.submit') }} </NButton>
       </div>
     </NForm>
   </NCard>
@@ -31,6 +31,7 @@ import { useMessage } from 'naive-ui'
 import { useAsyncPromise } from '@/composables/useAsyncPromise'
 import { shallowRef } from 'vue'
 import { useNaiveUiFieldConfig } from '@/composables/useNaiveUiFieldConfig'
+import { useI18n } from 'vue-i18n'
 
 const message = useMessage()
 const rememberMe = shallowRef(false)
@@ -48,6 +49,8 @@ const { execute, loading } = useAsyncPromise(() =>
     body: { username: 'test', password: 'test' },
   }),
 )
+
+const { t } = useI18n()
 
 const onSubmit = handleSubmit(async (values) => {
   await login(values, rememberMe.value)

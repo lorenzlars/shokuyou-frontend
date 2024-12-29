@@ -1,1 +1,35 @@
-{}
+{
+    "titles": {
+        "login": "Login",
+        "createRecipe": "Rezept erstellen",
+        "updateRecipe": "Rezept aktualisieren"
+    },
+    "placeholders": {
+        "username": "Benutzernamen eingeben",
+        "password": "Passwort eingeben",
+        "recipeName": "Rezeptname eingeben",
+        "recipeDescription": "Rezeptbeschreibung eingeben"
+    },
+    "checkbox": {
+        "remember": "Erinnern"
+    },
+    "buttons": {
+        "register": "Registrieren",
+        "submit": "Absenden",
+        "create": "Erstellen",
+        "update": "Aktualisieren",
+        "edit": "Bearbeiten",
+        "cancel": "Abbrechen",
+        "delete": "Löschen"
+    },
+    "messages": {
+        "recipeDeletedSuccessfully": "Rezept erfolgreich gelöscht.",
+        "recipeDeleteFailed": "Rezept konnte nicht gelöscht werden.",
+        "recipeUpdatedSuccessfully": "Rezept erfolgreich aktualisiert.",
+        "recipeCreatedSuccessfully": "Rezept erfolgreich erstellt.",
+        "loginSuccess": "Erfolgreich eingeloggt.",
+        "loginFailed": "Login fehlgeschlagen.",
+        "registrationSuccess": "Registrierung erfolgreich.",
+        "registrationFailed": "Registrierung fehlgeschlagen."
+    }
+}

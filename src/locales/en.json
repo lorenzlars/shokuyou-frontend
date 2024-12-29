@@ -1,1 +1,35 @@
-{}
+{
+    "titles": {
+        "login": "Login",
+        "createRecipe": "Create Recipe",
+        "updateRecipe": "Update Recipe"
+    },
+    "placeholders": {
+        "username": "Enter username",
+        "password": "Enter password",
+        "recipeName": "Enter recipe name",
+        "recipeDescription": "Enter recipe description"
+    },
+    "checkbox": {
+        "remember": "Remember"
+    },
+    "buttons": {
+        "register": "Register",
+        "submit": "Submit",
+        "create": "Create",
+        "update": "Update",
+        "edit": "Edit",
+        "cancel": "Cancel",
+        "delete": "Delete"
+    },
+    "messages": {
+        "recipeDeletedSuccessfully": "Recipe deleted successfully.",
+        "recipeDeleteFailed": "Failed to delete recipe.",
+        "recipeUpdatedSuccessfully": "Recipe updated successfully.",
+        "recipeCreatedSuccessfully": "Recipe created successfully.",
+        "loginSuccess": "Logged in successfully.",
+        "loginFailed": "Login failed.",
+        "registrationSuccess": "Registration successful.",
+        "registrationFailed": "Registration failed."
+    }
+}

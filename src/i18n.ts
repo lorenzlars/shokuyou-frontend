@@ -1,7 +1,5 @@
 import { nextTick, watch } from 'vue'
-import { createI18n } from 'vue-i18n'
-
-export const SUPPORT_LOCALES = ['en', 'ja', 'de']
+import { createI18n, type I18n } from 'vue-i18n'
 
 export function setupI18n(options = { locale: 'en' }) {
   const i18n = createI18n({ legacy: false, ...options })
@@ -24,14 +22,10 @@ export function setupI18n(options = { locale: 'en' }) {
   return i18n
 }
 
-export function setI18nLanguage(i18n: ReturnType<typeof createI18n>, locale: string) {
-  if (i18n.mode === 'legacy') {
-    i18n.global.locale = locale
-  } else {
-    i18n.global.locale.value = locale
-  }
+export function setI18nLanguage(i18n: I18n, locale: string) {
+  i18n.global.locale = locale
 
-  document.querySelector('html').setAttribute(
+  document.querySelector('html')?.setAttribute(
     'lang',
     locale,
   )
@@ -42,12 +36,9 @@ export function setI18nLanguage(i18n: ReturnType<typeof createI18n>, locale: str
   )
 }
 
-export async function loadLocaleMessages(i18n, locale) {
-  // load locale messages with dynamic import
-  const messages = await import(
-    /* webpackChunkName: "locale-[request]" */ `./locales/${locale}.json`)
+export async function loadLocaleMessages(i18n: I18n, locale: string) {
+  const messages = await import(`./locales/${locale}.json`)
 
-  // set locale and locale message
   i18n.global.setLocaleMessage(
     locale,
     messages.default,
