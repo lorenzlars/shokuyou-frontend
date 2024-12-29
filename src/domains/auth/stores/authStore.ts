@@ -9,7 +9,7 @@ export const useAuthStore = defineStore('auth', () => {
 
   async function login(loginUserDto: LoginUserDto, rememberMe: boolean = false) {
     try {
-      const { data } = await AuthService.postLogin({
+      const { data } = await AuthService.userLogin({
         body: loginUserDto,
       })
 

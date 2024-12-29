@@ -7,16 +7,24 @@
         </NFormItem>
 
         <NFormItem class="w-full" v-bind="passwordProps">
-          <NInput v-model:value="password" type="password" :placeholder="t('placeholders.password')" />
+          <NInput
+            v-model:value="password"
+            type="password"
+            :placeholder="t('placeholders.password')"
+          />
         </NFormItem>
       </div>
 
-      <NCheckbox class="mb-5" v-model:checked="rememberMe"> {{ t('checkbox.remember') }} </NCheckbox>
+      <NCheckbox class="mb-5" v-model:checked="rememberMe">
+        {{ t('checkbox.remember') }}
+      </NCheckbox>
 
       <div class="flex justify-between">
         <NButton type="default" @click="register" :loading> {{ t('buttons.register') }} </NButton>
 
-        <NButton type="primary" attr-type="submit" :loading="isSubmitting"> {{ t('buttons.submit') }} </NButton>
+        <NButton type="primary" attr-type="submit" :loading="isSubmitting">
+          {{ t('buttons.submit') }}
+        </NButton>
       </div>
     </NForm>
   </NCard>
@@ -41,11 +49,17 @@ const emit = defineEmits<{
   success: []
 }>()
 
-const [username, usernameProps] = defineField<'username'>('username', useNaiveUiFieldConfig('Username'))
-const [password, passwordProps] = defineField<'password'>('password', useNaiveUiFieldConfig('Password'))
+const [username, usernameProps] = defineField<'username'>(
+  'username',
+  useNaiveUiFieldConfig('Username'),
+)
+const [password, passwordProps] = defineField<'password'>(
+  'password',
+  useNaiveUiFieldConfig('Password'),
+)
 const { login } = useAuthStore()
 const { execute, loading } = useAsyncPromise(() =>
-  AuthService.postRegister({
+  AuthService.userRegister({
     body: { username: 'test', password: 'test' },
   }),
 )

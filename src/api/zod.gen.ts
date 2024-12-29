@@ -2,6 +2,15 @@
 
 import { z } from 'zod';
 
+export const zPaginationResponseDto = z.object({
+    page: z.number().default(1),
+    pageSize: z.number().default(10),
+    orderBy: z.string().optional(),
+    sortOrder: z.string().optional(),
+    content: z.array(z.string()),
+    total: z.number()
+});
+
 export const zCreateRecipeDto = z.object({
     name: z.string(),
     description: z.string().optional(),
@@ -39,7 +48,9 @@ export const zUserResponseDto = z.object({
     username: z.string()
 });
 
-export const zGetRecipesResponse = z.array(zRecipe);
+export const zGetRecipesResponse = zPaginationResponseDto.merge(z.object({
+    content: z.array(zRecipe).optional()
+}));
 
 export const zCreateRecipeResponse = zRecipe;
 
@@ -47,6 +58,6 @@ export const zGetRecipeResponse = zRecipe;
 
 export const zUpdateRecipeResponse = zRecipe;
 
-export const zPostLoginResponse = zLoginResponseDto;
+export const zUserLoginResponse = zLoginResponseDto;
 
 export const zGetProfileResponse = zUserResponseDto;
