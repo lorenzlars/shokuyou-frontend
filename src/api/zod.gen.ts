@@ -2,15 +2,6 @@
 
 import { z } from 'zod';
 
-export const zPaginationResponseDto = z.object({
-    page: z.number().default(1),
-    pageSize: z.number().default(10),
-    orderBy: z.string().optional(),
-    sortOrder: z.string().optional(),
-    content: z.array(z.string()),
-    total: z.number()
-});
-
 export const zCreateRecipeDto = z.object({
     name: z.string(),
     description: z.string().optional(),
@@ -22,6 +13,15 @@ export const zRecipe = z.object({
     name: z.string(),
     description: z.string(),
     url: z.string()
+});
+
+export const zPaginationResponseDto = z.object({
+    page: z.number().default(1),
+    pageSize: z.number().default(10),
+    orderBy: z.string().optional(),
+    sortOrder: z.string().optional(),
+    content: z.array(z.string()),
+    total: z.number()
 });
 
 export const zUpdateRecipeDto = z.object({
