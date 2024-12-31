@@ -1,7 +1,7 @@
 <template>
   <div class="container">
-    <NCard v-if="recipe" class="my-5">
-      <RecipeForm :initial-values="recipe" @submit="onSubmit" />
+    <NCard class="my-5">
+      <RecipeForm :initial-values="recipe" @submit="onSubmit" :loading />
     </NCard>
   </div>
 </template>
@@ -9,12 +9,17 @@
 <script lang="ts" setup>
 import { shallowRef } from 'vue'
 import { useRoute, useRouter } from '@kitbag/router'
-import { RecipesService, type CreateRecipeDto, type ResponseRecipeDto, type UpdateRecipeDto } from '@/api'
+import {
+  RecipesService,
+  type CreateRecipeDto,
+  type ResponseRecipeDto,
+  type UpdateRecipeDto,
+} from '@/api'
 import { NCard, useMessage } from 'naive-ui'
 import RecipeForm from '../components/RecipeForm.vue'
 import { useI18n } from 'vue-i18n'
 
-type RecipeFormEmitValues = Parameters<InstanceType<typeof RecipeForm>["$emit"]>['1']
+type RecipeFormEmitValues = Parameters<InstanceType<typeof RecipeForm>['$emit']>['1']
 
 const { params } = useRoute()
 const { push } = useRouter()
@@ -23,14 +28,19 @@ const message = useMessage()
 const { t } = useI18n()
 
 const { id } = params as Record<string, string>
-const { data } = await RecipesService.getRecipe({ path: { id } })
+const loading = shallowRef(false)
 
-if (data) {
-  recipe.value = data
+if (id) {
+  const { data } = await RecipesService.getRecipe({ path: { id } })
+
+  if (data) {
+    recipe.value = data
+  }
 }
 
 async function deleteRecipe() {
   // TODO: Error handing
+  // TODO: Abstract this in a generic composable
   await RecipesService.deleteRecipe({ path: { id } })
 
   message.success(t('messages.recipeDeletedSuccessfully'))
@@ -38,6 +48,7 @@ async function deleteRecipe() {
 
 async function updateRecipe(values: UpdateRecipeDto) {
   // TODO: Error handing
+  // TODO: Abstract this in a generic composable
   const { data: recipe } = await RecipesService.updateRecipe({
     body: values,
     path: {
@@ -52,8 +63,9 @@ async function updateRecipe(values: UpdateRecipeDto) {
 
 async function createRecipe(values: CreateRecipeDto) {
   // TODO: Error handing
+  // TODO: Abstract this in a generic composable
   const { data: recipe } = await RecipesService.createRecipe({
-    body: values
+    body: values,
   })
 
   message.success(t('messages.recipeUpdatedSuccessfully'))
@@ -63,6 +75,7 @@ async function createRecipe(values: CreateRecipeDto) {
 
 async function uploadImage(id: string, image: File) {
   // TODO: Error handing
+  // TODO: Abstract this in a generic composable
   const { data: recipe } = await RecipesService.uploadImage({
     path: {
       id,
@@ -79,6 +92,8 @@ async function uploadImage(id: string, image: File) {
 }
 
 async function deleteImage(id: string) {
+  // TODO: Error handing
+  // TODO: Abstract this in a generic composable
   return await RecipesService.deleteImage({
     path: {
       id,
@@ -87,20 +102,22 @@ async function deleteImage(id: string) {
 }
 
 async function onSubmit(values: RecipeFormEmitValues) {
+  // TODO: Abstract this in a generic composable
+  loading.value = true
+
   const [valuesRecipe, valuesImage] = values
 
   if (valuesRecipe) {
     if (recipe.value) {
       recipe.value = await updateRecipe(valuesRecipe)
     } else {
-      // TODO: Re-think the create page
       recipe.value = await createRecipe(valuesRecipe)
     }
 
     if (recipe.value) {
-      if (valuesImage) {
+      if (valuesImage instanceof File) {
         recipe.value = await uploadImage(recipe.value.id, valuesImage)
-      } else {
+      } else if (valuesImage === null) {
         await deleteImage(recipe.value.id)
       }
     }

@@ -20,13 +20,15 @@ export const recipesRoute = [
   createRoute({
     parent: baseRoute,
     name: 'recipe',
-    path: path('/recipes/[id]', { id: /* Is UUID */ /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$/ }),
+    path: path('/recipes/[id]', {
+      id: /* Is UUID */ /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$/,
+    }),
     component: defineAsyncComponent(() => import('./pages/RecipePage.vue')),
   }),
   createRoute({
     parent: baseRoute,
     name: 'recipe-create',
     path: '/recipes/create',
-    component: defineAsyncComponent(() => import('./pages/CreateRecipePage.vue')),
+    component: defineAsyncComponent(() => import('./pages/RecipePage.vue')),
   }),
 ]

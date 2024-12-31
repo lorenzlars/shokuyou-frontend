@@ -6,7 +6,15 @@
       <NButton type="primary" @click="push('recipe-create')">Create</NButton>
     </div>
 
-    <NDataTable :pagination :row-props="rowProps" :data :columns="columns" :loading :row-key="rowKey" remote />
+    <NDataTable
+      :pagination
+      :row-props="rowProps"
+      :data
+      :columns="columns"
+      :loading
+      :row-key="rowKey"
+      remote
+    />
   </div>
 </template>
 
@@ -17,20 +25,23 @@ import { useRouter } from '@kitbag/router'
 import { usePagination, type PaginationParameters } from '@/composables/usePagination'
 
 const { push } = useRouter()
-const { pagination, data, loading } = usePagination<Recipe>({
-  showSizePicker: true,
-  pageSizes: [5, 10, 20, 50],
-}, async (parameters: PaginationParameters) => {
-  const { data } = await RecipesService.getRecipes({
-    query: parameters,
-  })
+const { pagination, data, loading } = usePagination(
+  {
+    showSizePicker: true,
+    pageSizes: [5, 10, 20, 50],
+  },
+  async (parameters: PaginationParameters) => {
+    const { data } = await RecipesService.getRecipes({
+      query: parameters,
+    })
 
-  if (!data) {
-    throw new Error('No data')
-  }
+    if (!data) {
+      throw new Error('No data')
+    }
 
-  return data
-})
+    return data
+  },
+)
 
 const columns = [
   {

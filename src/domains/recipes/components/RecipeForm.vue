@@ -1,12 +1,28 @@
 <template>
   <NForm @submit="onSubmit">
     <div class="flex gap-2">
-      <NUpload v-if="isEditMode" show-file-list accept="image/*" @update:file-list="onFileChange"
-        :default-upload="false">
-        <NButton type="primary">Upload Image</NButton>
+      <NUpload
+        abstract
+        v-if="isEditMode"
+        show-file-list
+        accept="image/*"
+        @update:file-list="onFileChange"
+        :default-upload="false"
+      >
+        <NButtonGroup>
+          <NButton @click="onDeleteImage" type="primary">Delete</NButton>
+          <NUploadTrigger #="{ handleClick }" abstract>
+            <NButton @click="handleClick" type="primary">Upload Image</NButton>
+          </NUploadTrigger>
+        </NButtonGroup>
       </NUpload>
-      <div v-if="!isEditMode && initialValues?.imageUrl" class="w-64">
-        <img class="object-cover object-center w-full h-full" :src="initialValues.imageUrl" alt="Recipe Image" />
+      <div class="w-64">
+        <img
+          v-if="imageUrl"
+          class="object-cover object-center w-full h-full"
+          :src="imageUrl"
+          alt="Recipe Image"
+        />
       </div>
 
       <NFormItem v-if="isEditMode" class="w-full" v-bind="nameProps">
@@ -28,21 +44,33 @@
       <NButton v-if="isEditMode" type="primary" attr-type="submit" :loading>
         {{ initialValues ? t('buttons.update') : t('buttons.create') }}
       </NButton>
-      <NButton v-if="initialValues" @click="isEditMode = !isEditMode">
+      <NButton v-if="initialValues" @click="isEditMode = !isEditMode" :loading>
         {{ isEditMode ? t('buttons.cancel') : t('buttons.edit') }}
       </NButton>
-      <NButton v-if="initialValues" type="error" @click="onDelete">{{ t('buttons.delete') }}</NButton>
+      <NButton v-if="initialValues" type="error" @click="onDelete" :loading>
+        {{ t('buttons.delete') }}
+      </NButton>
     </div>
   </NForm>
 </template>
 
 <script lang="ts" setup>
-import { NButton, NInput, NForm, NFormItem, NUpload, type UploadFileInfo } from 'naive-ui'
+import {
+  NButton,
+  NInput,
+  NForm,
+  NFormItem,
+  NUpload,
+  NButtonGroup,
+  NUploadTrigger,
+  type UploadFileInfo,
+} from 'naive-ui'
 import { useRecipeForm } from '@/domains/recipes/composables/useRecipeForm'
 import { type CreateRecipeDto, type ResponseRecipeDto, type UpdateRecipeDto } from '@/api'
 import { useNaiveUiFieldConfig } from '@/composables/useNaiveUiFieldConfig'
-import { shallowRef, ref } from 'vue'
+import { shallowRef } from 'vue'
 import { useI18n } from 'vue-i18n'
+import { useField } from 'vee-validate'
 
 const emit = defineEmits<{
   submit: [values: [CreateRecipeDto | UpdateRecipeDto | null, File | null | undefined]]
@@ -50,30 +78,43 @@ const emit = defineEmits<{
 
 const props = defineProps<{
   initialValues?: ResponseRecipeDto
+  loading?: boolean
 }>()
 
 const isEditMode = shallowRef(!props.initialValues)
 const { handleSubmit, defineField } = useRecipeForm(props.initialValues)
 const [name, nameProps] = defineField<'name'>('name', useNaiveUiFieldConfig('Name'))
-const [description, descriptionProps] = defineField<'description'>('description', useNaiveUiFieldConfig('Description'))
+const [description, descriptionProps] = defineField<'description'>(
+  'description',
+  useNaiveUiFieldConfig('Description'),
+)
+const { value: image } = useField<File | null | undefined>('image')
+const { value: imageUrl } = useField<string | undefined>('imageUrl')
 
 const { t } = useI18n()
-const loading = shallowRef(false)
-const selectedFiles = ref<UploadFileInfo[]>([])
 
-const onSubmit = handleSubmit(async (values) => {
-  const imageFile = selectedFiles.value[0]?.file
+const onSubmit = handleSubmit(async (values: Record<string, unknown>) => {
+  // TODO: Find a generic way to remove temporary properties from form values
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { image: _image, imageUrl: _imageUrl, ...rest } = values
 
-  emit('submit', [values, imageFile])
+  emit('submit', [rest as CreateRecipeDto | UpdateRecipeDto | null, image.value])
 })
 
 function onDelete() {
   emit('submit', [null, null])
 }
 
-function onFileChange(fileList: UploadFileInfo[]) {
-  // TODO: Handle null for delete and undefined for keeping image file
+function onDeleteImage() {
+  image.value = null
+  imageUrl.value = undefined
+}
 
-  selectedFiles.value = fileList
+function onFileChange(fileList: UploadFileInfo[]) {
+  image.value = fileList[0]?.file
+
+  if (image.value instanceof File) {
+    imageUrl.value = URL.createObjectURL(image.value)
+  }
 }
 </script>

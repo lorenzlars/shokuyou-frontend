@@ -1,9 +1,7 @@
-import type { PaginationResponseDto } from "@/api"
-import { computed, reactive, shallowRef } from "vue"
+import type { PaginationResponseDto } from '@/api'
+import { computed, reactive, shallowRef } from 'vue'
 
-export type PaginationResponse<T> = Omit<PaginationResponseDto, 'content'> & {
-  content: T[]
-}
+export type PaginationResponse<T> = PaginationResponseDto & { content?: T[] }
 
 export type PaginationParameters = {
   page: number
@@ -15,7 +13,10 @@ export type PaginationOptions = {
   pageSizes: number[]
 }
 
-export function usePagination<T>(options: PaginationOptions, callback: (parameters: PaginationParameters) => Promise<PaginationResponse<T>>) {
+export function usePagination<T>(
+  options: PaginationOptions,
+  callback: (parameters: PaginationParameters) => Promise<PaginationResponse<T>>,
+) {
   const data = shallowRef<T[]>()
   const loading = shallowRef(false)
   const page = shallowRef(1)
