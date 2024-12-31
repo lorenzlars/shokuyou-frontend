@@ -9,10 +9,18 @@ export type CreateRecipeDto = {
      * Description of the recipe
      */
     description?: string;
+};
+
+export type Image = {
     /**
-     * Base64 Image of the recipe
+     * The unique identifier of the recipe
      */
-    image?: string;
+    id: string;
+    /**
+     * The name of the recipe
+     */
+    publicId: string;
+    url: string;
 };
 
 export type Recipe = {
@@ -29,9 +37,28 @@ export type Recipe = {
      */
     description: string;
     /**
-     * The URL of the recipe image
+     * The image of the recipe
      */
-    url: string;
+    image: Image;
+};
+
+export type ResponseRecipeDto = {
+    /**
+     * Name of the recipe
+     */
+    id: string;
+    /**
+     * Name of the recipe
+     */
+    name: string;
+    /**
+     * Description of the recipe
+     */
+    description?: string;
+    /**
+     * The image url the recipe image
+     */
+    imageUrl?: string;
 };
 
 export type PaginationResponseDto = {
@@ -70,10 +97,6 @@ export type UpdateRecipeDto = {
      * Der eindeutige Benutzername
      */
     description?: string;
-    /**
-     * Base64 Image of the recipe
-     */
-    image?: string;
 };
 
 export type LoginUserDto = {
@@ -138,7 +161,7 @@ export type GetRecipesData = {
 
 export type GetRecipesResponses = {
     200: PaginationResponseDto & {
-        content?: Array<Recipe>;
+        content?: Array<ResponseRecipeDto>;
     };
 };
 
@@ -203,7 +226,7 @@ export type GetRecipeResponses = {
     /**
      * Successfully retrieved the recipe
      */
-    200: Recipe;
+    200: ResponseRecipeDto;
 };
 
 export type GetRecipeResponse = GetRecipeResponses[keyof GetRecipeResponses];
@@ -232,6 +255,56 @@ export type UpdateRecipeResponses = {
 };
 
 export type UpdateRecipeResponse = UpdateRecipeResponses[keyof UpdateRecipeResponses];
+
+export type DeleteImageData = {
+    body?: never;
+    path: {
+        id: string;
+    };
+    query?: never;
+    url: '/v1/recipes/{id}/image';
+};
+
+export type DeleteImageErrors = {
+    /**
+     * No Recipe found to remove the image from
+     */
+    404: unknown;
+};
+
+export type DeleteImageResponses = {
+    /**
+     * Successfully removed the image
+     */
+    200: unknown;
+};
+
+export type UploadImageData = {
+    body: {
+        file: Blob | File;
+    };
+    path: {
+        id: string;
+    };
+    query?: never;
+    url: '/v1/recipes/{id}/image';
+};
+
+export type UploadImageErrors = {
+    /**
+     * No Recipe found to add the image to
+     */
+    404: unknown;
+};
+
+export type UploadImageResponses = {
+    /**
+     * Successfully uploaded the image
+     */
+    200: ResponseRecipeDto;
+};
+
+export type UploadImageResponse = UploadImageResponses[keyof UploadImageResponses];
 
 export type UserLoginData = {
     body: LoginUserDto;

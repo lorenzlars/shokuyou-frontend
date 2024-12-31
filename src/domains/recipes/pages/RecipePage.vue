@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <NCard v-if="recipe" class="my-5">
-      <RecipeForm :initial-values="recipe" @submit="onSubmit" @delete="deleteRecipe" />
+      <RecipeForm :initial-values="recipe" @submit="onSubmit" />
     </NCard>
   </div>
 </template>
@@ -9,37 +9,105 @@
 <script lang="ts" setup>
 import { shallowRef } from 'vue'
 import { useRoute, useRouter } from '@kitbag/router'
-import { RecipesService, type CreateRecipeDto, type Recipe } from '@/api'
+import { RecipesService, type CreateRecipeDto, type ResponseRecipeDto, type UpdateRecipeDto } from '@/api'
 import { NCard, useMessage } from 'naive-ui'
 import RecipeForm from '../components/RecipeForm.vue'
 import { useI18n } from 'vue-i18n'
 
+type RecipeFormEmitValues = Parameters<InstanceType<typeof RecipeForm>["$emit"]>['1']
+
 const { params } = useRoute()
 const { push } = useRouter()
-const recipe = shallowRef<Recipe>()
+const recipe = shallowRef<ResponseRecipeDto>() // TODO: Lazy load to avoid undefined type
 const message = useMessage()
 const { t } = useI18n()
 
 const { id } = params as Record<string, string>
 const { data } = await RecipesService.getRecipe({ path: { id } })
 
-recipe.value = data
-
-const deleteRecipe = async () => {
-  if (!recipe.value) return
-
-  try {
-    await RecipesService.deleteRecipe({ path: { id } })
-    message.success(t('messages.recipeDeletedSuccessfully'))
-    push('recipes')
-  } catch {
-    message.error(t('messages.recipeDeleteFailed'))
-  }
+if (data) {
+  recipe.value = data
 }
 
-const onSubmit = async (values: CreateRecipeDto) => {
-  await RecipesService.updateRecipe({ path: { id }, body: values })
+async function deleteRecipe() {
+  // TODO: Error handing
+  await RecipesService.deleteRecipe({ path: { id } })
+
+  message.success(t('messages.recipeDeletedSuccessfully'))
+}
+
+async function updateRecipe(values: UpdateRecipeDto) {
+  // TODO: Error handing
+  const { data: recipe } = await RecipesService.updateRecipe({
+    body: values,
+    path: {
+      id,
+    },
+  })
+
+  message.success(t('messages.recipeCreatedSuccessfully'))
+
+  return recipe
+}
+
+async function createRecipe(values: CreateRecipeDto) {
+  // TODO: Error handing
+  const { data: recipe } = await RecipesService.createRecipe({
+    body: values
+  })
+
   message.success(t('messages.recipeUpdatedSuccessfully'))
+
+  return recipe
+}
+
+async function uploadImage(id: string, image: File) {
+  // TODO: Error handing
+  const { data: recipe } = await RecipesService.uploadImage({
+    path: {
+      id,
+    },
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+    body: {
+      file: image,
+    },
+  })
+
+  return recipe
+}
+
+async function deleteImage(id: string) {
+  return await RecipesService.deleteImage({
+    path: {
+      id,
+    },
+  })
+}
+
+async function onSubmit(values: RecipeFormEmitValues) {
+  const [valuesRecipe, valuesImage] = values
+
+  if (valuesRecipe) {
+    if (recipe.value) {
+      recipe.value = await updateRecipe(valuesRecipe)
+    } else {
+      // TODO: Re-think the create page
+      recipe.value = await createRecipe(valuesRecipe)
+    }
+
+    if (recipe.value) {
+      if (valuesImage) {
+        recipe.value = await uploadImage(recipe.value.id, valuesImage)
+      } else {
+        await deleteImage(recipe.value.id)
+      }
+    }
+  } else {
+    await deleteRecipe()
+  }
+
   push('recipes')
 }
 </script>

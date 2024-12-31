@@ -4,15 +4,27 @@ import { z } from 'zod';
 
 export const zCreateRecipeDto = z.object({
     name: z.string(),
-    description: z.string().optional(),
-    image: z.string().optional()
+    description: z.string().optional()
+});
+
+export const zImage = z.object({
+    id: z.string(),
+    publicId: z.string(),
+    url: z.string()
 });
 
 export const zRecipe = z.object({
     id: z.string(),
     name: z.string(),
     description: z.string(),
-    url: z.string()
+    image: zImage
+});
+
+export const zResponseRecipeDto = z.object({
+    id: z.string(),
+    name: z.string(),
+    description: z.string().optional(),
+    imageUrl: z.string().optional()
 });
 
 export const zPaginationResponseDto = z.object({
@@ -26,8 +38,7 @@ export const zPaginationResponseDto = z.object({
 
 export const zUpdateRecipeDto = z.object({
     name: z.string(),
-    description: z.string().optional(),
-    image: z.string().optional()
+    description: z.string().optional()
 });
 
 export const zLoginUserDto = z.object({
@@ -49,14 +60,16 @@ export const zUserResponseDto = z.object({
 });
 
 export const zGetRecipesResponse = zPaginationResponseDto.merge(z.object({
-    content: z.array(zRecipe).optional()
+    content: z.array(zResponseRecipeDto).optional()
 }));
 
 export const zCreateRecipeResponse = zRecipe;
 
-export const zGetRecipeResponse = zRecipe;
+export const zGetRecipeResponse = zResponseRecipeDto;
 
 export const zUpdateRecipeResponse = zRecipe;
+
+export const zUploadImageResponse = zResponseRecipeDto;
 
 export const zUserLoginResponse = zLoginResponseDto;
 
