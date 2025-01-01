@@ -91,6 +91,24 @@ async function uploadImage(id: string, image: File) {
   return recipe
 }
 
+async function updateImage(id: string, image: File) {
+  // TODO: Error handing
+  // TODO: Abstract this in a generic composable
+  const { data: recipe } = await RecipesService.updateImage({
+    path: {
+      id,
+    },
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+    body: {
+      file: image,
+    },
+  })
+
+  return recipe
+}
+
 async function deleteImage(id: string) {
   // TODO: Error handing
   // TODO: Abstract this in a generic composable
@@ -116,7 +134,11 @@ async function onSubmit(values: RecipeFormEmitValues) {
 
     if (recipe.value) {
       if (valuesImage instanceof File) {
-        recipe.value = await uploadImage(recipe.value.id, valuesImage)
+        if (recipe.value.imageUrl) {
+          recipe.value = await updateImage(recipe.value.id, valuesImage)
+        } else {
+          recipe.value = await uploadImage(recipe.value.id, valuesImage)
+        }
       } else if (valuesImage === null) {
         await deleteImage(recipe.value.id)
       }

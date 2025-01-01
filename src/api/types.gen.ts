@@ -306,6 +306,33 @@ export type UploadImageResponses = {
 
 export type UploadImageResponse = UploadImageResponses[keyof UploadImageResponses];
 
+export type UpdateImageData = {
+    body: {
+        file: Blob | File;
+    };
+    path: {
+        id: string;
+    };
+    query?: never;
+    url: '/v1/recipes/{id}/image';
+};
+
+export type UpdateImageErrors = {
+    /**
+     * No Recipe found to update the image at
+     */
+    404: unknown;
+};
+
+export type UpdateImageResponses = {
+    /**
+     * Successfully uploaded the image
+     */
+    200: ResponseRecipeDto;
+};
+
+export type UpdateImageResponse = UpdateImageResponses[keyof UpdateImageResponses];
+
 export type UserLoginData = {
     body: LoginUserDto;
     path?: never;

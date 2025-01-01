@@ -7,11 +7,7 @@
         </NFormItem>
 
         <NFormItem class="w-full" v-bind="passwordProps">
-          <NInput
-            v-model:value="password"
-            type="password"
-            :placeholder="t('placeholders.password')"
-          />
+          <NInput v-model:value="password" type="password" :placeholder="t('placeholders.password')" />
         </NFormItem>
       </div>
 

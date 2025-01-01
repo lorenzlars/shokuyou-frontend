@@ -71,6 +71,8 @@ export const zUpdateRecipeResponse = zRecipe;
 
 export const zUploadImageResponse = zResponseRecipeDto;
 
+export const zUpdateImageResponse = zResponseRecipeDto;
+
 export const zUserLoginResponse = zLoginResponseDto;
 
 export const zGetProfileResponse = zUserResponseDto;
