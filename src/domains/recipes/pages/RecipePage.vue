@@ -9,12 +9,7 @@
 <script lang="ts" setup>
 import { shallowRef } from 'vue'
 import { useRoute, useRouter } from '@kitbag/router'
-import {
-  RecipesService,
-  type CreateRecipeDto,
-  type ResponseRecipeDto,
-  type UpdateRecipeDto,
-} from '@/api'
+import { type RecipeRequestDto, type RecipeResponseDto, RecipesService } from '@/api'
 import { NCard, useMessage } from 'naive-ui'
 import RecipeForm from '../components/RecipeForm.vue'
 import { useI18n } from 'vue-i18n'
@@ -23,7 +18,7 @@ type RecipeFormEmitValues = Parameters<InstanceType<typeof RecipeForm>['$emit']>
 
 const { params } = useRoute()
 const { push } = useRouter()
-const recipe = shallowRef<ResponseRecipeDto>() // TODO: Lazy load to avoid undefined type
+const recipe = shallowRef<RecipeResponseDto>() // TODO: Lazy load to avoid undefined type
 const message = useMessage()
 const { t } = useI18n()
 
@@ -46,7 +41,7 @@ async function deleteRecipe() {
   message.success(t('messages.recipeDeletedSuccessfully'))
 }
 
-async function updateRecipe(values: UpdateRecipeDto) {
+async function updateRecipe(values: RecipeRequestDto) {
   // TODO: Error handing
   // TODO: Abstract this in a generic composable
   const { data: recipe } = await RecipesService.updateRecipe({
@@ -61,7 +56,7 @@ async function updateRecipe(values: UpdateRecipeDto) {
   return recipe
 }
 
-async function createRecipe(values: CreateRecipeDto) {
+async function createRecipe(values: RecipeRequestDto) {
   // TODO: Error handing
   // TODO: Abstract this in a generic composable
   const { data: recipe } = await RecipesService.createRecipe({

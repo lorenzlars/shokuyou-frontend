@@ -1,18 +1,18 @@
 import { toTypedSchema } from '@vee-validate/zod'
 import { useForm } from 'vee-validate'
-import type { CreateRecipeDto } from '@/api'
-import { zCreateRecipeDto } from '@/api/zod.gen.ts'
+import type { RecipeRequestDto } from '@/api'
+import { zRecipeRequestDto } from '@/api/zod.gen.ts'
 import { object, string } from 'zod'
 
-export function useRecipeForm(initialValues?: CreateRecipeDto) {
-  const schema = zCreateRecipeDto.merge(
+export function useRecipeForm(initialValues?: RecipeRequestDto) {
+  const schema = zRecipeRequestDto.merge(
     object({
       image: object({}).optional().nullable(),
       imageUrl: string().optional(),
     }),
   )
 
-  return useForm<CreateRecipeDto>({
+  return useForm<RecipeRequestDto>({
     validationSchema: toTypedSchema(schema),
     initialValues,
   })

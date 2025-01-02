@@ -66,18 +66,18 @@ import {
   type UploadFileInfo,
 } from 'naive-ui'
 import { useRecipeForm } from '@/domains/recipes/composables/useRecipeForm'
-import { type CreateRecipeDto, type ResponseRecipeDto, type UpdateRecipeDto } from '@/api'
+import { type RecipeRequestDto, type RecipeResponseDto } from '@/api'
 import { useNaiveUiFieldConfig } from '@/composables/useNaiveUiFieldConfig'
 import { shallowRef } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useField } from 'vee-validate'
 
 const emit = defineEmits<{
-  submit: [values: [CreateRecipeDto | UpdateRecipeDto | null, File | null | undefined]]
+  submit: [values: [RecipeRequestDto | null, File | null | undefined]]
 }>()
 
 const props = defineProps<{
-  initialValues?: ResponseRecipeDto
+  initialValues?: RecipeResponseDto
   loading?: boolean
 }>()
 
@@ -98,7 +98,7 @@ const onSubmit = handleSubmit(async (values: Record<string, unknown>) => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { image: _image, imageUrl: _imageUrl, ...rest } = values
 
-  emit('submit', [rest as CreateRecipeDto | UpdateRecipeDto | null, image.value])
+  emit('submit', [rest as RecipeRequestDto | null, image.value])
 })
 
 function onDelete() {

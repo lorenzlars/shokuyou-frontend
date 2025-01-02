@@ -61,7 +61,7 @@ export class RecipesService {
     }
     
     /**
-     * Update a single recipe
+     * Replace a single recipe
      */
     public static updateRecipe<ThrowOnError extends boolean = false>(options: Options<UpdateRecipeData, ThrowOnError>) {
         return (options?.client ?? client).put<UpdateRecipeResponse, unknown, ThrowOnError>({
@@ -106,7 +106,7 @@ export class RecipesService {
     }
     
     /**
-     * Add an image to a recipe
+     * Replace the image of the recipe
      */
     public static updateImage<ThrowOnError extends boolean = false>(options: Options<UpdateImageData, ThrowOnError>) {
         return (options?.client ?? client).put<UpdateImageResponse, unknown, ThrowOnError>({

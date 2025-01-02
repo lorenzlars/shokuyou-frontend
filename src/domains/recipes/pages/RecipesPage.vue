@@ -19,7 +19,7 @@
 </template>
 
 <script lang="ts" setup>
-import { type GetRecipeResponse, type Recipe, RecipesService } from '@/api'
+import { type GetRecipeResponse, type RecipeResponseDto, RecipesService } from '@/api'
 import { NDataTable, NButton } from 'naive-ui'
 import { useRouter } from '@kitbag/router'
 import { usePagination, type PaginationParameters } from '@/composables/usePagination'
@@ -63,7 +63,7 @@ function rowProps(row: GetRecipeResponse) {
   }
 }
 
-function rowKey(rowData: Recipe) {
+function rowKey(rowData: RecipeResponseDto) {
   return rowData.id
 }
 </script>

@@ -2,77 +2,60 @@
 
 import { z } from 'zod';
 
-export const zCreateRecipeDto = z.object({
+export const zRecipeRequestDto = z.object({
     name: z.string(),
     description: z.string().optional()
 });
 
-export const zImage = z.object({
-    id: z.string(),
-    publicId: z.string(),
-    url: z.string()
-});
-
-export const zRecipe = z.object({
-    id: z.string(),
-    name: z.string(),
-    description: z.string(),
-    image: zImage
-});
-
-export const zResponseRecipeDto = z.object({
+export const zRecipeResponseDto = z.object({
     id: z.string(),
     name: z.string(),
     description: z.string().optional(),
     imageUrl: z.string().optional()
 });
 
+export const zPaginationSortOrder = z.enum([
+    'ASC',
+    'DESC'
+]);
+
 export const zPaginationResponseDto = z.object({
     page: z.number().default(1),
     pageSize: z.number().default(10),
     orderBy: z.string().optional(),
-    sortOrder: z.string().optional(),
-    content: z.array(z.string()),
+    sortOrder: zPaginationSortOrder.optional(),
+    content: z.array(z.array(z.unknown())),
     total: z.number()
 });
 
-export const zUpdateRecipeDto = z.object({
-    name: z.string(),
-    description: z.string().optional()
-});
-
-export const zLoginUserDto = z.object({
+export const zAuthRequestDto = z.object({
     username: z.string(),
     password: z.string()
 });
 
-export const zLoginResponseDto = z.object({
+export const zAuthResponseDto = z.object({
     accessToken: z.string()
 });
 
-export const zCreateUserDto = z.object({
-    username: z.string(),
-    password: z.string()
-});
-
 export const zUserResponseDto = z.object({
+    id: z.string(),
     username: z.string()
 });
 
 export const zGetRecipesResponse = zPaginationResponseDto.merge(z.object({
-    content: z.array(zResponseRecipeDto).optional()
+    content: z.array(zRecipeResponseDto).optional()
 }));
 
-export const zCreateRecipeResponse = zRecipe;
+export const zCreateRecipeResponse = zRecipeResponseDto;
 
-export const zGetRecipeResponse = zResponseRecipeDto;
+export const zGetRecipeResponse = zRecipeResponseDto;
 
-export const zUpdateRecipeResponse = zRecipe;
+export const zUpdateRecipeResponse = zRecipeResponseDto;
 
-export const zUploadImageResponse = zResponseRecipeDto;
+export const zUploadImageResponse = zRecipeResponseDto;
 
-export const zUpdateImageResponse = zResponseRecipeDto;
+export const zUpdateImageResponse = zRecipeResponseDto;
 
-export const zUserLoginResponse = zLoginResponseDto;
+export const zUserLoginResponse = zAuthResponseDto;
 
 export const zGetProfileResponse = zUserResponseDto;
