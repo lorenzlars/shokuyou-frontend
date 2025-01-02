@@ -1,42 +1,42 @@
 {
-  "general": {
-    "register": "Register",
-    "submit": "Submit",
-    "create": "Create",
-    "update": "Update",
-    "edit": "Edit",
-    "cancel": "Cancel",
-    "delete": "Delete",
-    "password": "Password",
-    "username": "Username",
-    "remember": "Remember",
-    "login": "Login"
-  },
-  "titles": {
-    "login": "Login",
-    "register": "Register",
-    "createRecipe": "Create Recipe",
-    "updateRecipe": "Update Recipe"
-  },
-  "hints": {
-    "passwordRequireUppercase": "At least one uppercase letter",
-    "passwordRequireLowercase": "At least one lowercase letter",
-    "passwordRequireNumber": "At least one number",
-    "passwordRequireSpecialCharacter": "At least one special character ({regex})",
-    "passwordRequireLength": "At least 8 characters"
-  },
-  "messages": {
-    "recipeDeletedSuccessfully": "Recipe deleted successfully.",
-    "recipeDeleteFailed": "Failed to delete recipe.",
-    "recipeUpdatedSuccessfully": "Recipe updated successfully.",
-    "recipeCreatedSuccessfully": "Recipe created successfully.",
-    "loginSuccess": "Logged in successfully.",
-    "loginFailed": "Login failed.",
-    "registrationSuccess": "Registration successful.",
-    "registrationFailed": "Registration failed."
-  },
   "errors": {
     "generic": "Unknown error, try again later.",
     "loginFailed": "Authorization failed"
+  },
+  "general": {
+    "cancel": "Cancel",
+    "create": "Create",
+    "delete": "Delete",
+    "edit": "Edit",
+    "login": "Login",
+    "password": "Password",
+    "register": "Register",
+    "remember": "Remember",
+    "submit": "Submit",
+    "update": "Update",
+    "username": "Username"
+  },
+  "hints": {
+    "passwordRequireLength": "At least 8 characters",
+    "passwordRequireLowercase": "At least one lowercase letter",
+    "passwordRequireNumber": "At least one number",
+    "passwordRequireSpecialCharacter": "At least one special character ({regex})",
+    "passwordRequireUppercase": "At least one uppercase letter"
+  },
+  "messages": {
+    "loginFailed": "Login failed.",
+    "loginSuccess": "Logged in successfully.",
+    "recipeCreatedSuccessfully": "Recipe created successfully.",
+    "recipeDeleteFailed": "Failed to delete recipe.",
+    "recipeDeletedSuccessfully": "Recipe deleted successfully.",
+    "recipeUpdatedSuccessfully": "Recipe updated successfully.",
+    "registrationFailed": "Registration failed.",
+    "registrationSuccess": "Registration successful."
+  },
+  "titles": {
+    "createRecipe": "Create Recipe",
+    "login": "Login",
+    "register": "Register",
+    "updateRecipe": "Update Recipe"
   }
 }

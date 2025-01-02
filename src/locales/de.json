@@ -1,38 +1,42 @@
 {
-    "general": {
-        "register": "Registrieren",
-        "submit": "Absenden",
-        "create": "Erstellen",
-        "update": "Aktualisieren",
-        "edit": "Bearbeiten",
-        "cancel": "Abbrechen",
-        "delete": "Löschen",
-        "password": "Passwort",
-        "username": "Benutzername",
-        "remember": "Erinnern",
-        "login": "Anmelden"
-    },
-    "titles": {
-        "login": "Anmelden",
-        "register": "Registrieren",
-        "createRecipe": "Rezept erstellen",
-        "updateRecipe": "Rezept aktualisieren"
-    },
-    "hints": {
-        "passwordRequireUppercase": "Mindestens ein Großbuchstabe",
-        "passwordRequireLowercase": "Mindestens ein Kleinbuchstabe",
-        "passwordRequireNumber": "Mindestens eine Zahl",
-        "passwordRequireSpecialCharacter": "Mindestens ein Sonderzeichen ({regex})",
-        "passwordRequireLength": "Mindestens 8 Zeichen"
-    },
-    "messages": {
-        "recipeDeletedSuccessfully": "Rezept erfolgreich gelöscht.",
-        "recipeDeleteFailed": "Rezept konnte nicht gelöscht werden.",
-        "recipeUpdatedSuccessfully": "Rezept erfolgreich aktualisiert.",
-        "recipeCreatedSuccessfully": "Rezept erfolgreich erstellt.",
-        "loginSuccess": "Erfolgreich eingeloggt.",
-        "loginFailed": "Anmeldung fehlgeschlagen.",
-        "registrationSuccess": "Registrierung erfolgreich.",
-        "registrationFailed": "Registrierung fehlgeschlagen."
-    }
+  "errors": {
+    "generic": "Unbekannter Fehler, versuchen Sie es später noch einmal.",
+    "loginFailed": "Die Autorisierung ist fehlgeschlagen"
+  },
+  "general": {
+    "cancel": "Abbrechen",
+    "create": "Erstellen",
+    "delete": "Löschen",
+    "edit": "Bearbeiten",
+    "login": "Anmelden",
+    "password": "Passwort",
+    "register": "Registrieren",
+    "remember": "Erinnern",
+    "submit": "Absenden",
+    "update": "Aktualisieren",
+    "username": "Benutzername"
+  },
+  "hints": {
+    "passwordRequireLength": "Mindestens 8 Zeichen",
+    "passwordRequireLowercase": "Mindestens ein Kleinbuchstabe",
+    "passwordRequireNumber": "Mindestens eine Zahl",
+    "passwordRequireSpecialCharacter": "Mindestens ein Sonderzeichen ({regex})",
+    "passwordRequireUppercase": "Mindestens ein Großbuchstabe"
+  },
+  "messages": {
+    "loginFailed": "Anmeldung fehlgeschlagen.",
+    "loginSuccess": "Erfolgreich eingeloggt.",
+    "recipeCreatedSuccessfully": "Rezept erfolgreich erstellt.",
+    "recipeDeleteFailed": "Rezept konnte nicht gelöscht werden.",
+    "recipeDeletedSuccessfully": "Rezept erfolgreich gelöscht.",
+    "recipeUpdatedSuccessfully": "Rezept erfolgreich aktualisiert.",
+    "registrationFailed": "Registrierung fehlgeschlagen.",
+    "registrationSuccess": "Registrierung erfolgreich."
+  },
+  "titles": {
+    "createRecipe": "Rezept erstellen",
+    "login": "Anmelden",
+    "register": "Registrieren",
+    "updateRecipe": "Rezept aktualisieren"
+  }
 }
