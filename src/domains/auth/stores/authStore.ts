@@ -8,22 +8,18 @@ export const useAuthStore = defineStore('auth', () => {
   const isAuthenticated = computed(() => !!token.value)
 
   async function login(authRequestDto: AuthRequestDto, rememberMe: boolean = false) {
-    try {
-      const { data } = await AuthService.userLogin({
-        body: authRequestDto,
-      })
+    const { data } = await AuthService.userLogin({
+      body: authRequestDto,
+    })
 
-      if (data) {
-        token.value = data.accessToken
+    if (data) {
+      token.value = data.accessToken
 
-        if (rememberMe) {
-          localStorage.setItem('token', data.accessToken)
-        } else {
-          sessionStorage.setItem('token', data.accessToken)
-        }
+      if (rememberMe) {
+        localStorage.setItem('token', data.accessToken)
+      } else {
+        sessionStorage.setItem('token', data.accessToken)
       }
-    } catch {
-      throw new Error('Unable to authenticate user')
     }
   }
 

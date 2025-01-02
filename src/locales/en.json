@@ -34,5 +34,9 @@
     "loginFailed": "Login failed.",
     "registrationSuccess": "Registration successful.",
     "registrationFailed": "Registration failed."
+  },
+  "errors": {
+    "generic": "Unknown error, try again later.",
+    "loginFailed": "Authorization failed"
   }
 }

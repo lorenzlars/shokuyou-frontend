@@ -6,24 +6,19 @@ import { type AuthRequestDto } from '@/api'
 import { shallowRef } from 'vue'
 import { useNaiveUiFieldConfig } from '@/composables/useNaiveUiFieldConfig'
 import { useI18n } from 'vue-i18n'
-
-export type LoginFormSubmitValues = {
-  values: AuthRequestDto
-  rememberMe: boolean
-}
+import { useAuthStore } from '@/domains/auth/stores/authStore.ts'
+import { AxiosError } from 'axios'
 
 const rememberMe = shallowRef(false)
 const { handleSubmit, defineField } = useLoginForm()
 
 const emit = defineEmits<{
-  submit: [payload: LoginFormSubmitValues]
-}>()
-
-defineProps<{
-  loading?: boolean
+  submitted: [payload: AuthRequestDto]
 }>()
 
 const { t } = useI18n()
+const { login } = useAuthStore()
+const showError = shallowRef(false)
 
 const [username, usernameProps] = defineField<'username'>(
   'username',
@@ -35,7 +30,17 @@ const [password, passwordProps] = defineField<'password'>(
 )
 
 const onSubmit = handleSubmit(async (values) => {
-  emit('submit', { values, rememberMe: rememberMe.value })
+  try {
+    await login(values, rememberMe.value)
+  } catch (error) {
+    if (error instanceof AxiosError && error.response?.status === 401) {
+      showError.value = true
+    } else {
+      throw error
+    }
+  }
+
+  emit('submitted', values)
 })
 </script>
 
@@ -54,11 +59,13 @@ const onSubmit = handleSubmit(async (values) => {
     </NCheckbox>
 
     <div class="flex justify-between mt-8">
-      <slot name="buttons" />
-
-      <NButton type="primary" attr-type="submit" :loading>
+      <NButton type="primary" attr-type="submit">
         {{ t('general.login') }}
       </NButton>
+
+      <slot name="buttons" />
     </div>
+
+    <p class="m-0 text-danger" v-if="showError">{{ t('errors.loginFailed') }}</p>
   </NForm>
 </template>

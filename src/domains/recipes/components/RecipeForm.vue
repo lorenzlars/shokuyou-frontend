@@ -15,6 +15,7 @@ import { useNaiveUiFieldConfig } from '@/composables/useNaiveUiFieldConfig'
 import { shallowRef } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useField } from 'vee-validate'
+import { preprocessValues } from '@/utils/formUtils.ts'
 
 const emit = defineEmits<{
   submit: [values: [RecipeRequestDto | null, File | null | undefined]]
@@ -37,12 +38,8 @@ const { value: imageUrl } = useField<string | undefined>('imageUrl')
 
 const { t } = useI18n()
 
-const onSubmit = handleSubmit(async (values: Record<string, unknown>) => {
-  // TODO: Find a generic way to remove temporary properties from form values
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const { image: _image, imageUrl: _imageUrl, ...rest } = values
-
-  emit('submit', [rest as RecipeRequestDto | null, image.value])
+const onSubmit = handleSubmit(async (values) => {
+  emit('submit', [preprocessValues(values, ['image', 'imageUrl']), image.value])
 })
 
 function onDelete() {
@@ -107,13 +104,13 @@ function onFileChange(fileList: UploadFileInfo[]) {
 
     <div class="flex justify-end">
       <NButton v-if="isEditMode" type="primary" attr-type="submit" :loading>
-        {{ initialValues ? t('buttons.update') : t('buttons.create') }}
+        {{ initialValues ? t('general.update') : t('general.create') }}
       </NButton>
       <NButton v-if="initialValues" @click="isEditMode = !isEditMode" :loading>
-        {{ isEditMode ? t('buttons.cancel') : t('buttons.edit') }}
+        {{ isEditMode ? t('general.cancel') : t('general.edit') }}
       </NButton>
       <NButton v-if="initialValues" type="error" @click="onDelete" :loading>
-        {{ t('buttons.delete') }}
+        {{ t('general.delete') }}
       </NButton>
     </div>
   </NForm>

@@ -1,20 +1,26 @@
 <script setup lang="ts">
 import { NButton, NInput, NForm, NFormItem } from 'naive-ui'
-import { type AuthRequestDto } from '@/api'
+import { type AuthRegisterRequestDto, type AuthRequestDto, AuthService } from '@/api'
 import { useNaiveUiFieldConfig } from '@/composables/useNaiveUiFieldConfig'
 import { useI18n } from 'vue-i18n'
 import { useRegisterForm } from '@/domains/auth/composables/useRegisterForm.ts'
 import ValidationRules from '@/domains/auth/components/ValidationRules.vue'
+import { preprocessValues } from '@/utils/formUtils.ts'
+import { useAsyncPromise } from '@/composables/useAsyncPromise.ts'
 
 const { handleSubmit, defineField, passwordRules } = useRegisterForm()
 const { t } = useI18n()
 const emit = defineEmits<{
-  submit: [values: AuthRequestDto]
+  submitted: [values: AuthRequestDto]
 }>()
 
-defineProps<{
-  loading?: boolean
-}>()
+const { execute, loading } = useAsyncPromise(
+  (values: AuthRegisterRequestDto) =>
+    AuthService.userRegister({
+      body: values,
+    }),
+  () => ({}),
+)
 
 const [username, usernameProps] = defineField<'username'>(
   'username',
@@ -30,7 +36,11 @@ const [passwordConfirm, passwordConfirmProps] = defineField<'passwordConfirm'>(
 )
 
 const onSubmit = handleSubmit(async (values) => {
-  emit('submit', values)
+  const processedValues = preprocessValues(values, ['passwordConfirm'])
+
+  await execute(processedValues)
+
+  emit('submitted', preprocessValues(values, ['passwordConfirm']))
 })
 </script>
 
@@ -57,11 +67,11 @@ const onSubmit = handleSubmit(async (values) => {
     </NFormItem>
 
     <div class="flex justify-between mt-8">
-      <slot name="buttons" />
-
       <NButton type="primary" attr-type="submit" :loading>
         {{ t('general.register') }}
       </NButton>
+
+      <slot name="buttons" />
     </div>
   </NForm>
 </template>

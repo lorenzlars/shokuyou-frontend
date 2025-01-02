@@ -5,7 +5,7 @@ import FuriganaTitle from '@/components/FuriganaTitle.vue'
 
 <template>
   <main class="container">
-    <div class="flex flex-col gap-6 items-center md:mt-32">
+    <div class="flex flex-col gap-6 items-center md:my-32">
       <RouterLink to="/login" class="text-lg font-bold no-underline text-text hover:no-underline">
         <FuriganaTitle
           :letters="[

@@ -8,17 +8,5 @@ export default defineConfig({
   input: 'http://localhost:3000/docs-yaml',
   output: 'src/api',
   experimentalParser: true,
-  plugins: [
-    ...defaultPlugins,
-    'zod',
-    {
-      name: '@hey-api/typescript',
-    },
-    {
-      name: '@hey-api/sdk',
-      transformer: true,
-      validator: true,
-      asClass: true,
-    },
-  ],
+  plugins: [...defaultPlugins, 'zod'],
 })
