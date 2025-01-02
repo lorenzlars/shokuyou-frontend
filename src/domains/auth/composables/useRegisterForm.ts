@@ -17,6 +17,8 @@ type FormReturn = ReturnType<typeof useForm<FormValues>> & {
   passwordRules: ComputedRef<PasswordRule[]>
 }
 
+const SPECIAL_CHARS = '#?!$%^&*-'
+
 export function useRegisterForm(): FormReturn {
   const { t } = useI18n()
   const passwordRules = computed<PasswordRule[]>(() => [
@@ -33,8 +35,8 @@ export function useRegisterForm(): FormReturn {
       hint: t('hints.passwordRequireNumber'),
     },
     {
-      regex: /(?=.*?[#?!@$%^&*-])/,
-      hint: t('hints.passwordRequireSpecialCharacter'),
+      regex: new RegExp(`(?=.*?[${SPECIAL_CHARS}])`),
+      hint: t('hints.passwordRequireSpecialCharacter', { regex: SPECIAL_CHARS }),
     },
     {
       regex: /.{8,}/,
