@@ -22,7 +22,7 @@
     "passwordRequireUppercase": "At least one uppercase letter",
     "passwordRequireLowercase": "At least one lowercase letter",
     "passwordRequireNumber": "At least one number",
-    "passwordRequireSpecialCharacter": "At least one special character (#?!@$%^&*-)",
+    "passwordRequireSpecialCharacter": "At least one special character (#?!$%^&*-)",
     "passwordRequireLength": "At least 8 characters"
   },
   "messages": {
