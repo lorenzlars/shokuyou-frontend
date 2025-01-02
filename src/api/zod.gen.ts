@@ -37,6 +37,11 @@ export const zAuthResponseDto = z.object({
     accessToken: z.string()
 });
 
+export const zAuthRegisterRequestDto = z.object({
+    username: z.string(),
+    password: z.string()
+});
+
 export const zUserResponseDto = z.object({
     id: z.string(),
     username: z.string()

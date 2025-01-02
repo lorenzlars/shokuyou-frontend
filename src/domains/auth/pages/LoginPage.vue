@@ -1,17 +1,29 @@
 <script setup lang="ts">
 import { useRouter } from '@kitbag/router'
-import LoginForm from '@/domains/auth/components/LoginForm.vue'
+import LoginForm, { type LoginFormSubmitValues } from '@/domains/auth/components/LoginForm.vue'
+import { useAuthStore } from '@/domains/auth/stores/authStore.ts'
+import { NButton, NCard } from 'naive-ui'
+import { useI18n } from 'vue-i18n'
 
 const { push } = useRouter()
+const { login } = useAuthStore()
+const { t } = useI18n()
 
-function onLogin() {
+async function onSubmit({ values, rememberMe }: LoginFormSubmitValues) {
+  await login(values, rememberMe)
+
   push('recipes')
 }
 </script>
 
 <template>
-  <div class="flex flex-col items-center">
-    <h1>しょくよう</h1>
-    <LoginForm class="my-32" @success="onLogin" />
-  </div>
+  <NCard :title="t('titles.login')">
+    <LoginForm @submit="onSubmit">
+      <template #buttons>
+        <NButton type="default" @click="push('register')">
+          {{ t('general.register') }}
+        </NButton>
+      </template>
+    </LoginForm>
+  </NCard>
 </template>

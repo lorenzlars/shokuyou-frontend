@@ -77,6 +77,17 @@ export type AuthResponseDto = {
     accessToken: string;
 };
 
+export type AuthRegisterRequestDto = {
+    /**
+     * Username of the user
+     */
+    username: string;
+    /**
+     * Password of the user
+     */
+    password: string;
+};
+
 export type UserResponseDto = {
     /**
      * The id of the user
@@ -306,7 +317,7 @@ export type UserRegisterData = {
     /**
      * Daten zur Erstellung eines neuen Benutzers
      */
-    body: AuthRequestDto;
+    body: AuthRegisterRequestDto;
     path?: never;
     query?: never;
     url: '/v1/auth/register';

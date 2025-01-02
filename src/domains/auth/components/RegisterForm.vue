@@ -1,29 +1,20 @@
 <script setup lang="ts">
-import { NButton, NInput, NForm, NFormItem, NCheckbox } from 'naive-ui'
-import { useLoginForm } from '@/domains/auth/composables/useLoginForm.ts'
+import { NButton, NInput, NForm, NFormItem } from 'naive-ui'
 import { type AuthRequestDto } from '@/api'
-
-import { shallowRef } from 'vue'
 import { useNaiveUiFieldConfig } from '@/composables/useNaiveUiFieldConfig'
 import { useI18n } from 'vue-i18n'
+import { useRegisterForm } from '@/domains/auth/composables/useRegisterForm.ts'
+import ValidationRules from '@/domains/auth/components/ValidationRules.vue'
 
-export type LoginFormSubmitValues = {
-  values: AuthRequestDto
-  rememberMe: boolean
-}
-
-const rememberMe = shallowRef(false)
-const { handleSubmit, defineField } = useLoginForm()
-
+const { handleSubmit, defineField, passwordRules } = useRegisterForm()
+const { t } = useI18n()
 const emit = defineEmits<{
-  submit: [payload: LoginFormSubmitValues]
+  submit: [values: AuthRequestDto]
 }>()
 
 defineProps<{
   loading?: boolean
 }>()
-
-const { t } = useI18n()
 
 const [username, usernameProps] = defineField<'username'>(
   'username',
@@ -33,9 +24,13 @@ const [password, passwordProps] = defineField<'password'>(
   'password',
   useNaiveUiFieldConfig(t('general.password')),
 )
+const [passwordConfirm, passwordConfirmProps] = defineField<'passwordConfirm'>(
+  'passwordConfirm',
+  useNaiveUiFieldConfig(t('general.password')),
+)
 
 const onSubmit = handleSubmit(async (values) => {
-  emit('submit', { values, rememberMe: rememberMe.value })
+  emit('submit', values)
 })
 </script>
 
@@ -47,17 +42,25 @@ const onSubmit = handleSubmit(async (values) => {
 
     <NFormItem class="w-full" v-bind="passwordProps">
       <NInput v-model:value="password" type="password" :placeholder="t('general.password')" />
+
+      <template #feedback>
+        <ValidationRules :value="password" :rules="passwordRules" />
+      </template>
     </NFormItem>
 
-    <NCheckbox class="mb-5" v-model:checked="rememberMe">
-      {{ t('general.remember') }}
-    </NCheckbox>
+    <NFormItem class="w-full" v-bind="passwordConfirmProps">
+      <NInput
+        v-model:value="passwordConfirm"
+        type="password"
+        :placeholder="t('general.password')"
+      />
+    </NFormItem>
 
     <div class="flex justify-between mt-8">
       <slot name="buttons" />
 
       <NButton type="primary" attr-type="submit" :loading>
-        {{ t('general.login') }}
+        {{ t('general.register') }}
       </NButton>
     </div>
   </NForm>

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { RouterView, useRouter } from '@kitbag/router'
+import { RouterView, RouterLink, useRouter } from '@kitbag/router'
 import { NButton } from 'naive-ui'
 import { useAuthStore } from '@/domains/auth/stores/authStore.ts'
 import BaseMenu, { type MenuOption } from '@/components/BaseMenu.vue'
@@ -9,7 +9,7 @@ const { push } = useRouter()
 const menuOptions: MenuOption[] = [
   {
     label: 'Recipes',
-    name: 'recipes'
+    name: 'recipes',
   },
 ]
 
@@ -22,7 +22,10 @@ function handleLogout() {
 <template>
   <header class="flex justify-between items-center p-2 border-b-1 border-solid border-gray-200">
     <div class="flex items-center w-full">
-      <span class="text-lg font-bold w-28">しょくよう</span>
+      <RouterLink class="text-lg font-bold no-underline text-text hover:no-underline w-28" to="/">
+        食用
+      </RouterLink>
+
       <BaseMenu :options="menuOptions" />
     </div>
     <NButton @click="handleLogout"> Logout </NButton>

@@ -1,59 +1,3 @@
-<template>
-  <NForm @submit="onSubmit">
-    <div class="flex gap-2">
-      <NUpload
-        abstract
-        v-if="isEditMode"
-        show-file-list
-        accept="image/*"
-        @update:file-list="onFileChange"
-        :default-upload="false"
-      >
-        <NButtonGroup>
-          <NButton @click="onDeleteImage" type="primary">Delete</NButton>
-          <NUploadTrigger #="{ handleClick }" abstract>
-            <NButton @click="handleClick" type="primary">Upload Image</NButton>
-          </NUploadTrigger>
-        </NButtonGroup>
-      </NUpload>
-      <div class="w-64">
-        <img
-          v-if="imageUrl"
-          class="object-cover object-center w-full h-full"
-          :src="imageUrl"
-          alt="Recipe Image"
-        />
-      </div>
-
-      <NFormItem v-if="isEditMode" class="w-full" v-bind="nameProps">
-        <NInput v-model:value="name" type="text" placeholder="Rezeptname" />
-      </NFormItem>
-      <div v-else>
-        {{ name }}
-      </div>
-
-      <NFormItem v-if="isEditMode" class="w-full" v-bind="descriptionProps">
-        <NInput v-model:value="description" type="text" placeholder="Rezeptbeschreibung" />
-      </NFormItem>
-      <div v-else>
-        {{ description }}
-      </div>
-    </div>
-
-    <div class="flex justify-end">
-      <NButton v-if="isEditMode" type="primary" attr-type="submit" :loading>
-        {{ initialValues ? t('buttons.update') : t('buttons.create') }}
-      </NButton>
-      <NButton v-if="initialValues" @click="isEditMode = !isEditMode" :loading>
-        {{ isEditMode ? t('buttons.cancel') : t('buttons.edit') }}
-      </NButton>
-      <NButton v-if="initialValues" type="error" @click="onDelete" :loading>
-        {{ t('buttons.delete') }}
-      </NButton>
-    </div>
-  </NForm>
-</template>
-
 <script lang="ts" setup>
 import {
   NButton,
@@ -118,3 +62,59 @@ function onFileChange(fileList: UploadFileInfo[]) {
   }
 }
 </script>
+
+<template>
+  <NForm @submit="onSubmit">
+    <div class="flex gap-2">
+      <NUpload
+        abstract
+        v-if="isEditMode"
+        show-file-list
+        accept="image/*"
+        @update:file-list="onFileChange"
+        :default-upload="false"
+      >
+        <NButtonGroup>
+          <NButton @click="onDeleteImage" type="primary">Delete</NButton>
+          <NUploadTrigger #="{ handleClick }" abstract>
+            <NButton @click="handleClick" type="primary">Upload Image</NButton>
+          </NUploadTrigger>
+        </NButtonGroup>
+      </NUpload>
+      <div class="w-64">
+        <img
+          v-if="imageUrl"
+          class="object-cover object-center w-full h-full"
+          :src="imageUrl"
+          alt="Recipe Image"
+        />
+      </div>
+
+      <NFormItem v-if="isEditMode" class="w-full" v-bind="nameProps">
+        <NInput v-model:value="name" type="text" placeholder="Rezeptname" />
+      </NFormItem>
+      <div v-else>
+        {{ name }}
+      </div>
+
+      <NFormItem v-if="isEditMode" class="w-full" v-bind="descriptionProps">
+        <NInput v-model:value="description" type="text" placeholder="Rezeptbeschreibung" />
+      </NFormItem>
+      <div v-else>
+        {{ description }}
+      </div>
+    </div>
+
+    <div class="flex justify-end">
+      <NButton v-if="isEditMode" type="primary" attr-type="submit" :loading>
+        {{ initialValues ? t('buttons.update') : t('buttons.create') }}
+      </NButton>
+      <NButton v-if="initialValues" @click="isEditMode = !isEditMode" :loading>
+        {{ isEditMode ? t('buttons.cancel') : t('buttons.edit') }}
+      </NButton>
+      <NButton v-if="initialValues" type="error" @click="onDelete" :loading>
+        {{ t('buttons.delete') }}
+      </NButton>
+    </div>
+  </NForm>
+</template>

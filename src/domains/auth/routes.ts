@@ -1,5 +1,5 @@
 import AuthLayout from '@/domains/auth/layout/AuthLayout.vue'
-import { createRoute, } from '@kitbag/router'
+import { createRoute } from '@kitbag/router'
 import { defineAsyncComponent } from 'vue'
 import { useAuthMiddleware } from './middlewares/authMiddleware'
 
@@ -17,5 +17,11 @@ export const authRoute = [
     name: 'login',
     path: 'login',
     component: defineAsyncComponent(() => import('./pages/LoginPage.vue')),
-  })
+  }),
+  createRoute({
+    parent: baseRoute,
+    name: 'register',
+    path: 'register',
+    component: defineAsyncComponent(() => import('./pages/RegisterPage.vue')),
+  }),
 ]

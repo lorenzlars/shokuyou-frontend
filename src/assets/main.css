@@ -1,0 +1,143 @@
+:root {
+  /* Color palette */
+  --color-neutral-light-4: hsl(0, 0%, 100%);
+  --color-neutral-light-3: hsl(0, 0%, 98%);
+  --color-neutral-light-2: hsl(0, 0%, 96%);
+  --color-neutral-light-1: hsl(0, 0%, 94%);
+  --color-neutral: hsl(0, 0%, 40%);
+  --color-neutral-dark-1: hsl(180, 1%, 18%);
+  --color-neutral-dark-2: hsl(180, 1%, 17%);
+  --color-neutral-dark-3: hsl(180, 1%, 16%);
+  --color-neutral-dark-4: hsl(0, 0%, 15%);
+
+  --color-yellow-light-1: hsl(45, 94%, 65%);
+  --color-yellow: hsl(43, 84%, 60%);
+  --color-yellow-dark-1: hsl(44, 83%, 46%);
+
+  --color-red: hsl(0, 78%, 52%);
+
+  --color-beige: hsl(36, 8%, 65%);
+
+  /* Color theme */
+  --color-text: var(--color-neutral-dark-4);
+  --color-text-secondary: var(--color-neutral-dark-3);
+
+  --color-bg-1: var(--color-neutral-light-4);
+  --color-bg-2: var(--color-neutral-light-3);
+  --color-bg-3: var(--color-neutral-light-2);
+  --color-bg-4: var(--color-neutral-light-1);
+
+  --color-accent: var(--color-yellow);
+  --color-accent-focus: var(--color-yellow-dark-1);
+
+  --color-danger: var(--color-red);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-text: var(--color-beige);
+    --color-text-secondary: var(--color-neutral);
+
+    --color-bg-1: var(--color-neutral-dark-1);
+    --color-bg-2: var(--color-neutral-dark-2);
+    --color-bg-3: var(--color-neutral-dark-3);
+    --color-bg-4: var(--color-neutral-dark-4);
+
+    --color-accent: hsl(from var(--color-yellow) h calc(s - 20) calc(l - 10));
+  }
+
+  img {
+    filter: brightness(80%);
+  }
+}
+
+/* Base element styles */
+
+html {
+  color: var(--color-text);
+  background-color: var(--color-bg-1);
+  font-family: 'Inter', sans-serif;
+  font-size: 12pt;
+  line-height: 1.2rem;
+  scroll-behavior: smooth;
+}
+
+h1 {
+  font-size: 3rem;
+  line-height: 3rem;
+  font-weight: 700;
+  margin-top: 3rem;
+  margin-bottom: 0.6rem;
+}
+
+h2 {
+  font-size: 1.875rem;
+  line-height: 2rem;
+  font-weight: 600;
+  margin-top: 1.875rem;
+  margin-bottom: 0.6rem;
+}
+
+h3 {
+  font-size: 1.25rem;
+  line-height: 1.4rem;
+  font-weight: 600;
+  margin-top: 1.25rem;
+  margin-bottom: 0.6rem;
+}
+
+h4 {
+  font-size: 1.125rem;
+  line-height: 1.2rem;
+  font-weight: 500;
+  margin-top: 1.125rem;
+  margin-bottom: 0.6rem;
+}
+
+h5 {
+  font-size: 1rem;
+  line-height: 1.1rem;
+  margin-top: 1rem;
+  margin-bottom: 0.6rem;
+}
+
+h6 {
+  font-size: 0.875rem;
+  line-height: 1rem;
+  font-weight: 500;
+  margin-top: 0.875rem;
+  margin-bottom: 0.6rem;
+}
+
+ul {
+  padding-left: 1rem;
+  list-style: disc;
+}
+
+li {
+  line-height: 1.4rem;
+}
+
+p {
+  margin-bottom: 1rem;
+  line-height: 1.4rem;
+}
+
+a {
+  font-weight: 500;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+/* Custom helper classes */
+
+.title {
+  font-size: 3rem;
+  line-height: 1;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  text-decoration: underline;
+  text-decoration-color: var(--color-accent);
+}
