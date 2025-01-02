@@ -2,13 +2,21 @@
 import {
   NButton,
   NInput,
+  NInputNumber,
   NForm,
   NFormItem,
   NUpload,
-  NButtonGroup,
+  NUploadDragger,
   NUploadTrigger,
+  NImage,
+  NIcon,
   type UploadFileInfo,
 } from 'naive-ui'
+import {
+  ImageOutline as ImageOutlineIcon,
+  ArchiveOutline as ArchiveIcon,
+  TrashBin as TrashBinIcon,
+} from '@vicons/ionicons5'
 import { useRecipeForm } from '@/domains/recipes/composables/useRecipeForm'
 import { type RecipeRequestDto, type RecipeResponseDto } from '@/api'
 import { useNaiveUiFieldConfig } from '@/composables/useNaiveUiFieldConfig'
@@ -27,12 +35,34 @@ const props = defineProps<{
 }>()
 
 const isEditMode = shallowRef(!props.initialValues)
-const { handleSubmit, defineField } = useRecipeForm(props.initialValues)
+const { handleSubmit, defineField, resetForm } = useRecipeForm(props.initialValues)
 const [name, nameProps] = defineField<'name'>('name', useNaiveUiFieldConfig('Name'))
+const [servings, servingsProps] = defineField<'servings'>(
+  'servings',
+  useNaiveUiFieldConfig('Servings'),
+)
 const [description, descriptionProps] = defineField<'description'>(
   'description',
   useNaiveUiFieldConfig('Description'),
 )
+const [source, sourceProps] = defineField<'source'>('source', useNaiveUiFieldConfig('Source'))
+const [duration, durationProps] = defineField<'duration'>(
+  'duration',
+  useNaiveUiFieldConfig('Duration'),
+)
+const [ingredients, ingredientsProps] = defineField<'ingredients'>(
+  'ingredients',
+  useNaiveUiFieldConfig('Ingredients'),
+)
+const [instructions, instructionsProps] = defineField<'instructions'>(
+  'instructions',
+  useNaiveUiFieldConfig('Instructions'),
+)
+const [nutrition, nutritionProps] = defineField<'nutrition'>(
+  'nutrition',
+  useNaiveUiFieldConfig('Nutrition'),
+)
+const [notes, notesProps] = defineField<'notes'>('notes', useNaiveUiFieldConfig('Notes'))
 const { value: image } = useField<File | null | undefined>('image')
 const { value: imageUrl } = useField<string | undefined>('imageUrl')
 
@@ -58,59 +88,162 @@ function onFileChange(fileList: UploadFileInfo[]) {
     imageUrl.value = URL.createObjectURL(image.value)
   }
 }
+
+function onEditToggle() {
+  isEditMode.value = !isEditMode.value
+
+  if (!isEditMode.value) {
+    resetForm()
+  }
+}
 </script>
 
 <template>
   <NForm @submit="onSubmit">
-    <div class="flex gap-2">
-      <NUpload
-        abstract
-        v-if="isEditMode"
-        show-file-list
-        accept="image/*"
-        @update:file-list="onFileChange"
-        :default-upload="false"
-      >
-        <NButtonGroup>
-          <NButton @click="onDeleteImage" type="primary">Delete</NButton>
-          <NUploadTrigger #="{ handleClick }" abstract>
-            <NButton @click="handleClick" type="primary">Upload Image</NButton>
-          </NUploadTrigger>
-        </NButtonGroup>
-      </NUpload>
-      <div class="w-64">
-        <img
-          v-if="imageUrl"
-          class="object-cover object-center w-full h-full"
-          :src="imageUrl"
-          alt="Recipe Image"
-        />
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+      <div class="flex flex-col gap-3">
+        <div class="relative">
+          <NImage
+            v-if="(isEditMode && imageUrl) || !isEditMode"
+            :src="imageUrl"
+            class="w-full"
+            :class="{ 'h-64': !imageUrl }"
+            :img-props="{ class: 'object-cover object-center w-full h-full' }"
+            preview-disabled
+          >
+            <template #placeholder>
+              <div class="bg-gray-100 px-5 flex items-center justify-center w-full h-full">
+                <NIcon :size="48" :depth="3">
+                  <ImageOutlineIcon />
+                </NIcon>
+              </div>
+            </template>
+          </NImage>
+
+          <NButton
+            class="absolute -top-3 -right-3"
+            v-if="isEditMode && imageUrl"
+            @click="onDeleteImage"
+            type="error"
+            strong
+            circle
+          >
+            <template #icon>
+              <NIcon>
+                <TrashBinIcon />
+              </NIcon>
+            </template>
+          </NButton>
+
+          <NUpload
+            abstract
+            v-if="isEditMode"
+            show-file-list
+            accept="image/*"
+            @update:file-list="onFileChange"
+            :default-upload="false"
+          >
+            <NUploadTrigger v-if="!imageUrl" #="{ handleClick }" abstract>
+              <NUploadDragger
+                @click="handleClick"
+                class="flex items-center justify-center bg-gray-100 px-5 h-64"
+              >
+                <div class="flex flex-col items-center">
+                  <NIcon :size="48" :depth="3">
+                    <ArchiveIcon />
+                  </NIcon>
+                  <p class="text-center">Click or drag a file to this area to upload</p>
+                </div>
+              </NUploadDragger>
+            </NUploadTrigger>
+          </NUpload>
+        </div>
+
+        <NFormItem v-bind="nameProps">
+          <NInput class="w-full" v-model:value="name" :disabled="!isEditMode" type="text" />
+        </NFormItem>
+
+        <NFormItem v-bind="servingsProps">
+          <NInputNumber
+            :show-button="false"
+            class="w-full"
+            v-model:value="servings"
+            :disabled="!isEditMode"
+            type="text"
+          />
+        </NFormItem>
+
+        <NFormItem v-bind="sourceProps">
+          <NInput class="w-full" v-model:value="source" :disabled="!isEditMode" type="text" />
+        </NFormItem>
+
+        <NFormItem v-bind="durationProps">
+          <NInputNumber
+            :show-button="false"
+            class="w-full"
+            v-model:value="duration"
+            :disabled="!isEditMode"
+          />
+        </NFormItem>
+
+        <NFormItem v-bind="descriptionProps">
+          <NInput
+            class="w-full"
+            v-model:value="description"
+            :disabled="!isEditMode"
+            type="textarea"
+            placeholder="Rezeptbeschreibung"
+          />
+        </NFormItem>
       </div>
 
-      <NFormItem v-if="isEditMode" class="w-full" v-bind="nameProps">
-        <NInput v-model:value="name" type="text" placeholder="Rezeptname" />
-      </NFormItem>
-      <div v-else>
-        {{ name }}
-      </div>
+      <div class="col-span-2">
+        <NFormItem v-bind="ingredientsProps">
+          <NInput
+            class="w-full"
+            v-model:value="ingredients"
+            type="textarea"
+            :disabled="!isEditMode"
+          />
+        </NFormItem>
 
-      <NFormItem v-if="isEditMode" class="w-full" v-bind="descriptionProps">
-        <NInput v-model:value="description" type="text" placeholder="Rezeptbeschreibung" />
-      </NFormItem>
-      <div v-else>
-        {{ description }}
+        <NFormItem v-bind="instructionsProps">
+          <NInput
+            class="w-full"
+            v-model:value="instructions"
+            type="textarea"
+            :disabled="!isEditMode"
+          />
+        </NFormItem>
+
+        <NFormItem v-bind="notesProps">
+          <NInput class="w-full" v-model:value="notes" type="textarea" :disabled="!isEditMode" />
+        </NFormItem>
+
+        <NFormItem v-bind="nutritionProps">
+          <NInput
+            class="w-full"
+            v-model:value="nutrition"
+            type="textarea"
+            :disabled="!isEditMode"
+          />
+        </NFormItem>
       </div>
     </div>
 
-    <div class="flex justify-end">
-      <NButton v-if="isEditMode" type="primary" attr-type="submit" :loading>
-        {{ initialValues ? t('general.update') : t('general.create') }}
-      </NButton>
-      <NButton v-if="initialValues" @click="isEditMode = !isEditMode" :loading>
+    <div class="flex justify-between">
+      <div class="flex gap-3">
+        <NButton v-if="isEditMode" type="primary" attr-type="submit" :loading>
+          {{ initialValues ? t('general.update') : t('general.create') }}
+        </NButton>
+
+        <NButton v-if="isEditMode" type="error" @click="onDelete" :loading>
+          {{ t('general.delete') }}
+        </NButton>
+      </div>
+
+      <NButton v-if="initialValues" @click="onEditToggle" :loading>
         {{ isEditMode ? t('general.cancel') : t('general.edit') }}
-      </NButton>
-      <NButton v-if="initialValues" type="error" @click="onDelete" :loading>
-        {{ t('general.delete') }}
       </NButton>
     </div>
   </NForm>

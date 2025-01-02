@@ -4,7 +4,14 @@ import { z } from 'zod';
 
 export const zRecipeRequestDto = z.object({
     name: z.string(),
-    description: z.string().optional()
+    description: z.string().optional(),
+    source: z.string().optional(),
+    servings: z.number().optional(),
+    duration: z.number().optional(),
+    ingredients: z.string().optional(),
+    instructions: z.string().optional(),
+    nutrition: z.string().optional(),
+    notes: z.string().optional()
 });
 
 export const zRecipeResponseDto = z.object({

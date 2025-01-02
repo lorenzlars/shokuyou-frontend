@@ -19,7 +19,9 @@
   "dependencies": {
     "@hey-api/client-axios": "^0.3.4",
     "@kitbag/router": "^0.14.2",
+    "@unocss/reset": "^0.65.3",
     "@vee-validate/zod": "^4.14.7",
+    "@vicons/ionicons5": "^0.13.0",
     "axios": "^1.7.9",
     "localforage": "^1.10.0",
     "naive-ui": "^2.40.4",

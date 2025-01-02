@@ -1,42 +1,42 @@
 {
-  "errors": {
-    "generic": "Unknown error, try again later.",
-    "loginFailed": "Authorization failed"
-  },
   "general": {
-    "cancel": "Cancel",
-    "create": "Create",
-    "delete": "Delete",
-    "edit": "Edit",
-    "login": "Login",
-    "password": "Password",
     "register": "Register",
-    "remember": "Remember",
     "submit": "Submit",
+    "create": "Create",
     "update": "Update",
-    "username": "Username"
+    "edit": "Edit",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "password": "Password",
+    "username": "Username",
+    "remember": "Remember",
+    "login": "Login"
+  },
+  "titles": {
+    "login": "Login",
+    "register": "Register",
+    "createRecipe": "Create Recipe",
+    "updateRecipe": "Update Recipe"
   },
   "hints": {
-    "passwordRequireLength": "At least 8 characters",
+    "passwordRequireUppercase": "At least one uppercase letter",
     "passwordRequireLowercase": "At least one lowercase letter",
     "passwordRequireNumber": "At least one number",
     "passwordRequireSpecialCharacter": "At least one special character ({regex})",
-    "passwordRequireUppercase": "At least one uppercase letter"
+    "passwordRequireLength": "At least 8 characters"
   },
   "messages": {
-    "loginFailed": "Login failed.",
-    "loginSuccess": "Logged in successfully.",
-    "recipeCreatedSuccessfully": "Recipe created successfully.",
-    "recipeDeleteFailed": "Failed to delete recipe.",
     "recipeDeletedSuccessfully": "Recipe deleted successfully.",
+    "recipeDeleteFailed": "Failed to delete recipe.",
     "recipeUpdatedSuccessfully": "Recipe updated successfully.",
-    "registrationFailed": "Registration failed.",
-    "registrationSuccess": "Registration successful."
+    "recipeCreatedSuccessfully": "Recipe created successfully.",
+    "loginSuccess": "Logged in successfully.",
+    "loginFailed": "Login failed.",
+    "registrationSuccess": "Registration successful.",
+    "registrationFailed": "Registration failed."
   },
-  "titles": {
-    "createRecipe": "Create Recipe",
-    "login": "Login",
-    "register": "Register",
-    "updateRecipe": "Update Recipe"
+  "errors": {
+    "generic": "Unknown error, try again later.",
+    "loginFailed": "Authorization failed"
   }
 }

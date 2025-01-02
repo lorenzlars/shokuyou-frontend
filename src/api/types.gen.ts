@@ -9,6 +9,34 @@ export type RecipeRequestDto = {
      * Description of the recipe
      */
     description?: string;
+    /**
+     * The recipe source
+     */
+    source?: string;
+    /**
+     * The number of servings
+     */
+    servings?: number;
+    /**
+     * The recipe duration in minutes
+     */
+    duration?: number;
+    /**
+     * The recipe ingredients
+     */
+    ingredients?: string;
+    /**
+     * The recipe instructions
+     */
+    instructions?: string;
+    /**
+     * The recipe nutrition
+     */
+    nutrition?: string;
+    /**
+     * The recipe notes
+     */
+    notes?: string;
 };
 
 export type RecipeResponseDto = {

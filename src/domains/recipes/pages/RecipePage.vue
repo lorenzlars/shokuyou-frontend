@@ -34,7 +34,6 @@ if (id) {
 }
 
 async function deleteRecipe() {
-  // TODO: Error handing
   // TODO: Abstract this in a generic composable
   await RecipesService.deleteRecipe({ path: { id } })
 
@@ -42,7 +41,6 @@ async function deleteRecipe() {
 }
 
 async function updateRecipe(values: RecipeRequestDto) {
-  // TODO: Error handing
   // TODO: Abstract this in a generic composable
   const { data: recipe } = await RecipesService.updateRecipe({
     body: values,
@@ -57,7 +55,6 @@ async function updateRecipe(values: RecipeRequestDto) {
 }
 
 async function createRecipe(values: RecipeRequestDto) {
-  // TODO: Error handing
   // TODO: Abstract this in a generic composable
   const { data: recipe } = await RecipesService.createRecipe({
     body: values,
@@ -69,7 +66,6 @@ async function createRecipe(values: RecipeRequestDto) {
 }
 
 async function uploadImage(id: string, image: File) {
-  // TODO: Error handing
   // TODO: Abstract this in a generic composable
   const { data: recipe } = await RecipesService.uploadImage({
     path: {
@@ -87,7 +83,6 @@ async function uploadImage(id: string, image: File) {
 }
 
 async function updateImage(id: string, image: File) {
-  // TODO: Error handing
   // TODO: Abstract this in a generic composable
   const { data: recipe } = await RecipesService.updateImage({
     path: {
@@ -105,7 +100,6 @@ async function updateImage(id: string, image: File) {
 }
 
 async function deleteImage(id: string) {
-  // TODO: Error handing
   // TODO: Abstract this in a generic composable
   return await RecipesService.deleteImage({
     path: {
