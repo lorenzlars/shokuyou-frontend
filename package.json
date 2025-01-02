@@ -34,7 +34,7 @@
     "@hey-api/openapi-ts": "^0.60.1",
     "@tsconfig/node22": "^22.0.0",
     "@types/jsdom": "^21.1.7",
-    "@types/node": "^22.9.3",
+    "@types/node": "^22.10.4",
     "@unocss/preset-uno": "^0.65.2",
     "@vitejs/plugin-vue": "^5.2.1",
     "@vitest/eslint-plugin": "1.1.23",
