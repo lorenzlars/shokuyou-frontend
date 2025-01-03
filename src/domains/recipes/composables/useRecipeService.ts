@@ -2,17 +2,17 @@ import { type RecipeRequestDto, RecipesService } from '@/api'
 import { useI18n } from 'vue-i18n'
 import { useMessage } from 'naive-ui'
 
-export function useRecipeService(id: string) {
+export function useRecipeService() {
   const { t } = useI18n()
   const message = useMessage()
 
-  async function deleteRecipe() {
+  async function deleteRecipe(id: string) {
     await RecipesService.deleteRecipe({ path: { id } })
 
     message.success(t('messages.recipeDeletedSuccessfully'))
   }
 
-  async function updateRecipe(values: RecipeRequestDto) {
+  async function updateRecipe(id: string, values: RecipeRequestDto) {
     const { data: recipe } = await RecipesService.updateRecipe({
       body: values,
       path: {
@@ -20,7 +20,7 @@ export function useRecipeService(id: string) {
       },
     })
 
-    message.success(t('messages.recipeCreatedSuccessfully'))
+    message.success(t('messages.recipeUpdatedSuccessfully'))
 
     return recipe
   }
@@ -30,7 +30,7 @@ export function useRecipeService(id: string) {
       body: values,
     })
 
-    message.success(t('messages.recipeUpdatedSuccessfully'))
+    message.success(t('messages.recipeCreatedSuccessfully'))
 
     return recipe
   }
@@ -68,7 +68,7 @@ export function useRecipeService(id: string) {
   }
 
   async function deleteImage(id: string) {
-    return await RecipesService.deleteImage({
+    await RecipesService.deleteImage({
       path: {
         id,
       },

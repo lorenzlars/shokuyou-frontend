@@ -1,40 +1,28 @@
 <script lang="ts" setup>
-import {
-  NButton,
-  NInput,
-  NInputNumber,
-  NForm,
-  NFormItem,
-  NUpload,
-  NUploadDragger,
-  NUploadTrigger,
-  NImage,
-  NIcon,
-  type UploadFileInfo,
-} from 'naive-ui'
-import {
-  ImageOutline as ImageOutlineIcon,
-  ArchiveOutline as ArchiveIcon,
-  TrashBin as TrashBinIcon,
-} from '@vicons/ionicons5'
-import { useRecipeForm } from '@/domains/recipes/composables/useRecipeForm'
+import { NButton, NInput, NInputNumber, NForm, NFormItem } from 'naive-ui'
+import { type RecipeFormValues, useRecipeForm } from '@/domains/recipes/composables/useRecipeForm'
 import { type RecipeRequestDto, type RecipeResponseDto } from '@/api'
 import { useNaiveUiFieldConfig } from '@/composables/useNaiveUiFieldConfig'
 import { shallowRef } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useField } from 'vee-validate'
-import { preprocessValues } from '@/utils/formUtils.ts'
+import { preprocessValues } from '@/utils/formUtils'
+import { useRecipeService } from '@/domains/recipes/composables/useRecipeService'
+import { useSafeAsyncState } from '@/composables/useSafeAsyncState.ts'
+import ImageContainer from '@/domains/recipes/components/ImageContainer.vue'
 
 const emit = defineEmits<{
-  submit: [values: [RecipeRequestDto | null, File | null | undefined]]
+  submitted: [values?: RecipeRequestDto]
 }>()
 
 const props = defineProps<{
   initialValues?: RecipeResponseDto
-  loading?: boolean
 }>()
 
 const isEditMode = shallowRef(!props.initialValues)
+const { deleteRecipe, deleteImage, updateRecipe, uploadImage, updateImage, createRecipe } =
+  useRecipeService()
+
 const { handleSubmit, defineField, resetForm } = useRecipeForm(props.initialValues)
 const [name, nameProps] = defineField<'name'>('name', useNaiveUiFieldConfig('Name'))
 const [servings, servingsProps] = defineField<'servings'>(
@@ -67,26 +55,38 @@ const { value: image } = useField<File | null | undefined>('image')
 const { value: imageUrl } = useField<string | undefined>('imageUrl')
 
 const { t } = useI18n()
+const { loading, execute } = useSafeAsyncState(async (values: RecipeFormValues) => {
+  const preprocessedValues = preprocessValues(values, ['image', 'imageUrl'])
 
-const onSubmit = handleSubmit(async (values) => {
-  emit('submit', [preprocessValues(values, ['image', 'imageUrl']), image.value])
+  if (props.initialValues) {
+    if (props.initialValues) {
+      await updateRecipe(props.initialValues.id, preprocessedValues)
+    } else {
+      await createRecipe(preprocessedValues)
+    }
+
+    if (values.image) {
+      if (values.imageUrl) {
+        await updateImage(props.initialValues.id, values.image)
+      } else {
+        await uploadImage(props.initialValues.id, values.image)
+      }
+    } else if (values.image === null) {
+      await deleteImage(props.initialValues.id)
+    }
+  }
+
+  return preprocessedValues
 })
 
-function onDelete() {
-  emit('submit', [null, null])
-}
+const onSubmit = handleSubmit(async (values) => {
+  emit('submitted', await execute(values))
+})
 
-function onDeleteImage() {
-  image.value = null
-  imageUrl.value = undefined
-}
+async function onDelete(id: string) {
+  await deleteRecipe(id)
 
-function onFileChange(fileList: UploadFileInfo[]) {
-  image.value = fileList[0]?.file
-
-  if (image.value instanceof File) {
-    imageUrl.value = URL.createObjectURL(image.value)
-  }
+  emit('submitted')
 }
 
 function onEditToggle() {
@@ -96,68 +96,18 @@ function onEditToggle() {
     resetForm()
   }
 }
+
+// TODO: All buttons should have there own loading state
+// TODO: FormField mapping should be abstracted
+// TODO: Switch to yup for validation
+// TODO: Form cancel reset is not working for fields initialliy not set
 </script>
 
 <template>
   <NForm @submit="onSubmit">
     <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
       <div class="flex flex-col gap-3">
-        <div class="relative">
-          <NImage
-            v-if="(isEditMode && imageUrl) || !isEditMode"
-            :src="imageUrl"
-            class="w-full"
-            :class="{ 'h-64': !imageUrl }"
-            :img-props="{ class: 'object-cover object-center w-full h-full' }"
-            preview-disabled
-          >
-            <template #placeholder>
-              <div class="bg-gray-100 px-5 flex items-center justify-center w-full h-full">
-                <NIcon :size="48" :depth="3">
-                  <ImageOutlineIcon />
-                </NIcon>
-              </div>
-            </template>
-          </NImage>
-
-          <NButton
-            class="absolute -top-3 -right-3"
-            v-if="isEditMode && imageUrl"
-            @click="onDeleteImage"
-            type="error"
-            strong
-            circle
-          >
-            <template #icon>
-              <NIcon>
-                <TrashBinIcon />
-              </NIcon>
-            </template>
-          </NButton>
-
-          <NUpload
-            abstract
-            v-if="isEditMode"
-            show-file-list
-            accept="image/*"
-            @update:file-list="onFileChange"
-            :default-upload="false"
-          >
-            <NUploadTrigger v-if="!imageUrl" #="{ handleClick }" abstract>
-              <NUploadDragger
-                @click="handleClick"
-                class="flex items-center justify-center bg-gray-100 px-5 h-64"
-              >
-                <div class="flex flex-col items-center">
-                  <NIcon :size="48" :depth="3">
-                    <ArchiveIcon />
-                  </NIcon>
-                  <p class="text-center">Click or drag a file to this area to upload</p>
-                </div>
-              </NUploadDragger>
-            </NUploadTrigger>
-          </NUpload>
-        </div>
+        <ImageContainer v-model="image" v-model:src="imageUrl" :edit="isEditMode" />
 
         <NFormItem v-bind="nameProps">
           <NInput class="w-full" v-model:value="name" :disabled="!isEditMode" type="text" />
@@ -232,16 +182,22 @@ function onEditToggle() {
 
     <div class="flex justify-between">
       <div class="flex gap-3">
-        <NButton v-if="isEditMode" type="primary" attr-type="submit" :loading>
+        <NButton v-if="isEditMode" type="primary" attr-type="submit" :loading :disabled="loading">
           {{ initialValues ? t('general.update') : t('general.create') }}
         </NButton>
 
-        <NButton v-if="isEditMode && initialValues" type="error" @click="onDelete" :loading>
+        <NButton
+          v-if="isEditMode && initialValues"
+          type="error"
+          @click="onDelete(initialValues.id)"
+          :loading
+          :disabled="loading"
+        >
           {{ t('general.delete') }}
         </NButton>
       </div>
 
-      <NButton v-if="initialValues" @click="onEditToggle" :loading>
+      <NButton v-if="initialValues" @click="onEditToggle" :loading :disabled="loading">
         {{ isEditMode ? t('general.cancel') : t('general.edit') }}
       </NButton>
     </div>

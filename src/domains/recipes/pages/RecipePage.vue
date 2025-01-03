@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <NCard class="my-5">
-      <RecipeForm :initial-values="recipe" @submit="onSubmit" :loading />
+      <RecipeForm :initial-values="recipe" @submitted="onSubmitted" />
     </NCard>
   </div>
 </template>
@@ -12,55 +12,19 @@ import { useRoute, useRouter } from '@kitbag/router'
 import { type RecipeResponseDto, RecipesService } from '@/api'
 import { NCard } from 'naive-ui'
 import RecipeForm from '../components/RecipeForm.vue'
-import { useRecipeService } from '@/domains/recipes/composables/useRecipeService.ts'
-
-type RecipeFormEmitValues = Parameters<InstanceType<typeof RecipeForm>['$emit']>['1']
+import { unwrapResponseData } from '@/utils/formUtils'
+import { extractParamProp } from '@/utils/routerUtils.ts'
 
 const { params } = useRoute()
+const id = extractParamProp(params, 'id')
 const { push } = useRouter()
-const recipe = shallowRef<RecipeResponseDto>() // TODO: Lazy load to avoid undefined type
-const { deleteRecipe, deleteImage, updateRecipe, uploadImage, updateImage, createRecipe } =
-  useRecipeService((params as Record<string, string>).id)
+const recipe = shallowRef<RecipeResponseDto>()
 
-const { id } = params as Record<string, string>
-const loading = shallowRef(false)
-
-if (id) {
-  const { data } = await RecipesService.getRecipe({ path: { id } })
-
-  if (data) {
-    recipe.value = data
-  }
+async function onSubmitted() {
+  push('recipes')
 }
 
-async function onSubmit(values: RecipeFormEmitValues) {
-  // TODO: Abstract this in a generic composable
-  loading.value = true
-
-  const [valuesRecipe, valuesImage] = values
-
-  if (valuesRecipe) {
-    if (recipe.value) {
-      recipe.value = await updateRecipe(valuesRecipe)
-    } else {
-      recipe.value = await createRecipe(valuesRecipe)
-    }
-
-    if (recipe.value) {
-      if (valuesImage instanceof File) {
-        if (recipe.value.imageUrl) {
-          recipe.value = await updateImage(recipe.value.id, valuesImage)
-        } else {
-          recipe.value = await uploadImage(recipe.value.id, valuesImage)
-        }
-      } else if (valuesImage === null) {
-        await deleteImage(recipe.value.id)
-      }
-    }
-  } else {
-    await deleteRecipe()
-  }
-
-  push('recipes')
+if (id) {
+  recipe.value = unwrapResponseData(await RecipesService.getRecipe({ path: { id } }))
 }
 </script>
