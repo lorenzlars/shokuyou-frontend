@@ -29,18 +29,16 @@ async function loadMore(
 
     <NInput v-model:value="filter" placeholder="Search recipe name" />
 
-    <LazyGrid :loader="loadMore" :filter>
-      <template #default="{ data }">
-        <RouterLink :to="`/recipes/${data.id}`">
-          <NCard :title="data.name" class="h-full">
-            <template #cover>
-              <img :src="data.imageUrl" />
-            </template>
+    <LazyGrid :loader="loadMore" :filter v-slot="{ data }">
+      <RouterLink :to="`/recipes/${data.id}`">
+        <NCard :title="data.name" class="h-full">
+          <template #cover>
+            <img :src="data.imageUrl" />
+          </template>
 
-            {{ data.description }}
-          </NCard>
-        </RouterLink>
-      </template>
+          {{ data.description }}
+        </NCard>
+      </RouterLink>
     </LazyGrid>
   </div>
 </template>

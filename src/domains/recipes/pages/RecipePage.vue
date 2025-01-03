@@ -9,18 +9,18 @@
 <script lang="ts" setup>
 import { shallowRef } from 'vue'
 import { useRoute, useRouter } from '@kitbag/router'
-import { type RecipeRequestDto, type RecipeResponseDto, RecipesService } from '@/api'
-import { NCard, useMessage } from 'naive-ui'
+import { type RecipeResponseDto, RecipesService } from '@/api'
+import { NCard } from 'naive-ui'
 import RecipeForm from '../components/RecipeForm.vue'
-import { useI18n } from 'vue-i18n'
+import { useRecipeService } from '@/domains/recipes/composables/useRecipeService.ts'
 
 type RecipeFormEmitValues = Parameters<InstanceType<typeof RecipeForm>['$emit']>['1']
 
 const { params } = useRoute()
 const { push } = useRouter()
 const recipe = shallowRef<RecipeResponseDto>() // TODO: Lazy load to avoid undefined type
-const message = useMessage()
-const { t } = useI18n()
+const { deleteRecipe, deleteImage, updateRecipe, uploadImage, updateImage, createRecipe } =
+  useRecipeService((params as Record<string, string>).id)
 
 const { id } = params as Record<string, string>
 const loading = shallowRef(false)
@@ -31,81 +31,6 @@ if (id) {
   if (data) {
     recipe.value = data
   }
-}
-
-async function deleteRecipe() {
-  // TODO: Abstract this in a generic composable
-  await RecipesService.deleteRecipe({ path: { id } })
-
-  message.success(t('messages.recipeDeletedSuccessfully'))
-}
-
-async function updateRecipe(values: RecipeRequestDto) {
-  // TODO: Abstract this in a generic composable
-  const { data: recipe } = await RecipesService.updateRecipe({
-    body: values,
-    path: {
-      id,
-    },
-  })
-
-  message.success(t('messages.recipeCreatedSuccessfully'))
-
-  return recipe
-}
-
-async function createRecipe(values: RecipeRequestDto) {
-  // TODO: Abstract this in a generic composable
-  const { data: recipe } = await RecipesService.createRecipe({
-    body: values,
-  })
-
-  message.success(t('messages.recipeUpdatedSuccessfully'))
-
-  return recipe
-}
-
-async function uploadImage(id: string, image: File) {
-  // TODO: Abstract this in a generic composable
-  const { data: recipe } = await RecipesService.uploadImage({
-    path: {
-      id,
-    },
-    headers: {
-      'Content-Type': 'multipart/form-data',
-    },
-    body: {
-      file: image,
-    },
-  })
-
-  return recipe
-}
-
-async function updateImage(id: string, image: File) {
-  // TODO: Abstract this in a generic composable
-  const { data: recipe } = await RecipesService.updateImage({
-    path: {
-      id,
-    },
-    headers: {
-      'Content-Type': 'multipart/form-data',
-    },
-    body: {
-      file: image,
-    },
-  })
-
-  return recipe
-}
-
-async function deleteImage(id: string) {
-  // TODO: Abstract this in a generic composable
-  return await RecipesService.deleteImage({
-    path: {
-      id,
-    },
-  })
 }
 
 async function onSubmit(values: RecipeFormEmitValues) {
