@@ -8,7 +8,23 @@ const { logout } = useAuthStore()
 const { push } = useRouter()
 const menuOptions: MenuOption[] = [
   {
+    label: 'Planner',
+    name: 'recipes',
+  },
+  {
     label: 'Recipes',
+    name: 'recipes',
+  },
+  {
+    label: 'Organizer',
+    name: 'recipes',
+  },
+  {
+    label: 'Groceries',
+    name: 'recipes',
+  },
+  {
+    label: 'Profile',
     name: 'recipes',
   },
 ]

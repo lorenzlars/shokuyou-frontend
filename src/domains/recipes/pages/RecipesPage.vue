@@ -1,69 +1,46 @@
+<script lang="ts" setup>
+import { type GetRecipesData, type RecipeResponseDto, RecipesService } from '@/api'
+import { NButton, NCard, NInput } from 'naive-ui'
+import { useRouter } from '@kitbag/router'
+import LazyGrid from '@/components/LazyGrid.vue'
+import { shallowRef } from 'vue'
+import type { PaginationResponse } from '@/composables/usePagination.ts'
+
+const { push } = useRouter()
+const filter = shallowRef<string>()
+async function loadMore(
+  query: GetRecipesData['query'],
+): Promise<PaginationResponse<RecipeResponseDto>> {
+  const { data } = await RecipesService.getRecipes({
+    query,
+  })
+
+  return data as PaginationResponse<RecipeResponseDto>
+}
+</script>
+
 <template>
-  <div>
-    <div class="flex justify-between items-center">
-      <h1>Recipes</h1>
+  <div class="flex flex-col gap-5">
+    <div class="flex justify-between items-center my-3">
+      <h1 class="m-0">Recipes</h1>
 
       <NButton type="primary" @click="push('recipe-create')">Create</NButton>
     </div>
 
-    <NDataTable
-      :pagination
-      :row-props="rowProps"
-      :data
-      :columns="columns"
-      :loading
-      :row-key="rowKey"
-      remote
-    />
+    <NInput v-model:value="filter" placeholder="Search recipe name" />
+
+    <LazyGrid :loader="loadMore" :filter>
+      <template #default="{ data }">
+        <RouterLink :to="`/recipes/${data.id}`">
+          <NCard :title="data.name" class="h-full">
+            <template #cover>
+              <img :src="data.imageUrl" />
+            </template>
+
+            {{ data.description }}
+          </NCard>
+        </RouterLink>
+      </template>
+    </LazyGrid>
   </div>
 </template>
-
-<script lang="ts" setup>
-import { type GetRecipeResponse, type RecipeResponseDto, RecipesService } from '@/api'
-import { NDataTable, NButton } from 'naive-ui'
-import { useRouter } from '@kitbag/router'
-import { usePagination, type PaginationParameters } from '@/composables/usePagination'
-
-const { push } = useRouter()
-const { pagination, data, loading } = usePagination(
-  {
-    showSizePicker: true,
-    pageSizes: [5, 10, 20, 50],
-  },
-  async (parameters: PaginationParameters) => {
-    const { data } = await RecipesService.getRecipes({
-      query: parameters,
-    })
-
-    if (!data) {
-      throw new Error('No data')
-    }
-
-    return data
-  },
-)
-
-const columns = [
-  {
-    title: 'Name',
-    key: 'name',
-  },
-  {
-    title: 'Description',
-    key: 'description',
-  },
-]
-
-function rowProps(row: GetRecipeResponse) {
-  return {
-    style: 'cursor: pointer;',
-    onClick: () => {
-      push(`/recipes/${row.id}`)
-    },
-  }
-}
-
-function rowKey(rowData: RecipeResponseDto) {
-  return rowData.id
-}
-</script>

@@ -18,6 +18,13 @@ export const zRecipeResponseDto = z.object({
     id: z.string(),
     name: z.string(),
     description: z.string().optional(),
+    source: z.string().optional(),
+    servings: z.number().optional(),
+    duration: z.number().optional(),
+    ingredients: z.string().optional(),
+    instructions: z.string().optional(),
+    nutrition: z.string().optional(),
+    notes: z.string().optional(),
     imageUrl: z.string().optional()
 });
 
@@ -31,6 +38,7 @@ export const zPaginationResponseDto = z.object({
     pageSize: z.number().default(10),
     orderBy: z.string().optional(),
     sortOrder: zPaginationSortOrder.optional(),
+    filter: z.string().optional(),
     content: z.array(z.array(z.unknown())),
     total: z.number()
 });

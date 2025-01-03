@@ -192,7 +192,6 @@ function onEditToggle() {
             v-model:value="description"
             :disabled="!isEditMode"
             type="textarea"
-            placeholder="Rezeptbeschreibung"
           />
         </NFormItem>
       </div>
@@ -237,7 +236,7 @@ function onEditToggle() {
           {{ initialValues ? t('general.update') : t('general.create') }}
         </NButton>
 
-        <NButton v-if="isEditMode" type="error" @click="onDelete" :loading>
+        <NButton v-if="isEditMode && initialValues" type="error" @click="onDelete" :loading>
           {{ t('general.delete') }}
         </NButton>
       </div>

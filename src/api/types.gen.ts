@@ -53,6 +53,34 @@ export type RecipeResponseDto = {
      */
     description?: string;
     /**
+     * The recipe source
+     */
+    source?: string;
+    /**
+     * The number of servings
+     */
+    servings?: number;
+    /**
+     * The recipe duration in minutes
+     */
+    duration?: number;
+    /**
+     * The recipe ingredients
+     */
+    ingredients?: string;
+    /**
+     * The recipe instructions
+     */
+    instructions?: string;
+    /**
+     * The recipe nutrition
+     */
+    nutrition?: string;
+    /**
+     * The recipe notes
+     */
+    notes?: string;
+    /**
      * The image url the recipe image
      */
     imageUrl?: string;
@@ -77,6 +105,10 @@ export type PaginationResponseDto = {
      * The sort order
      */
     sortOrder?: PaginationSortOrder;
+    /**
+     * The filter
+     */
+    filter?: string;
     /**
      * The content of the page
      */
@@ -134,11 +166,11 @@ export type GetRecipesData = {
         /**
          * The page number
          */
-        page: number;
+        page: unknown;
         /**
          * The page size
          */
-        pageSize: number;
+        pageSize: unknown;
         /**
          * The order by attribute
          */
@@ -147,6 +179,10 @@ export type GetRecipesData = {
          * The sort order
          */
         sortOrder?: PaginationSortOrder;
+        /**
+         * The filter
+         */
+        filter?: string;
     };
     url: '/v1/recipes';
 };

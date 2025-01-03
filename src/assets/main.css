@@ -33,23 +33,23 @@
   --color-danger: var(--color-red);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --color-text: var(--color-beige);
-    --color-text-secondary: var(--color-neutral);
+/*@media (prefers-color-scheme: dark) {*/
+/*  :root {*/
+/*    --color-text: var(--color-beige);*/
+/*    --color-text-secondary: var(--color-neutral);*/
 
-    --color-bg-1: var(--color-neutral-dark-1);
-    --color-bg-2: var(--color-neutral-dark-2);
-    --color-bg-3: var(--color-neutral-dark-3);
-    --color-bg-4: var(--color-neutral-dark-4);
+/*    --color-bg-1: var(--color-neutral-dark-1);*/
+/*    --color-bg-2: var(--color-neutral-dark-2);*/
+/*    --color-bg-3: var(--color-neutral-dark-3);*/
+/*    --color-bg-4: var(--color-neutral-dark-4);*/
 
-    --color-accent: hsl(from var(--color-yellow) h calc(s - 20) calc(l - 10));
-  }
+/*    --color-accent: hsl(from var(--color-yellow) h calc(s - 20) calc(l - 10));*/
+/*  }*/
 
-  img {
-    filter: brightness(80%);
-  }
-}
+/*  img {*/
+/*    filter: brightness(80%);*/
+/*  }*/
+/*}*/
 
 /* Base element styles */
 
