@@ -11,8 +11,7 @@ type InputBindings = {
 
 type NaiveConfig = (state: PublicPathState) => ReturnType<LazyInputBindsConfig> & InputBindings
 
-
-export function useNaiveUiFieldConfig(label: string): NaiveConfig {
+export function useNaiveUiFieldConfig(label?: string): NaiveConfig {
   return (state: PublicPathState) => ({
     props: {
       validationStatus: state.errors[0] ? 'error' : undefined,

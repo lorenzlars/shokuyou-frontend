@@ -10,6 +10,7 @@ import { preprocessValues } from '@/utils/formUtils'
 import { useRecipeService } from '@/domains/recipes/composables/useRecipeService'
 import { useSafeAsyncState } from '@/composables/useSafeAsyncState.ts'
 import ImageContainer from '@/domains/recipes/components/ImageContainer.vue'
+import FormField from '@/components/FormField.vue'
 
 const emit = defineEmits<{
   submitted: [values?: RecipeRequestDto]
@@ -62,11 +63,10 @@ const { loading, execute } = useSafeAsyncState(async (values: RecipeFormValues) 
     await updateRecipe(props.initialValues.id, preprocessedValues)
 
     if (values.image) {
-      if (props.initialValues.imageUrl) {
-        await updateImage(props.initialValues.id, values.image)
-      } else {
-        await uploadImage(props.initialValues.id, values.image)
-      }
+      await (props.initialValues.imageUrl ? updateImage : uploadImage)(
+        props.initialValues.id,
+        values.image,
+      )
     } else if (values.image === null) {
       await deleteImage(props.initialValues.id)
     }
@@ -110,9 +110,16 @@ function onEditToggle() {
       <div class="flex flex-col gap-3">
         <ImageContainer v-model="image" v-model:src="imageUrl" :edit="isEditMode" />
 
-        <NFormItem v-bind="nameProps">
-          <NInput class="w-full" v-model:value="name" :disabled="!isEditMode" type="text" />
-        </NFormItem>
+        <FormField name="name" label="Name" v-slot="{ fieldValue, fieldValueUpdate, fieldBinding }">
+          <NInput
+            class="w-full"
+            :value="fieldValue"
+            @update:value="fieldValueUpdate"
+            v-bind="fieldBinding"
+            :disabled="!isEditMode"
+            type="text"
+          />
+        </FormField>
 
         <NFormItem v-bind="servingsProps">
           <NInputNumber

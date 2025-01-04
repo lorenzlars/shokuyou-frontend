@@ -22,12 +22,12 @@ export function useRegisterForm(): FormReturn {
   const { t } = useI18n()
   const passwordRules = computed<PasswordRule[]>(() => [
     {
-      regex: /(?=.*?[A-Z])/,
-      hint: t('hints.passwordRequireUppercase'),
-    },
-    {
       regex: /(?=.*?[a-z])/,
       hint: t('hints.passwordRequireLowercase'),
+    },
+    {
+      regex: /(?=.*?[A-Z])/,
+      hint: t('hints.passwordRequireUppercase'),
     },
     {
       regex: /(?=.*?[0-9])/,
@@ -51,7 +51,7 @@ export function useRegisterForm(): FormReturn {
     ),
     passwordConfirm: string(),
   }).test('passwordsMatch', 'Passwords do not match', (value, context) => {
-    if (value !== context.parent.password) {
+    if (value !== context.parent?.password) {
       return context.createError({ path: 'passwordConfirm', message: t('hints.passwordConfirm') })
     }
 
