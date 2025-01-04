@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { NButton, NInput, NInputNumber, NForm, NFormItem } from 'naive-ui'
+import { NButton, NForm, NFormItem, NInput, NInputNumber } from 'naive-ui'
 import { type RecipeFormValues, useRecipeForm } from '@/domains/recipes/composables/useRecipeForm'
 import { type RecipeRequestDto, type RecipeResponseDto } from '@/api'
 import { useNaiveUiFieldConfig } from '@/composables/useNaiveUiFieldConfig'
@@ -59,20 +59,22 @@ const { loading, execute } = useSafeAsyncState(async (values: RecipeFormValues) 
   const preprocessedValues = preprocessValues(values, ['image', 'imageUrl'])
 
   if (props.initialValues) {
-    if (props.initialValues) {
-      await updateRecipe(props.initialValues.id, preprocessedValues)
-    } else {
-      await createRecipe(preprocessedValues)
-    }
+    await updateRecipe(props.initialValues.id, preprocessedValues)
 
     if (values.image) {
-      if (values.imageUrl) {
+      if (props.initialValues.imageUrl) {
         await updateImage(props.initialValues.id, values.image)
       } else {
         await uploadImage(props.initialValues.id, values.image)
       }
     } else if (values.image === null) {
       await deleteImage(props.initialValues.id)
+    }
+  } else {
+    const recipe = await createRecipe(preprocessedValues)
+
+    if (values.image) {
+      await uploadImage(recipe.id, values.image)
     }
   }
 
@@ -97,9 +99,8 @@ function onEditToggle() {
   }
 }
 
-// TODO: All buttons should have there own loading state
 // TODO: FormField mapping should be abstracted
-// TODO: Switch to yup for validation
+// TODO: All buttons should have there own loading state
 // TODO: Form cancel reset is not working for fields initialliy not set
 </script>
 

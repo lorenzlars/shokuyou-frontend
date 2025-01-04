@@ -78,8 +78,8 @@ async function loadNextPage(query?: Omit<GetRecipesData['query'], 'page' | 'page
     <slot v-for="(item, key) in items" :key v-bind="{ data: item }" />
 
     <div v-if="loading" :class="[`col-span-${columns}`]">Loading...</div>
-
     <div v-else-if="!state || state.total > items.length">Load more</div>
+    <div v-if="items.length === 0" :class="[`col-span-${columns}`]">empty</div>
   </div>
 </template>
 

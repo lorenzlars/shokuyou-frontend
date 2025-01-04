@@ -1,8 +1,7 @@
-import { toTypedSchema } from '@vee-validate/zod'
-import { object, string, ZodIssueCode } from 'zod'
+import { toTypedSchema } from '@vee-validate/yup'
+import { object, string } from 'yup'
 import { useForm } from 'vee-validate'
 import type { AuthRegisterRequestDto } from '@/api'
-import { zAuthRegisterRequestDto } from '@/api/zod.gen.ts'
 import { useI18n } from 'vue-i18n'
 import { computed, type ComputedRef } from 'vue'
 
@@ -44,29 +43,23 @@ export function useRegisterForm(): FormReturn {
     },
   ])
 
-  const passwordField = passwordRules.value.reduce(
-    (field, rule) => field.regex(rule.regex, rule.hint),
-    zAuthRegisterRequestDto.shape.password,
-  )
-
   const schema = object({
-    ...zAuthRegisterRequestDto.shape,
-    password: passwordField,
+    username: string(),
+    password: passwordRules.value.reduce(
+      (field, rule) => field.matches(rule.regex, rule.hint),
+      string(),
+    ),
     passwordConfirm: string(),
+  }).test('passwordsMatch', 'Passwords do not match', (value, context) => {
+    if (value !== context.parent.password) {
+      return context.createError({ path: 'passwordConfirm', message: t('hints.passwordConfirm') })
+    }
+
+    return true
   })
-    // TODO: This brakes somehow vee-validate recognizing required fields https://github.com/logaretm/vee-validate/issues/4338
-    .superRefine((val, ctx) => {
-      if (val.password !== val.passwordConfirm) {
-        ctx.addIssue({
-          path: ['passwordConfirm'],
-          code: ZodIssueCode.custom,
-          message: 'Passwords do not match',
-        })
-      }
-    })
 
   const form = useForm<FormValues>({
-    validationSchema: toTypedSchema(schema),
+    validationSchema: toTypedSchema(schema, { stripUnknown: true }),
   })
 
   return {

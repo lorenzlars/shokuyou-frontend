@@ -1,6 +1,7 @@
 import { type RecipeRequestDto, RecipesService } from '@/api'
 import { useI18n } from 'vue-i18n'
 import { useMessage } from 'naive-ui'
+import { unwrapResponseData } from '@/utils/formUtils.ts'
 
 export function useRecipeService() {
   const { t } = useI18n()
@@ -13,12 +14,14 @@ export function useRecipeService() {
   }
 
   async function updateRecipe(id: string, values: RecipeRequestDto) {
-    const { data: recipe } = await RecipesService.updateRecipe({
-      body: values,
-      path: {
-        id,
-      },
-    })
+    const recipe = unwrapResponseData(
+      await RecipesService.updateRecipe({
+        body: values,
+        path: {
+          id,
+        },
+      }),
+    )
 
     message.success(t('messages.recipeUpdatedSuccessfully'))
 
@@ -26,9 +29,11 @@ export function useRecipeService() {
   }
 
   async function createRecipe(values: RecipeRequestDto) {
-    const { data: recipe } = await RecipesService.createRecipe({
-      body: values,
-    })
+    const recipe = unwrapResponseData(
+      await RecipesService.createRecipe({
+        body: values,
+      }),
+    )
 
     message.success(t('messages.recipeCreatedSuccessfully'))
 
@@ -52,19 +57,19 @@ export function useRecipeService() {
   }
 
   async function updateImage(id: string, image: File) {
-    const { data: recipe } = await RecipesService.updateImage({
-      path: {
-        id,
-      },
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
-      body: {
-        file: image,
-      },
-    })
-
-    return recipe
+    return unwrapResponseData(
+      await RecipesService.updateImage({
+        path: {
+          id,
+        },
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+        body: {
+          file: image,
+        },
+      }),
+    )
   }
 
   async function deleteImage(id: string) {

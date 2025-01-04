@@ -20,7 +20,7 @@
     "@hey-api/client-axios": "^0.3.4",
     "@kitbag/router": "^0.14.2",
     "@unocss/reset": "^0.65.3",
-    "@vee-validate/zod": "^4.14.7",
+    "@vee-validate/yup": "^4.15.0",
     "@vicons/ionicons5": "^0.13.0",
     "@vueuse/core": "^12.3.0",
     "axios": "^1.7.9",
@@ -31,6 +31,7 @@
     "vfonts": "^0.0.3",
     "vue": "^3.5.13",
     "vue-i18n": "^11.0.1",
+    "yup": "^1.6.1",
     "zod": "^3.24.1"
   },
   "devDependencies": {
