@@ -10,7 +10,6 @@ import { preprocessValues } from '@/utils/formUtils'
 import { useRecipeService } from '@/domains/recipes/composables/useRecipeService'
 import { useSafeAsyncState } from '@/composables/useSafeAsyncState.ts'
 import ImageContainer from '@/domains/recipes/components/ImageContainer.vue'
-import FormField from '@/components/FormField.vue'
 
 const emit = defineEmits<{
   submitted: [values?: RecipeRequestDto]
@@ -110,16 +109,15 @@ function onEditToggle() {
       <div class="flex flex-col gap-3">
         <ImageContainer v-model="image" v-model:src="imageUrl" :edit="isEditMode" />
 
-        <FormField name="name" label="Name" v-slot="{ fieldValue, fieldValueUpdate, fieldBinding }">
+        <NFormItem v-bind="nameProps">
           <NInput
+            :show-button="false"
             class="w-full"
-            :value="fieldValue"
-            @update:value="fieldValueUpdate"
-            v-bind="fieldBinding"
+            v-model:value="name"
             :disabled="!isEditMode"
             type="text"
           />
-        </FormField>
+        </NFormItem>
 
         <NFormItem v-bind="servingsProps">
           <NInputNumber
@@ -127,7 +125,6 @@ function onEditToggle() {
             class="w-full"
             v-model:value="servings"
             :disabled="!isEditMode"
-            type="text"
           />
         </NFormItem>
 
