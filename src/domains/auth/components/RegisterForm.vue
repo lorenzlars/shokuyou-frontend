@@ -5,7 +5,7 @@ import { useNaiveUiFieldConfig } from '@/composables/useNaiveUiFieldConfig'
 import { useI18n } from 'vue-i18n'
 import { useRegisterForm } from '@/domains/auth/composables/useRegisterForm.ts'
 import ValidationRules from '@/domains/auth/components/ValidationRules.vue'
-import { preprocessValues } from '@/utils/formUtils.ts'
+import { preprocessValues } from '@/components/form'
 import { useAsyncPromise } from '@/composables/useAsyncPromise.ts'
 
 const { handleSubmit, defineField, passwordRules } = useRegisterForm()

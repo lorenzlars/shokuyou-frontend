@@ -12,7 +12,7 @@ import { useRoute, useRouter } from '@kitbag/router'
 import { type RecipeResponseDto, RecipesService } from '@/api'
 import { NCard } from 'naive-ui'
 import RecipeForm from '../components/RecipeForm.vue'
-import { unwrapResponseData } from '@/utils/formUtils'
+import { unwrapResponseData } from '@/components/form'
 import { extractParamProp } from '@/utils/routerUtils.ts'
 
 const { params } = useRoute()

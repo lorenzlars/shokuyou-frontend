@@ -49,7 +49,7 @@ export function useRegisterForm(): FormReturn {
       .reduce((field, rule) => field.matches(rule.regex, rule.hint), string())
       .required(),
     passwordConfirm: string().required(),
-  }).test('passwordsMatch', 'Passwords do not match', (value, context) => {
+  }).test('passwordsMatch', (value, context) => {
     if (value !== context.parent?.password) {
       return context.createError({ path: 'passwordConfirm', message: t('hints.passwordConfirm') })
     }

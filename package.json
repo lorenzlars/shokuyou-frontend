@@ -20,6 +20,7 @@
     "@hey-api/client-axios": "^0.3.4",
     "@kitbag/router": "^0.14.2",
     "@unocss/reset": "^0.65.3",
+    "@vee-validate/i18n": "^4.15.0",
     "@vee-validate/yup": "^4.15.0",
     "@vicons/ionicons5": "^0.13.0",
     "@vueuse/core": "^12.3.0",

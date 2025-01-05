@@ -17,6 +17,9 @@ importers:
       '@unocss/reset':
         specifier: ^0.65.3
         version: 0.65.3
+      '@vee-validate/i18n':
+        specifier: ^4.15.0
+        version: 4.15.0
       '@vee-validate/yup':
         specifier: ^4.15.0
         version: 4.15.0(vue@3.5.13(typescript@5.6.3))(yup@1.6.1)
@@ -1176,6 +1179,9 @@ packages:
     resolution: {integrity: sha512-MC2PqDB2tbYky7s1XTBoOAdtvUIwwl65qL1UbHTLYiWO9Q704IZUYvrdtpgieR+8IPu2dG2vUyIe3dbD4zPf9g==}
     peerDependencies:
       vite: ^2.9.0 || ^3.0.0-0 || ^4.0.0 || ^5.0.0-0 || ^6.0.0-0
+
+  '@vee-validate/i18n@4.15.0':
+    resolution: {integrity: sha512-XAXoIhcgy4//9WBmxK/6Wnv14Bwkrka/0PMHPOxUhbc8y4QfdIRbyFWvxWZw2nzc6suHrFIePt1mBx91aTqIwg==}
 
   '@vee-validate/yup@4.15.0':
     resolution: {integrity: sha512-paK2ZdxZJRrUGwqaqf7KMNC+n5C7UGs7DofK7wZCza/zKT/QtFSxVYgopGoYYrbAfd6DpVmNpf/ouBuRdPBthA==}
@@ -4519,6 +4525,8 @@ snapshots:
       - rollup
       - supports-color
       - vue
+
+  '@vee-validate/i18n@4.15.0': {}
 
   '@vee-validate/yup@4.15.0(vue@3.5.13(typescript@5.6.3))(yup@1.6.1)':
     dependencies:

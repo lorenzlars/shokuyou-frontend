@@ -1,7 +1,7 @@
 import { type RecipeRequestDto, RecipesService } from '@/api'
 import { useI18n } from 'vue-i18n'
 import { useMessage } from 'naive-ui'
-import { unwrapResponseData } from '@/utils/formUtils.ts'
+import { unwrapResponseData } from '@/components/form'
 
 export function useRecipeService() {
   const { t } = useI18n()

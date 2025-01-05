@@ -1,6 +1,7 @@
 import { useForm } from 'vee-validate'
 import type { RecipeRequestDto } from '@/api'
 import { object, string, number, mixed } from 'yup'
+import { toProvidedTypedSchema } from '@/components/form'
 
 export type RecipeFormValues = RecipeRequestDto & {
   // null means delete, undefined means keep
@@ -11,20 +12,20 @@ export type RecipeFormValues = RecipeRequestDto & {
 export function useRecipeForm(initialValues?: RecipeRequestDto) {
   const schema = object({
     name: string().required().label('Name'),
-    description: string(),
-    source: string(),
-    servings: number(),
-    duration: number(),
-    ingredients: string(),
-    instructions: string(),
-    nutrition: string(),
-    notes: string(),
+    description: string().label('Description'),
+    source: string().label('Source'),
+    servings: number().label('Servings'),
+    duration: number().label('Duration'),
+    ingredients: string().label('Ingredients'),
+    instructions: string().label('Instructions'),
+    nutrition: string().label('Nutrition'),
+    notes: string().label('Notes'),
     image: mixed().nullable(),
     imageUrl: string(),
   })
 
   return useForm<RecipeFormValues>({
-    validationSchema: schema,
+    validationSchema: toProvidedTypedSchema(schema),
     initialValues,
   })
 }

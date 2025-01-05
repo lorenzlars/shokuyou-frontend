@@ -12,6 +12,9 @@
     "remember": "Remember",
     "login": "Login"
   },
+  "form": {
+    "inputField": "Input {label}"
+  },
   "titles": {
     "login": "Login",
     "register": "Register",

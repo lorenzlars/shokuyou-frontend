@@ -1,15 +1,14 @@
 <script lang="ts" setup>
-import { NButton, NForm, NFormItem, NInput, NInputNumber } from 'naive-ui'
+import { NButton, NForm } from 'naive-ui'
 import { type RecipeFormValues, useRecipeForm } from '@/domains/recipes/composables/useRecipeForm'
 import { type RecipeRequestDto, type RecipeResponseDto } from '@/api'
-import { useNaiveUiFieldConfig } from '@/composables/useNaiveUiFieldConfig'
 import { shallowRef } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useField } from 'vee-validate'
-import { preprocessValues } from '@/utils/formUtils'
 import { useRecipeService } from '@/domains/recipes/composables/useRecipeService'
 import { useSafeAsyncState } from '@/composables/useSafeAsyncState.ts'
 import ImageContainer from '@/domains/recipes/components/ImageContainer.vue'
+import { StringFormField, NumberFormField, preprocessValues } from '@/components/form'
 
 const emit = defineEmits<{
   submitted: [values?: RecipeRequestDto]
@@ -20,37 +19,10 @@ const props = defineProps<{
 }>()
 
 const isEditMode = shallowRef(!props.initialValues)
+const { handleSubmit, resetForm } = useRecipeForm(props.initialValues)
 const { deleteRecipe, deleteImage, updateRecipe, uploadImage, updateImage, createRecipe } =
   useRecipeService()
 
-const { handleSubmit, defineField, resetForm } = useRecipeForm(props.initialValues)
-const [name, nameProps] = defineField<'name'>('name', useNaiveUiFieldConfig('Name'))
-const [servings, servingsProps] = defineField<'servings'>(
-  'servings',
-  useNaiveUiFieldConfig('Servings'),
-)
-const [description, descriptionProps] = defineField<'description'>(
-  'description',
-  useNaiveUiFieldConfig('Description'),
-)
-const [source, sourceProps] = defineField<'source'>('source', useNaiveUiFieldConfig('Source'))
-const [duration, durationProps] = defineField<'duration'>(
-  'duration',
-  useNaiveUiFieldConfig('Duration'),
-)
-const [ingredients, ingredientsProps] = defineField<'ingredients'>(
-  'ingredients',
-  useNaiveUiFieldConfig('Ingredients'),
-)
-const [instructions, instructionsProps] = defineField<'instructions'>(
-  'instructions',
-  useNaiveUiFieldConfig('Instructions'),
-)
-const [nutrition, nutritionProps] = defineField<'nutrition'>(
-  'nutrition',
-  useNaiveUiFieldConfig('Nutrition'),
-)
-const [notes, notesProps] = defineField<'notes'>('notes', useNaiveUiFieldConfig('Notes'))
 const { value: image } = useField<File | null | undefined>('image')
 const { value: imageUrl } = useField<string | undefined>('imageUrl')
 
@@ -98,9 +70,7 @@ function onEditToggle() {
   }
 }
 
-// TODO: FormField mapping should be abstracted
 // TODO: All buttons should have there own loading state
-// TODO: Form cancel reset is not working for fields initialliy not set
 </script>
 
 <template>
@@ -109,79 +79,35 @@ function onEditToggle() {
       <div class="flex flex-col gap-3">
         <ImageContainer v-model="image" v-model:src="imageUrl" :edit="isEditMode" />
 
-        <NFormItem v-bind="nameProps">
-          <NInput
-            :show-button="false"
-            class="w-full"
-            v-model:value="name"
-            :disabled="!isEditMode"
-            type="text"
-          />
-        </NFormItem>
+        <StringFormField name="name" :disabled="!isEditMode" class="w-full" />
 
-        <NFormItem v-bind="servingsProps">
-          <NInputNumber
-            :show-button="false"
-            class="w-full"
-            v-model:value="servings"
-            :disabled="!isEditMode"
-          />
-        </NFormItem>
+        <NumberFormField name="servings" :disabled="!isEditMode" class="w-full" />
 
-        <NFormItem v-bind="sourceProps">
-          <NInput class="w-full" v-model:value="source" :disabled="!isEditMode" type="text" />
-        </NFormItem>
+        <StringFormField name="source" :disabled="!isEditMode" class="w-full" />
 
-        <NFormItem v-bind="durationProps">
-          <NInputNumber
-            :show-button="false"
-            class="w-full"
-            v-model:value="duration"
-            :disabled="!isEditMode"
-          />
-        </NFormItem>
+        <NumberFormField name="duration" :disabled="!isEditMode" class="w-full" />
 
-        <NFormItem v-bind="descriptionProps">
-          <NInput
-            class="w-full"
-            v-model:value="description"
-            :disabled="!isEditMode"
-            type="textarea"
-          />
-        </NFormItem>
+        <StringFormField name="description" :disabled="!isEditMode" class="w-full" />
       </div>
 
       <div class="col-span-2">
-        <NFormItem v-bind="ingredientsProps">
-          <NInput
-            class="w-full"
-            v-model:value="ingredients"
-            type="textarea"
-            :disabled="!isEditMode"
-          />
-        </NFormItem>
+        <StringFormField
+          name="ingredients"
+          :disabled="!isEditMode"
+          class="w-full"
+          type="textarea"
+        />
 
-        <NFormItem v-bind="instructionsProps">
-          <NInput
-            class="w-full"
-            v-model:value="instructions"
-            type="textarea"
-            :disabled="!isEditMode"
-          />
-        </NFormItem>
+        <StringFormField
+          name="instructions"
+          :disabled="!isEditMode"
+          class="w-full"
+          type="textarea"
+        />
 
-        <NFormItem v-bind="notesProps">
-          <NInput class="w-full" v-model:value="notes" type="textarea" :disabled="!isEditMode" />
-        </NFormItem>
+        <StringFormField name="notes" :disabled="!isEditMode" class="w-full" type="textarea" />
 
-        <NFormItem v-bind="nutritionProps">
-          <NInput
-            class="w-full"
-            v-model:value="nutrition"
-            type="textarea"
-            :disabled="!isEditMode"
-          />
-        </NFormItem>
+        <StringFormField name="nutrition" :disabled="!isEditMode" class="w-full" type="textarea" />
       </div>
     </div>
 
