@@ -1,10 +1,12 @@
 <script lang="ts" setup>
 import { type GetRecipesData, type RecipeResponseDto, RecipesService } from '@/api'
-import { NButton, NCard, NInput } from 'naive-ui'
 import { useRouter } from '@kitbag/router'
 import LazyGrid from '@/components/LazyGrid.vue'
 import { shallowRef } from 'vue'
 import type { PaginationResponse } from '@/composables/usePagination.ts'
+import RecipeCard from '@/domains/recipes/components/RecipeCard.vue'
+import InputField from '@/components/inputs/InputField.vue'
+import BaseButton from '@/components/BaseButton.vue'
 
 const { push } = useRouter()
 const filter = shallowRef<string>()
@@ -20,24 +22,18 @@ async function loadMore(
 </script>
 
 <template>
-  <div class="flex flex-col gap-5">
-    <div class="flex justify-between items-center my-3">
+  <div class="flex flex-col gap-5 py-5">
+    <div class="flex justify-between items-center">
       <h1 class="m-0">Recipes</h1>
 
-      <NButton type="primary" @click="push('recipe-create')">Create</NButton>
+      <BaseButton label="Create" @click="push('recipe-create')"></BaseButton>
     </div>
 
-    <NInput v-model:value="filter" placeholder="Search recipe name" />
+    <InputField v-model="filter" placeholder="Search recipe name" />
 
     <LazyGrid :loader="loadMore" :filter v-slot="{ data }">
       <RouterLink :to="`/recipes/${data.id}`">
-        <NCard :title="data.name" class="h-full">
-          <template #cover>
-            <img :src="data.imageUrl" />
-          </template>
-
-          {{ data.description }}
-        </NCard>
+        <RecipeCard :recipe="data" />
       </RouterLink>
     </LazyGrid>
   </div>

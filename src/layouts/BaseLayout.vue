@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { RouterView, RouterLink, useRouter } from '@kitbag/router'
-import { NButton } from 'naive-ui'
 import { useAuthStore } from '@/domains/auth/stores/authStore.ts'
 import BaseMenu, { type MenuOption } from '@/components/BaseMenu.vue'
+import BaseButton from '@/components/BaseButton.vue'
 
 const { logout } = useAuthStore()
 const { push } = useRouter()
@@ -44,7 +44,7 @@ function handleLogout() {
 
       <BaseMenu :options="menuOptions" />
     </div>
-    <NButton @click="handleLogout"> Logout </NButton>
+    <BaseButton @click="handleLogout"> Logout </BaseButton>
   </header>
 
   <main class="container">

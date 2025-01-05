@@ -10,13 +10,6 @@ export default defineConfig({
   theme: {
     colors: {
       text: 'var(--color-text)',
-      textSecondary: 'var(--color-text-secondary)',
-      bg: {
-        1: 'var(--color-bg-1)',
-        2: 'var(--color-bg-2)',
-        3: 'var(--color-bg-3)',
-        4: 'var(--color-bg-4)',
-      },
       neutral: 'var(--color-neutral)',
       neutralLight: {
         1: 'var(--color-neutral-light-1)',
@@ -30,8 +23,8 @@ export default defineConfig({
         3: 'var(--color-neutral-dark-3)',
         4: 'var(--color-neutral-dark-4)',
       },
-      accent: 'var(--color-accent)',
-      accentFocus: 'var(--color-accent-focus)',
+      primary: 'var(--color-accent)',
+      default: 'var(--gray-100)',
       danger: 'var(--color-danger)',
     },
   },

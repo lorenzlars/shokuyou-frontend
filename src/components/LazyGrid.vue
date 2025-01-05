@@ -74,7 +74,7 @@ async function loadNextPage(query?: Omit<GetRecipesData['query'], 'page' | 'page
 </script>
 
 <template>
-  <div class="grid gap-2" :class="[`grid-cols-${columns}`]">
+  <div class="grid gap-5" :class="[`grid-cols-${columns}`]">
     <slot v-for="(item, key) in items" :key v-bind="{ data: item }" />
 
     <div v-if="loading" :class="[`col-span-${columns}`]">Loading...</div>

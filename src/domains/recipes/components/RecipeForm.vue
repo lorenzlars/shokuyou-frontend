@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-import { NButton, NForm } from 'naive-ui'
 import { type RecipeFormValues, useRecipeForm } from '@/domains/recipes/composables/useRecipeForm'
 import { type RecipeRequestDto, type RecipeResponseDto } from '@/api'
 import { shallowRef } from 'vue'
@@ -9,6 +8,7 @@ import { useRecipeService } from '@/domains/recipes/composables/useRecipeService
 import { useSafeAsyncState } from '@/composables/useSafeAsyncState.ts'
 import ImageContainer from '@/domains/recipes/components/ImageContainer.vue'
 import { StringFormField, NumberFormField, preprocessValues } from '@/components/form'
+import BaseButton from '@/components/BaseButton.vue'
 
 const emit = defineEmits<{
   submitted: [values?: RecipeRequestDto]
@@ -69,12 +69,10 @@ function onEditToggle() {
     resetForm()
   }
 }
-
-// TODO: All buttons should have there own loading state
 </script>
 
 <template>
-  <NForm @submit="onSubmit">
+  <form @submit="onSubmit">
     <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
       <div class="flex flex-col gap-3">
         <ImageContainer v-model="image" v-model:src="imageUrl" :edit="isEditMode" />
@@ -87,10 +85,15 @@ function onEditToggle() {
 
         <NumberFormField name="duration" :disabled="!isEditMode" class="w-full" />
 
-        <StringFormField name="description" :disabled="!isEditMode" class="w-full" />
+        <StringFormField
+          name="description"
+          type="textarea"
+          :disabled="!isEditMode"
+          class="w-full"
+        />
       </div>
 
-      <div class="col-span-2">
+      <div class="flex flex-col gap-3 col-span-2">
         <StringFormField
           name="ingredients"
           :disabled="!isEditMode"
@@ -113,24 +116,23 @@ function onEditToggle() {
 
     <div class="flex justify-between">
       <div class="flex gap-3">
-        <NButton v-if="isEditMode" type="primary" attr-type="submit" :loading :disabled="loading">
+        <BaseButton v-if="isEditMode" type="submit" :loading :disabled="loading">
           {{ initialValues ? t('general.update') : t('general.create') }}
-        </NButton>
+        </BaseButton>
 
-        <NButton
+        <BaseButton
           v-if="isEditMode && initialValues"
-          type="error"
           @click="onDelete(initialValues.id)"
           :loading
           :disabled="loading"
         >
           {{ t('general.delete') }}
-        </NButton>
+        </BaseButton>
       </div>
 
-      <NButton v-if="initialValues" @click="onEditToggle" :loading :disabled="loading">
+      <BaseButton v-if="initialValues" @click="onEditToggle" :loading :disabled="loading">
         {{ isEditMode ? t('general.cancel') : t('general.edit') }}
-      </NButton>
+      </BaseButton>
     </div>
-  </NForm>
+  </form>
 </template>
