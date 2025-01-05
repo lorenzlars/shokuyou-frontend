@@ -44,12 +44,11 @@ export function useRegisterForm(): FormReturn {
   ])
 
   const schema = object({
-    username: string(),
-    password: passwordRules.value.reduce(
-      (field, rule) => field.matches(rule.regex, rule.hint),
-      string(),
-    ),
-    passwordConfirm: string(),
+    username: string().required(),
+    password: passwordRules.value
+      .reduce((field, rule) => field.matches(rule.regex, rule.hint), string())
+      .required(),
+    passwordConfirm: string().required(),
   }).test('passwordsMatch', 'Passwords do not match', (value, context) => {
     if (value !== context.parent?.password) {
       return context.createError({ path: 'passwordConfirm', message: t('hints.passwordConfirm') })

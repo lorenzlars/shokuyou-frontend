@@ -5,8 +5,8 @@ import { object, string } from 'yup'
 
 export function useLoginForm() {
   const schema = object({
-    username: string(),
-    password: string(),
+    username: string().required(),
+    password: string().required(),
   })
 
   return useForm<AuthRequestDto>({
