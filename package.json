@@ -19,7 +19,7 @@
     "build-storybook": "storybook build"
   },
   "dependencies": {
-    "@hey-api/client-axios": "^0.3.4",
+    "@hey-api/client-axios": "^0.4.0",
     "@iconify-prerendered/vue-fa-regular": "^0.28.1722793350",
     "@iconify-prerendered/vue-fa-solid": "^0.28.1722793361",
     "@kitbag/router": "^0.14.2",

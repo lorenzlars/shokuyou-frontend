@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@hey-api/client-axios':
-        specifier: ^0.3.4
-        version: 0.3.4(axios@1.7.9)
+        specifier: ^0.4.0
+        version: 0.4.0(axios@1.7.9)
       '@iconify-prerendered/vue-fa-regular':
         specifier: ^0.28.1722793350
         version: 0.28.1722793350(vue@3.5.13(typescript@5.6.3))
@@ -814,8 +814,8 @@ packages:
   '@hapi/topo@5.1.0':
     resolution: {integrity: sha512-foQZKJig7Ob0BMAYBfcJk8d77QtOe7Wo4ox7ff1lQYoNNAb6jwcY1ncdoy2e9wQZzvNy7ODZCYJkK8kzmcAnAg==}
 
-  '@hey-api/client-axios@0.3.4':
-    resolution: {integrity: sha512-9jyZb1kicWZoZwlu/2XnwRDQJsrGi+ExBuSn3liT5slQ6uRSbN5HYqZr1YzRy4fbAkxY9S2vFbqfdHniqWgGGg==}
+  '@hey-api/client-axios@0.4.0':
+    resolution: {integrity: sha512-hELbeP5i7InIQY1Fn8L2vjWQnlg5ET39KzN0O45C/wA2ArMXrkUfq9svnvSNrdXSt7K5nJZhMV2gT4WIHArU+g==}
     peerDependencies:
       axios: '>= 1.0.0 < 2'
 
@@ -4803,7 +4803,7 @@ snapshots:
     dependencies:
       '@hapi/hoek': 9.3.0
 
-  '@hey-api/client-axios@0.3.4(axios@1.7.9)':
+  '@hey-api/client-axios@0.4.0(axios@1.7.9)':
     dependencies:
       axios: 1.7.9(debug@4.4.0)
 
