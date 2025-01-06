@@ -7,7 +7,7 @@ import { useI18n } from 'vue-i18n'
 import { useAuthStore } from '@/domains/auth/stores/authStore.ts'
 import { AxiosError } from 'axios'
 import { StringFormField } from '@/components/form'
-import BaseButton from '@/components/BaseButton.vue'
+import BaseButton from '@/components/baseButton/BaseButton.vue'
 import BaseCheckbox from '@/components/BaseCheckbox.vue'
 
 const rememberMe = shallowRef(false)

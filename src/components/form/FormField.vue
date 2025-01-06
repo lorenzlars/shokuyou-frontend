@@ -29,13 +29,13 @@ const fieldProps = reactive({
 </script>
 
 <template>
-  <div class="flex flex-col gap-2">
+  <div class="flex flex-col gap-2 mb-3">
     <label class="flex gap-1" :for="name">
       <small class="font-semibold">{{ label }}</small>
       <span v-if="meta.required" class="text-danger">*</span>
     </label>
     <slot :id="name" v-bind="fieldProps" />
-    <div class="min-h-8">
+    <div class="min-h-5">
       <slot name="feedback" v-bind="{ value, errorMessage }">
         <transition>
           <small class="text-danger" v-if="errorMessage">{{ errorMessage }}</small>

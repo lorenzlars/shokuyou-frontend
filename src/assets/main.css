@@ -18,11 +18,12 @@
 
   --color-blue: hsl(212, 92%, 43%);
 
-  --color-beige: hsl(35, 9%, 53%);
+  --color-purple: hsl(271, 100%, 71%);
+
+  --color-orange: hsl(34, 97%, 64%);
 
   /* Color theme */
   --color-text: #000;
-
   --color-bg: #fff;
 
   --color-contrast-1: var(--color-neutral-light-4);
@@ -30,27 +31,27 @@
   --color-contrast-3: var(--color-neutral-light-2);
   --color-contrast-4: var(--color-neutral-light-1);
 
-  --color-accent: var(--color-beige);
-
+  --color-primary: var(--color-purple);
+  --color-secondary: var(--color-orange);
+  --color-accent: linear-gradient(90deg, var(--color-primary), var(--color-secondary));
   --color-info: var(--color-blue);
   --color-warning: var(--color-yellow);
   --color-success: var(--color-green);
   --color-danger: var(--color-red);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --color-text: #fff;
+/*@media (prefers-color-scheme: dark) {*/
+/*  :root {*/
+/*    --color-text: #fff;*/
+/*    --color-bg: #000;*/
 
-    --color-bg: #000;
+/*    --color-accent: hsl(from var(--color-yellow) h calc(s - 20) calc(l - 10));*/
+/*  }*/
 
-    --color-accent: hsl(from var(--color-yellow) h calc(s - 20) calc(l - 10));
-  }
-
-  img {
-    filter: brightness(80%);
-  }
-}
+/*  img {*/
+/*    filter: brightness(80%);*/
+/*  }*/
+/*}*/
 
 /* Base element styles */
 

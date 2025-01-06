@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import BaseButton from '@/components/BaseButton.vue'
+import BaseButton from '@/components/baseButton/BaseButton.vue'
 import { IconImage, IconTrash, IconBox } from '@iconify-prerendered/vue-fa-solid'
 
 defineProps<{
@@ -81,6 +81,7 @@ function onClick() {
       v-if="edit && modelValueSrc"
       @click="onDeleteImage"
       theme="danger"
+      circle
     >
       <template #icon>
         <IconTrash />

@@ -8,7 +8,7 @@ import { useRecipeService } from '@/domains/recipes/composables/useRecipeService
 import { useSafeAsyncState } from '@/composables/useSafeAsyncState.ts'
 import ImageContainer from '@/domains/recipes/components/ImageContainer.vue'
 import { StringFormField, NumberFormField, preprocessValues } from '@/components/form'
-import BaseButton from '@/components/BaseButton.vue'
+import BaseButton from '@/components/baseButton/BaseButton.vue'
 
 const emit = defineEmits<{
   submitted: [values?: RecipeRequestDto]

@@ -5,7 +5,7 @@ import { useRegisterForm } from '@/domains/auth/composables/useRegisterForm.ts'
 import ValidationRules from '@/domains/auth/components/ValidationRules.vue'
 import { preprocessValues, StringFormField } from '@/components/form'
 import { useAsyncPromise } from '@/composables/useAsyncPromise.ts'
-import BaseButton from '@/components/BaseButton.vue'
+import BaseButton from '@/components/baseButton/BaseButton.vue'
 
 const { handleSubmit, passwordRules } = useRegisterForm()
 const { t } = useI18n()
@@ -42,7 +42,7 @@ const onSubmit = handleSubmit(async (values) => {
 
     <StringFormField class="w-full" type="password" name="passwordConfirm" />
 
-    <BaseButton type="submit" :loading>
+    <BaseButton theme="accent" type="submit" :loading>
       {{ t('general.register') }}
     </BaseButton>
   </form>

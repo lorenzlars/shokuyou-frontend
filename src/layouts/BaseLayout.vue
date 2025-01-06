@@ -2,7 +2,7 @@
 import { RouterView, RouterLink, useRouter } from '@kitbag/router'
 import { useAuthStore } from '@/domains/auth/stores/authStore.ts'
 import BaseMenu, { type MenuOption } from '@/components/BaseMenu.vue'
-import BaseButton from '@/components/BaseButton.vue'
+import BaseButton from '@/components/baseButton/BaseButton.vue'
 
 const { logout } = useAuthStore()
 const { push } = useRouter()

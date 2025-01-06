@@ -6,7 +6,7 @@ import { shallowRef } from 'vue'
 import type { PaginationResponse } from '@/composables/usePagination.ts'
 import RecipeCard from '@/domains/recipes/components/RecipeCard.vue'
 import InputField from '@/components/inputs/InputField.vue'
-import BaseButton from '@/components/BaseButton.vue'
+import BaseButton from '@/components/baseButton/BaseButton.vue'
 
 const { push } = useRouter()
 const filter = shallowRef<string>()
