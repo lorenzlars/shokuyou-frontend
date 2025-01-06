@@ -12,8 +12,14 @@ defineProps<
 </script>
 
 <template>
-  <NumberFormField :name :label v-slot="field">
-    <InputField v-if="type !== 'textarea'" v-bind="{ ...field, ...$attrs }" :type />
-    <TextareaField v-else v-bind="{ ...field, ...$attrs }" />
+  <NumberFormField :name :label>
+    <template #default="field">
+      <InputField v-if="type !== 'textarea'" v-bind="{ ...field, ...$attrs }" :type />
+      <TextareaField v-else v-bind="{ ...field, ...$attrs }" />
+    </template>
+
+    <template #feedback="props">
+      <slot name="feedback" v-bind="props" />
+    </template>
   </NumberFormField>
 </template>

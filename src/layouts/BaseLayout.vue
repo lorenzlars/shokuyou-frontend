@@ -36,7 +36,7 @@ function handleLogout() {
 </script>
 
 <template>
-  <header class="flex justify-between items-center p-2 border-b-1 border-solid border-gray-200">
+  <header class="flex justify-between items-center p-2 border-b-2 border-b-solid border-contrast-1">
     <div class="flex items-center w-full">
       <RouterLink class="text-lg font-bold no-underline text-text hover:no-underline w-28" to="/">
         食用

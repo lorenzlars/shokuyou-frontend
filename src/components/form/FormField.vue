@@ -12,32 +12,47 @@ export type FormFieldProps = {
 const props = defineProps<FormFieldProps>()
 defineSlots<{
   default(props: FieldSlotProps<T>): unknown
-  feedback(props: { errorMessage?: string }): unknown
+  feedback(props: { value?: T; errorMessage?: string }): unknown
 }>()
 
 const { t } = useI18n()
 const schema = injectSchema()
 
 const label = props.label ?? schema.fields[props.name].spec.label
-const { meta, errorMessage, handleBlur, handleChange, value } = useField(props.name)
+const { meta, errorMessage, handleBlur, handleChange, value } = useField<T>(props.name)
 const fieldProps = reactive({
   modelValue: value,
-  placeholder: t('form.inputField', { label }),
+  placeholder: t('form.inputField', { label: label.toLowerCase() }),
   onblur: handleBlur,
   'onUpdate:modelValue': handleChange,
 })
 </script>
 
 <template>
-  <div>
-    <label class="block" :for="name">
-      {{ label }} <span v-if="meta.required" class="text-danger">*</span>
+  <div class="flex flex-col gap-2">
+    <label class="flex gap-1" :for="name">
+      <small class="font-semibold">{{ label }}</small>
+      <span v-if="meta.required" class="text-danger">*</span>
     </label>
     <slot :id="name" v-bind="fieldProps" />
-    <div class="h-5">
-      <slot name="feedback" v-bind="{ errorMessage }">
-        <span class="text-danger" v-if="errorMessage">{{ errorMessage }}</span>
+    <div class="min-h-8">
+      <slot name="feedback" v-bind="{ value, errorMessage }">
+        <transition>
+          <small class="text-danger" v-if="errorMessage">{{ errorMessage }}</small>
+        </transition>
       </slot>
     </div>
   </div>
 </template>
+
+<style lang="scss" scoped>
+.v-enter-active,
+.v-leave-active {
+  transition: opacity 0.5s ease;
+}
+
+.v-enter-from,
+.v-leave-to {
+  opacity: 0;
+}
+</style>

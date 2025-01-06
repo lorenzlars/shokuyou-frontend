@@ -1,15 +1,15 @@
-import { toTypedSchema } from '@vee-validate/yup'
 import { useForm } from 'vee-validate'
 import type { AuthRequestDto } from '@/api'
 import { object, string } from 'yup'
+import { toProvidedTypedSchema } from '@/components/form'
 
 export function useLoginForm() {
   const schema = object({
-    username: string().required(),
-    password: string().required(),
+    username: string().required().label('Username'),
+    password: string().required().label('Password'),
   })
 
   return useForm<AuthRequestDto>({
-    validationSchema: toTypedSchema(schema, { stripUnknown: true }),
+    validationSchema: toProvidedTypedSchema(schema),
   })
 }

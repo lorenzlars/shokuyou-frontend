@@ -1,7 +1,6 @@
 <script lang="ts" setup>
 import type { RecipeResponseDto } from '@/api'
-import { NIcon } from 'naive-ui'
-import { ImageOutline as ImageOutlineIcon } from '@vicons/ionicons5'
+import { IconImage } from '@iconify-prerendered/vue-fa-solid'
 
 defineProps<{
   recipe: RecipeResponseDto
@@ -21,9 +20,7 @@ defineProps<{
       />
 
       <div v-else class="flex flex-col items-center justify-center bg-gray-100 h-full">
-        <NIcon :size="48" :depth="3">
-          <ImageOutlineIcon />
-        </NIcon>
+        <IconImage class="text-5xl text-gray-400" />
       </div>
     </div>
     <div class="px-3">

@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { useRouter } from '@kitbag/router'
 import RegisterForm from '@/domains/auth/components/RegisterForm.vue'
-import { NButton, NCard } from 'naive-ui'
 import { useI18n } from 'vue-i18n'
+import BaseLink from '@/components/BaseLink.vue'
 
 const { push } = useRouter()
 const { t } = useI18n()
@@ -13,13 +13,11 @@ async function onSubmitted() {
 </script>
 
 <template>
-  <NCard :title="t('titles.register')">
-    <RegisterForm @submitted="onSubmitted">
-      <template #buttons>
-        <NButton type="default" @click="push('login')">
-          {{ t('general.login') }}
-        </NButton>
-      </template>
-    </RegisterForm>
-  </NCard>
+  <div class="flex flex-col gap-5 py-5 items-center">
+    <h1>{{ t('titles.register') }}</h1>
+
+    <RegisterForm class="w-full" @submitted="onSubmitted" />
+
+    <BaseLink to="/login">Sign-in</BaseLink>
+  </div>
 </template>

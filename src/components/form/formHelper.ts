@@ -49,9 +49,10 @@ export function unwrapResponseData<T>(response: AxiosResponse<T> | AxiosError): 
 export function toProvidedTypedSchema(
   ...props: Parameters<typeof toTypedSchema>
 ): ReturnType<typeof toTypedSchema> {
-  provide(schemaContextKey, props[0])
+  const [schema, options] = props
+  provide(schemaContextKey, schema)
 
-  return toTypedSchema(props[0], props[1] ?? { stripUnknown: true, abortEarly: false })
+  return toTypedSchema(schema, options ?? { stripUnknown: true, abortEarly: false })
 }
 
 export function injectSchema() {

@@ -1,17 +1,15 @@
 <script setup lang="ts">
 import { RouterView } from '@kitbag/router'
-import { NConfigProvider, NMessageProvider } from 'naive-ui'
 import ErrorHandlingProvider from '@/domains/errorHandling/components/ErrorHandlingProvider.vue'
+import MessageProvider from '@/components/message/MessageProvider.vue'
 </script>
 
 <template>
-  <NConfigProvider>
-    <NMessageProvider placement="bottom-left" :duration="5_000">
-      <ErrorHandlingProvider>
-        <Suspense>
-          <RouterView />
-        </Suspense>
-      </ErrorHandlingProvider>
-    </NMessageProvider>
-  </NConfigProvider>
+  <MessageProvider :timeout="5_000">
+    <ErrorHandlingProvider>
+      <Suspense>
+        <RouterView />
+      </Suspense>
+    </ErrorHandlingProvider>
+  </MessageProvider>
 </template>

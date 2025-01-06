@@ -75,7 +75,9 @@ async function loadNextPage(query?: Omit<GetRecipesData['query'], 'page' | 'page
 
 <template>
   <div class="grid gap-5" :class="[`grid-cols-${columns}`]">
-    <slot v-for="(item, key) in items" :key v-bind="{ data: item }" />
+    <transition-group name="fade-slide">
+      <slot v-for="(item, key) in items" :key v-bind="{ data: item }" />
+    </transition-group>
 
     <div v-if="loading" :class="[`col-span-${columns}`]">Loading...</div>
     <div v-else-if="!state || state.total > items.length">Load more</div>
@@ -83,4 +85,27 @@ async function loadNextPage(query?: Omit<GetRecipesData['query'], 'page' | 'page
   </div>
 </template>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.fade-slide-enter-active {
+  transition: all 0.3s ease-in-out;
+}
+.fade-slide-leave-active {
+  transition: all 0.3s ease-in-out;
+}
+.fade-slide-enter-from {
+  opacity: 0;
+  transform: translateY(20px);
+}
+.fade-slide-enter-to {
+  opacity: 1;
+  transform: translateY(0);
+}
+.fade-slide-leave-from {
+  opacity: 1;
+  transform: translateY(0);
+}
+.fade-slide-leave-to {
+  opacity: 0;
+  transform: translateY(20px);
+}
+</style>

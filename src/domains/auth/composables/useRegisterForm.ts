@@ -1,9 +1,9 @@
-import { toTypedSchema } from '@vee-validate/yup'
 import { object, string } from 'yup'
 import { useForm } from 'vee-validate'
 import type { AuthRegisterRequestDto } from '@/api'
 import { useI18n } from 'vue-i18n'
 import { computed, type ComputedRef } from 'vue'
+import { toProvidedTypedSchema } from '@/components/form'
 
 export type PasswordRule = {
   regex: RegExp
@@ -44,13 +44,14 @@ export function useRegisterForm(): FormReturn {
   ])
 
   const schema = object({
-    username: string().required(),
+    username: string().required().label('Username'),
     password: passwordRules.value
       .reduce((field, rule) => field.matches(rule.regex, rule.hint), string())
-      .required(),
-    passwordConfirm: string().required(),
+      .required()
+      .label('Password'),
+    passwordConfirm: string().required().label('Confirm Password'),
   }).test('passwordsMatch', (value, context) => {
-    if (value !== context.parent?.password) {
+    if (value && context.parent?.password && value !== context.parent?.password) {
       return context.createError({ path: 'passwordConfirm', message: t('hints.passwordConfirm') })
     }
 
@@ -58,7 +59,7 @@ export function useRegisterForm(): FormReturn {
   })
 
   const form = useForm<FormValues>({
-    validationSchema: toTypedSchema(schema, { stripUnknown: true }),
+    validationSchema: toProvidedTypedSchema(schema),
   })
 
   return {

@@ -1,10 +1,6 @@
 <script lang="ts" setup>
-import { NButton, NIcon } from 'naive-ui'
-import {
-  ImageOutline as ImageOutlineIcon,
-  ArchiveOutline as ArchiveIcon,
-  TrashBin as TrashBinIcon,
-} from '@vicons/ionicons5'
+import BaseButton from '@/components/BaseButton.vue'
+import { IconImage, IconTrash, IconBox } from '@iconify-prerendered/vue-fa-solid'
 
 defineProps<{
   edit?: boolean
@@ -66,9 +62,7 @@ function onClick() {
         v-else-if="!edit && !modelValueSrc"
         class="flex flex-col items-center justify-center gap-3 h-64"
       >
-        <NIcon :size="48" :depth="3">
-          <ImageOutlineIcon />
-        </NIcon>
+        <IconImage class="text-5xl text-gray-400" />
       </div>
       <div
         v-else-if="edit && !modelValueSrc"
@@ -77,26 +71,20 @@ function onClick() {
         @click="onClick"
         class="flex flex-col items-center justify-center gap-3 h-64"
       >
-        <NIcon :size="48" :depth="3">
-          <ArchiveIcon />
-        </NIcon>
+        <IconBox class="text-5xl text-gray-400" />
         <p class="text-center">Click or drag a file to this area to upload</p>
       </div>
     </div>
 
-    <NButton
+    <BaseButton
       class="absolute -top-3 -right-3"
       v-if="edit && modelValueSrc"
       @click="onDeleteImage"
-      type="error"
-      strong
-      circle
+      theme="danger"
     >
       <template #icon>
-        <NIcon>
-          <TrashBinIcon />
-        </NIcon>
+        <IconTrash />
       </template>
-    </NButton>
+    </BaseButton>
   </div>
 </template>

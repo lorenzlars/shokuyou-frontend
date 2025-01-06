@@ -1,6 +1,7 @@
 import type { App, Plugin } from 'vue'
 import { AxiosError, type AxiosResponse } from 'axios'
 import { useErrorHandlingContextProvider } from '@/domains/errorHandling/provider/useErrorHandlingContextProvider.ts'
+import { useMessage } from '@/components/message/useMessage.ts'
 
 type NestJsError = {
   errors: string
@@ -13,19 +14,20 @@ export const ErrorHandlingPlugin: Plugin = {
     const { injectContext } = useErrorHandlingContextProvider()
 
     function handleError(error: unknown) {
-      const { t, message } = injectContext()
+      const { showMessage } = useMessage()
+      const { t } = injectContext()
 
       if (error instanceof AxiosError) {
         const axiosResponse = error.response as AxiosResponse<NestJsError>
 
         if (axiosResponse.status === 400) {
-          return message.error(axiosResponse.data.message.join('\n'))
+          return showMessage({ text: axiosResponse.data.message.join('\n') })
         }
 
-        return message.error(error.message)
+        return showMessage({ text: error.message })
       }
 
-      message.error(t('errors.generic'))
+      showMessage({ text: t('errors.generic') })
       console.error(error)
     }
 

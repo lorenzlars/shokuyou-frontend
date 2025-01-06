@@ -1,22 +1,33 @@
 <script lang="ts" setup>
-withDefaults(
+import { computed } from 'vue'
+
+const props = withDefaults(
   defineProps<{
     label?: string
     type?: HTMLButtonElement['type']
-    style?: 'default' | 'primary' | 'danger'
+    theme?: 'neutral' | 'accent' | 'info' | 'warning' | 'success' | 'danger'
   }>(),
   {
     type: 'button',
-    style: 'default',
+    theme: 'neutral',
   },
+)
+
+const backgroundClass = computed(() =>
+  props.theme === 'neutral' ? 'bg-contrast-1' : `bg-${props.theme}`,
 )
 </script>
 
 <template>
-  <button :type class="p-2 rounded-2 border-none cursor-pointer" :class="[`bg-${style}`]">
+  <button
+    :type
+    class="p-3 text-md rounded-lg border-none cursor-pointer hover:bg-contrast-1"
+    :class="[backgroundClass]"
+  >
     <slot>
       {{ label }}
     </slot>
+    <slot name="icon" />
   </button>
 </template>
 

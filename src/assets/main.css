@@ -1,64 +1,71 @@
+
 :root {
   /* Color palette */
-  --color-neutral-light-4: hsl(0, 0%, 100%);
-  --color-neutral-light-3: hsl(0, 0%, 98%);
-  --color-neutral-light-2: hsl(0, 0%, 96%);
-  --color-neutral-light-1: hsl(0, 0%, 94%);
-  --color-neutral: hsl(0, 0%, 40%);
-  --color-neutral-dark-1: hsl(180, 1%, 18%);
-  --color-neutral-dark-2: hsl(180, 1%, 17%);
-  --color-neutral-dark-3: hsl(180, 1%, 16%);
-  --color-neutral-dark-4: hsl(0, 0%, 15%);
+  --color-neutral-light-4: hsl(0, 0%, 90%);
+  --color-neutral-light-3: hsl(0, 0%, 80%);
+  --color-neutral-light-2: hsl(0, 0%, 70%);
+  --color-neutral-light-1: hsl(0, 0%, 60%);
+  --color-neutral: hsl(0, 0%, 50%);
+  --color-neutral-dark-1: hsl(0, 0%, 40%);
+  --color-neutral-dark-2: hsl(0, 0%, 30%);
+  --color-neutral-dark-3: hsl(0, 0%, 20%);
+  --color-neutral-dark-4: hsl(0, 0%, 10%);
 
-  --color-yellow-light-1: hsl(45, 94%, 65%);
   --color-yellow: hsl(43, 84%, 60%);
-  --color-yellow-dark-1: hsl(44, 83%, 46%);
 
   --color-red: hsl(0, 78%, 52%);
 
-  --color-beige: hsl(36, 8%, 65%);
+  --color-green: hsl(120, 50%, 46%);
+
+  --color-blue: hsl(212, 92%, 43%);
+
+  --color-beige: hsl(35, 9%, 53%);
 
   /* Color theme */
-  --color-text: var(--color-neutral-dark-4);
-  --color-text-secondary: var(--color-neutral-dark-3);
+  --color-text: #000;
 
-  --color-bg-1: var(--color-neutral-light-4);
-  --color-bg-2: var(--color-neutral-light-3);
-  --color-bg-3: var(--color-neutral-light-2);
-  --color-bg-4: var(--color-neutral-light-1);
+  --color-bg: #fff;
 
-  --color-accent: var(--color-yellow);
-  --color-accent-focus: var(--color-yellow-dark-1);
+  --color-contrast-1: var(--color-neutral-light-4);
+  --color-contrast-2: var(--color-neutral-light-3);
+  --color-contrast-3: var(--color-neutral-light-2);
+  --color-contrast-4: var(--color-neutral-light-1);
 
+  --color-accent: var(--color-beige);
+
+  --color-info: var(--color-blue);
+  --color-warning: var(--color-yellow);
+  --color-success: var(--color-green);
   --color-danger: var(--color-red);
 }
 
-/*@media (prefers-color-scheme: dark) {*/
-/*  :root {*/
-/*    --color-text: var(--color-beige);*/
-/*    --color-text-secondary: var(--color-neutral);*/
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-text: #fff;
 
-/*    --color-bg-1: var(--color-neutral-dark-1);*/
-/*    --color-bg-2: var(--color-neutral-dark-2);*/
-/*    --color-bg-3: var(--color-neutral-dark-3);*/
-/*    --color-bg-4: var(--color-neutral-dark-4);*/
+    --color-bg: #000;
 
-/*    --color-accent: hsl(from var(--color-yellow) h calc(s - 20) calc(l - 10));*/
-/*  }*/
+    --color-accent: hsl(from var(--color-yellow) h calc(s - 20) calc(l - 10));
+  }
 
-/*  img {*/
-/*    filter: brightness(80%);*/
-/*  }*/
-/*}*/
+  img {
+    filter: brightness(80%);
+  }
+}
 
 /* Base element styles */
 
 html {
+  font-family: 'Inter', sans-serif;
   color: var(--color-text);
-  background-color: var(--color-bg-1);
+  background-color: var(--color-bg);
   font-size: 12pt;
   line-height: 1.2rem;
   scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
 }
 
 a {

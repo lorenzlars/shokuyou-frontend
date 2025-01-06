@@ -1,9 +1,7 @@
 import type { useI18n } from 'vue-i18n'
-import { useMessage } from 'naive-ui'
 
 type ErrorHandlingProviderContext = {
   t: ReturnType<typeof useI18n>['t']
-  message: ReturnType<typeof useMessage>
 }
 
 let context: ErrorHandlingProviderContext
