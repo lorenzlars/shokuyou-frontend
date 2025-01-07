@@ -1,7 +1,7 @@
 <script lang="ts" setup>
-import InputField from '@/components/inputs/InputField.vue'
+import BaseInput from '@/components/baseInput/BaseInput.vue'
 import FormField, { type FormFieldProps } from './FormField.vue'
-import TextareaField from '@/components/inputs/TextareaField.vue'
+import BaseTextarea from '@/components/baseTextarea/BaseTextarea.vue'
 const NumberFormField = FormField<string>
 
 defineProps<
@@ -14,8 +14,8 @@ defineProps<
 <template>
   <NumberFormField :name :label>
     <template #default="field">
-      <InputField v-if="type !== 'textarea'" v-bind="{ ...field, ...$attrs }" :type />
-      <TextareaField v-else v-bind="{ ...field, ...$attrs }" />
+      <BaseInput v-if="type !== 'textarea'" v-bind="{ ...field, ...$attrs }" :type />
+      <BaseTextarea v-else v-bind="{ ...field, ...$attrs }" />
     </template>
 
     <template #feedback="props">

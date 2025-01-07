@@ -10,6 +10,7 @@ const colors: Record<string, string> = {
   'neutral-3': 'var(--color-neutral-3)',
   primary: 'var(--color-primary)',
   secondary: 'var(--color-secondary)',
+  tertiary: 'var(--color-tertiary)',
   info: 'var(--color-info)',
   warning: 'var(--color-warning)',
   success: 'var(--color-success)',

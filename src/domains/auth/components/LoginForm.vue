@@ -8,7 +8,7 @@ import { useAuthStore } from '@/domains/auth/stores/authStore.ts'
 import { AxiosError } from 'axios'
 import { StringFormField } from '@/components/form'
 import BaseButton from '@/components/baseButton/BaseButton.vue'
-import BaseCheckbox from '@/components/BaseCheckbox.vue'
+import BaseCheckbox from '@/components/baseCheckbox/BaseCheckbox.vue'
 
 const rememberMe = shallowRef(false)
 const { handleSubmit } = useLoginForm()

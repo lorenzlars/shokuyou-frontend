@@ -7,7 +7,7 @@ const props = defineProps<{
 </script>
 
 <template>
-  <RouterLink v-bind="props" class="text-blue hover:text-contrast-4 hover:underline">
+  <RouterLink v-bind="props" class="text-blue hover:text-contrast-4 hover:underline cursor-pointer">
     <slot />
   </RouterLink>
 </template>

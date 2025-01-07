@@ -16,6 +16,7 @@
     "format": "prettier --write src/",
     "api:generate": "openapi-ts",
     "storybook": "storybook dev -p 6006",
+    "storybook:init": "pnpm dlx msw init public/",
     "build-storybook": "storybook build"
   },
   "dependencies": {
@@ -62,6 +63,9 @@
     "eslint-plugin-storybook": "^0.11.2",
     "eslint-plugin-vue": "^9.30.0",
     "jsdom": "^25.0.1",
+    "lorem-ipsum": "^2.0.8",
+    "msw": "^2.7.0",
+    "msw-storybook-addon": "^2.0.4",
     "npm-run-all2": "^7.0.1",
     "prettier": "^3.3.3",
     "sass-embedded": "^1.83.1",
@@ -81,6 +85,11 @@
   "eslintConfig": {
     "extends": [
       "plugin:storybook/recommended"
+    ]
+  },
+  "msw": {
+    "workerDirectory": [
+      "public"
     ]
   }
 }

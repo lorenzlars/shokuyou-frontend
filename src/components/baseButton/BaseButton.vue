@@ -8,6 +8,7 @@ withDefaults(
     theme?: 'neutral' | 'accent' | 'info' | 'warning' | 'success' | 'danger'
     loading?: boolean
     circle?: boolean
+    small?: boolean // TODO: Not implemented
   }>(),
   {
     type: 'button',
@@ -16,9 +17,9 @@ withDefaults(
 )
 
 const themeToClass = {
-  neutral: 'bg-neutral-1 text-dark hover:bg-neutral-1/80',
+  neutral: 'bg-neutral-3 text-dark hover:bg-neutral-3/80',
   accent:
-    'bg-gradient-to-r from-primary to-secondary text-light hover:from-primary/90 hover:to-secondary/90 border-primary border-solid',
+    'bg-gradient-to-r from-primary to-secondary text-light hover:from-primary/90 hover:to-secondary/90 border-tertiary border-solid',
   info: 'bg-info text-light hover:bg-info/80',
   success: 'bg-success text-light hover:bg-success/80',
   warning: 'bg-warning text-light hover:bg-warning/80',

@@ -6,9 +6,9 @@ import { useI18n } from 'vue-i18n'
 import { useField } from 'vee-validate'
 import { useRecipeService } from '@/domains/recipes/composables/useRecipeService'
 import { useSafeAsyncState } from '@/composables/useSafeAsyncState.ts'
-import ImageContainer from '@/domains/recipes/components/ImageContainer.vue'
 import { StringFormField, NumberFormField, preprocessValues } from '@/components/form'
 import BaseButton from '@/components/baseButton/BaseButton.vue'
+import ImageSelector from '@/components/imageSelector/ImageSelector.vue'
 
 const emit = defineEmits<{
   submitted: [values?: RecipeRequestDto]
@@ -75,7 +75,7 @@ function onEditToggle() {
   <form @submit="onSubmit">
     <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
       <div class="flex flex-col gap-3">
-        <ImageContainer v-model="image" v-model:src="imageUrl" :edit="isEditMode" />
+        <ImageSelector v-model="image" v-model:src="imageUrl" :edit="isEditMode" />
 
         <StringFormField name="name" :disabled="!isEditMode" class="w-full" />
 
@@ -116,7 +116,7 @@ function onEditToggle() {
 
     <div class="flex justify-between">
       <div class="flex gap-3">
-        <BaseButton v-if="isEditMode" type="submit" :loading :disabled="loading">
+        <BaseButton v-if="isEditMode" type="submit" theme="success" :loading :disabled="loading">
           {{ initialValues ? t('general.update') : t('general.create') }}
         </BaseButton>
 
@@ -125,6 +125,7 @@ function onEditToggle() {
           @click="onDelete(initialValues.id)"
           :loading
           :disabled="loading"
+          theme="danger"
         >
           {{ t('general.delete') }}
         </BaseButton>

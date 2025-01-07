@@ -1,10 +1,17 @@
 <script lang="ts" setup>
 import BaseButton from '@/components/baseButton/BaseButton.vue'
-import { IconImage, IconTrash, IconBox } from '@iconify-prerendered/vue-fa-solid'
+import { IconTrash } from '@iconify-prerendered/vue-fa-solid'
+import ImageSelectorEmpty from '@/components/imageSelector/ImageSelectorEmpty.vue'
+import ImageSelectorSelect from '@/components/imageSelector/ImageSelectorSelect.vue'
 
-defineProps<{
-  edit?: boolean
-}>()
+withDefaults(
+  defineProps<{
+    edit?: boolean
+  }>(),
+  {
+    edit: true,
+  },
+)
 
 const modelValue = defineModel<File | null>({ required: false })
 const modelValueSrc = defineModel<string>('src', { required: false })
@@ -52,32 +59,27 @@ function onClick() {
 
 <template>
   <div class="relative">
-    <div class="bg-gray-100">
+    <div class="rounded-xl overflow-hidden">
       <img
         v-if="modelValueSrc"
         :src="modelValueSrc"
+        alt="Recipe picture"
         class="object-cover object-center w-full h-full"
       />
-      <div
-        v-else-if="!edit && !modelValueSrc"
-        class="flex flex-col items-center justify-center gap-3 h-64"
-      >
-        <IconImage class="text-5xl text-gray-400" />
-      </div>
-      <div
+
+      <ImageSelectorEmpty v-else-if="!edit && !modelValueSrc" class="h-64" />
+
+      <ImageSelectorSelect
         v-else-if="edit && !modelValueSrc"
         @dragover.prevent
         @drop.prevent="onFileDrop"
         @click="onClick"
-        class="flex flex-col items-center justify-center gap-3 h-64"
-      >
-        <IconBox class="text-5xl text-gray-400" />
-        <p class="text-center">Click or drag a file to this area to upload</p>
-      </div>
+        class="h-64"
+      />
     </div>
 
     <BaseButton
-      class="absolute -top-3 -right-3"
+      class="absolute -top-5 -right-5"
       v-if="edit && modelValueSrc"
       @click="onDeleteImage"
       theme="danger"

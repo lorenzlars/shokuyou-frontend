@@ -1,11 +1,11 @@
 <script lang="ts" setup>
 import { type GetRecipesData, type RecipeResponseDto, RecipesService } from '@/api'
 import { useRouter } from '@kitbag/router'
-import LazyGrid from '@/components/LazyGrid.vue'
+import LazyGrid from '@/components/lazyGrid/LazyGrid.vue'
 import { shallowRef } from 'vue'
 import type { PaginationResponse } from '@/composables/usePagination.ts'
 import RecipeCard from '@/domains/recipes/components/RecipeCard.vue'
-import InputField from '@/components/inputs/InputField.vue'
+import BaseInput from '@/components/baseInput/BaseInput.vue'
 import BaseButton from '@/components/baseButton/BaseButton.vue'
 
 const { push } = useRouter()
@@ -29,11 +29,14 @@ async function loadMore(
       <BaseButton label="Create" @click="push('recipe-create')"></BaseButton>
     </div>
 
-    <InputField v-model="filter" placeholder="Search recipe name" />
+    <BaseInput v-model="filter" placeholder="Search recipe name" />
 
     <LazyGrid :loader="loadMore" :filter v-slot="{ data }">
       <RouterLink :to="`/recipes/${data.id}`">
-        <RecipeCard :recipe="data" />
+        <RecipeCard
+          :recipe="data"
+          class="@hover:scale-101 @hover:shadow-xl duration-300 transition h-full"
+        />
       </RouterLink>
     </LazyGrid>
   </div>

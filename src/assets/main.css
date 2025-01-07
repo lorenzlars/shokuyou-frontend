@@ -8,6 +8,7 @@
 
   --color-primary: hsl(271, 100%, 71%);
   --color-secondary: hsl(43, 84%, 60%);
+  --color-tertiary: hsl(187, 92%, 43%);
 
   --color-info: hsl(212, 92%, 43%);
   --color-warning: hsl(43, 84%, 60%);
@@ -20,17 +21,9 @@
     --color-light: hsl(0, 0%, 2%);
     --color-dark: hsl(0, 0%, 90%);
 
-    --color-neutral-1: hsl(0, 0%, 8%);
-    --color-neutral-2: hsl(0, 0%, 6%);
-    --color-neutral-3: hsl(0, 0%, 4%);
-
-    --color-primary: hsl(271, 100%, 71%);
-    --color-secondary: hsl(43, 84%, 60%);
-
-    --color-info: hsl(212, 92%, 43%);
-    --color-warning: hsl(43, 84%, 60%);
-    --color-success: hsl(120, 50%, 46%);
-    --color-danger: hsl(0, 78%, 52%);
+    --color-neutral-1: hsl(0, 0%, 20%);
+    --color-neutral-2: hsl(0, 0%, 25%);
+    --color-neutral-3: hsl(0, 0%, 30%);
   }
 
   img {

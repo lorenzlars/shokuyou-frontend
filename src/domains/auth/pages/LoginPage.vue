@@ -2,7 +2,7 @@
 import { useRouter } from '@kitbag/router'
 import LoginForm from '@/domains/auth/components/LoginForm.vue'
 import { useI18n } from 'vue-i18n'
-import BaseLink from '@/components/BaseLink.vue'
+import BaseLink from '@/components/baseLink/BaseLink.vue'
 
 const { push } = useRouter()
 const { t } = useI18n()

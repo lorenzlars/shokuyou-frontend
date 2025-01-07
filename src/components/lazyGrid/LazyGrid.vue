@@ -1,12 +1,12 @@
 <script lang="ts" setup generic="T">
 import { onUnmounted, shallowRef } from 'vue'
 import type { GetRecipesData } from '@/api'
-import type { PaginationResponse } from '@/composables/usePagination.ts'
+import type { PaginationParameters, PaginationResponse } from '@/composables/usePagination.ts'
 import { watchDebounced } from '@vueuse/core'
 
 const props = withDefaults(
   defineProps<{
-    loader: (query: GetRecipesData['query']) => Promise<PaginationResponse<T>>
+    loader: (query: PaginationParameters) => Promise<PaginationResponse<T>>
     pageSize?: number
     filter?: string
     columns?: number
