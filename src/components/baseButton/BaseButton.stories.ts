@@ -34,6 +34,25 @@ type Story = StoryObj<typeof meta>
 
 export const Primary: Story = {}
 
+export const Large: Story = {
+  render: (args) => ({
+    components: { BaseButton, IconCheckCircle },
+    setup() {
+      return { args }
+    },
+    template: `
+      <BaseButton style="width: 200px;" v-bind="args">
+        <template #icon>
+          <IconCheckCircle />
+        </template>
+      </BaseButton>
+    `,
+  }),
+  args: {
+    loading: true,
+  },
+}
+
 export const Circle: Story = {
   render: (args) => ({
     components: { BaseButton, IconCheckCircle },

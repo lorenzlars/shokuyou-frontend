@@ -1,64 +1,47 @@
 :root {
-  /* Color palette */
-  --color-neutral-light-4: hsl(0, 0%, 90%);
-  --color-neutral-light-3: hsl(0, 0%, 80%);
-  --color-neutral-light-2: hsl(0, 0%, 70%);
-  --color-neutral-light-1: hsl(0, 0%, 60%);
-  --color-neutral: hsl(0, 0%, 50%);
-  --color-neutral-dark-1: hsl(0, 0%, 40%);
-  --color-neutral-dark-2: hsl(0, 0%, 30%);
-  --color-neutral-dark-3: hsl(0, 0%, 20%);
-  --color-neutral-dark-4: hsl(0, 0%, 10%);
+  --color-light: hsl(0, 0%, 100%);
+  --color-dark: hsl(0, 0%, 2%);
 
-  --color-yellow: hsl(43, 84%, 60%);
+  --color-neutral-1: hsl(0, 0%, 95%);
+  --color-neutral-2: hsl(0, 0%, 90%);
+  --color-neutral-3: hsl(0, 0%, 85%);
 
-  --color-red: hsl(0, 78%, 52%);
+  --color-primary: hsl(271, 100%, 71%);
+  --color-secondary: hsl(43, 84%, 60%);
 
-  --color-green: hsl(120, 50%, 46%);
-
-  --color-blue: hsl(212, 92%, 43%);
-
-  --color-purple: hsl(271, 100%, 71%);
-
-  --color-orange: hsl(34, 97%, 64%);
-
-  /* Color theme */
-  --color-text: #000;
-  --color-bg: #fff;
-
-  --color-contrast-1: var(--color-neutral-light-4);
-  --color-contrast-2: var(--color-neutral-light-3);
-  --color-contrast-3: var(--color-neutral-light-2);
-  --color-contrast-4: var(--color-neutral-light-1);
-
-  --color-primary: var(--color-purple);
-  --color-secondary: var(--color-orange);
-  --color-accent: linear-gradient(90deg, var(--color-primary), var(--color-secondary));
-  --color-info: var(--color-blue);
-  --color-warning: var(--color-yellow);
-  --color-success: var(--color-green);
-  --color-danger: var(--color-red);
+  --color-info: hsl(212, 92%, 43%);
+  --color-warning: hsl(43, 84%, 60%);
+  --color-success: hsl(120, 50%, 46%);
+  --color-danger: hsl(0, 78%, 52%);
 }
 
-/*@media (prefers-color-scheme: dark) {*/
-/*  :root {*/
-/*    --color-text: #fff;*/
-/*    --color-bg: #000;*/
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-light: hsl(0, 0%, 2%);
+    --color-dark: hsl(0, 0%, 90%);
 
-/*    --color-accent: hsl(from var(--color-yellow) h calc(s - 20) calc(l - 10));*/
-/*  }*/
+    --color-neutral-1: hsl(0, 0%, 8%);
+    --color-neutral-2: hsl(0, 0%, 6%);
+    --color-neutral-3: hsl(0, 0%, 4%);
 
-/*  img {*/
-/*    filter: brightness(80%);*/
-/*  }*/
-/*}*/
+    --color-primary: hsl(271, 100%, 71%);
+    --color-secondary: hsl(43, 84%, 60%);
 
-/* Base element styles */
+    --color-info: hsl(212, 92%, 43%);
+    --color-warning: hsl(43, 84%, 60%);
+    --color-success: hsl(120, 50%, 46%);
+    --color-danger: hsl(0, 78%, 52%);
+  }
+
+  img {
+    filter: brightness(80%);
+  }
+}
 
 html {
   font-family: 'Inter', sans-serif;
-  color: var(--color-text);
-  background-color: var(--color-bg);
+  color: var(--color-dark);
+  background-color: var(--color-light);
   font-size: 12pt;
   line-height: 1.2rem;
   scroll-behavior: smooth;
@@ -70,5 +53,5 @@ body {
 
 a {
   text-decoration: none;
-  color: var(--color-text);
+  color: var(--color-dark);
 }

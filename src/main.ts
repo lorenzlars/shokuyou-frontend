@@ -1,6 +1,6 @@
 import '@unocss/reset/normalize.css'
-import './assets/main.css'
 import 'virtual:uno.css'
+import './assets/main.css'
 
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
