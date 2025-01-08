@@ -1,5 +1,5 @@
 <script lang="ts" setup generic="T">
-import { onUnmounted, shallowRef } from 'vue'
+import { onMounted, onUnmounted, shallowRef } from 'vue'
 import type { GetRecipesData } from '@/api'
 import type { PaginationParameters, PaginationResponse } from '@/composables/usePagination.ts'
 import { watchDebounced } from '@vueuse/core'
@@ -16,13 +16,18 @@ const props = withDefaults(
     columns: 3,
   },
 )
-
+defineSlots<{
+  default: (props: { data: T; key: number }) => unknown
+}>()
 const items = shallowRef<T[]>([])
 const state = shallowRef<Omit<PaginationResponse<T>, 'content'>>()
 const loading = shallowRef(false)
 
-window.addEventListener('scroll', handleScroll)
-await loadNextPage({ filter: props.filter })
+onMounted(async () => {
+  window.addEventListener('scroll', handleScroll)
+
+  await loadNextPage({ filter: props.filter })
+})
 
 onUnmounted(() => {
   window.removeEventListener('scroll', handleScroll)
