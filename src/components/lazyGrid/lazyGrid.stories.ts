@@ -50,6 +50,16 @@ const meta = {
       return await response.json()
     },
   },
+  // decorators: [
+  //   (story) => ({
+  //     components: { Story: story() },
+  //     template: `
+  //        <div style="height: 300px; overflow-y: scroll;">
+  //          <Story />
+  //        </div>
+  //      `,
+  //   }),
+  // ],
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-expect-error
   render: (args) => ({
@@ -58,11 +68,9 @@ const meta = {
       return { args }
     },
     template: `
-      <div style="height: 300px; overflow-y: scroll;">
-        <LazyGrid v-bind="args" v-slot="{ data }">
-          <BaseCard v-bind="data" />
-        </LazyGrid>
-      </div>
+      <LazyGrid v-bind="args" v-slot="{ data }">
+        <BaseCard v-bind="data" />
+      </LazyGrid>
     `,
   }),
 } satisfies Meta<typeof LazyGrid<MockResponse>>

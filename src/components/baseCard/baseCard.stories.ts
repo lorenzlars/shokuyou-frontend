@@ -4,7 +4,7 @@ import { LoremIpsum } from 'lorem-ipsum'
 import BaseCard from './BaseCard.vue'
 
 const meta = {
-  title: 'Components/BaseCard',
+  title: 'Components/Base/BaseCard',
   component: BaseCard,
   tags: ['autodocs'],
   render: (args) => ({

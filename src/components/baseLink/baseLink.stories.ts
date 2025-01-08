@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from '@storybook/vue3'
 import BaseLink from './BaseLink.vue'
 
 const meta = {
-  title: 'Components/BaseLink',
+  title: 'Components/Base/BaseLink',
   component: BaseLink,
   tags: ['autodocs'],
   render: (args) => ({

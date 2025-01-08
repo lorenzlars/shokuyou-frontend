@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from '@storybook/vue3'
 import BaseCheckbox from './BaseCheckbox.vue'
 
 const meta = {
-  title: 'Components/BaseCheckbox',
+  title: 'Components/Base/BaseCheckbox',
   component: BaseCheckbox,
   tags: ['autodocs'],
   args: {

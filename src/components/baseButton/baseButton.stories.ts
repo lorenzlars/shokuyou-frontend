@@ -4,7 +4,7 @@ import { IconCheckCircle } from '@iconify-prerendered/vue-fa-regular'
 import BaseButton from './BaseButton.vue'
 
 const meta = {
-  title: 'Components/BaseButton',
+  title: 'Components/Base/BaseButton',
   component: BaseButton,
   tags: ['autodocs'],
   argTypes: {
