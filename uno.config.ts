@@ -1,4 +1,4 @@
-import { defineConfig, presetWebFonts } from 'unocss'
+import { defineConfig, presetAttributify, presetWebFonts } from 'unocss'
 import presetUno from '@unocss/preset-uno'
 import { createLocalFontProcessor } from '@unocss/preset-web-fonts/local'
 
@@ -33,11 +33,16 @@ const generatePropertyDefinitions = (colors: Record<string, string>) => {
 
 export default defineConfig({
   presets: [
+    presetAttributify(),
     presetUno(),
     presetWebFonts({
       provider: 'google',
       fonts: {
-        sans: 'Inter',
+        sans: {
+          name: 'Inter',
+          weights: ['100', '200', '300', '400', '500', '600', '700', '800', '900'],
+          italic: true,
+        },
         mono: 'JetBrains Mono',
       },
       processors: createLocalFontProcessor({

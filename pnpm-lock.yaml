@@ -17,9 +17,15 @@ importers:
       '@iconify-prerendered/vue-fa-solid':
         specifier: ^0.28.1722793361
         version: 0.28.1722793361(vue@3.5.13(typescript@5.6.3))
+      '@iconify-prerendered/vue-pepicons-pencil':
+        specifier: ^0.28.1722795416
+        version: 0.28.1722795416(vue@3.5.13(typescript@5.6.3))
       '@kitbag/router':
         specifier: ^0.14.2
         version: 0.14.2(vue@3.5.13(typescript@5.6.3))
+      '@storybook/addon-viewport':
+        specifier: ^8.4.7
+        version: 8.4.7(storybook@8.4.7(prettier@3.4.2))
       '@unocss/reset':
         specifier: ^0.65.3
         version: 0.65.3
@@ -871,6 +877,11 @@ packages:
 
   '@iconify-prerendered/vue-fa-solid@0.28.1722793361':
     resolution: {integrity: sha512-z53MANXdXGHMR9VUYsVlel/pGbQFLcSpD0etNfpZphcQ5DgRerNwVqctGj/XQlXFJDbpQZEtSz24KU7d5/xAhg==}
+    peerDependencies:
+      vue: ^3.0.0
+
+  '@iconify-prerendered/vue-pepicons-pencil@0.28.1722795416':
+    resolution: {integrity: sha512-c4F26Ce8sFNomN1T7iiOAq3jCdFpfYkJuHmhKQNNfKwVvuHcH9sub9Hbpqqn2q+9z23CQo66NSKI85xbou92Jw==}
     peerDependencies:
       vue: ^3.0.0
 
@@ -5012,6 +5023,10 @@ snapshots:
       vue: 3.5.13(typescript@5.6.3)
 
   '@iconify-prerendered/vue-fa-solid@0.28.1722793361(vue@3.5.13(typescript@5.6.3))':
+    dependencies:
+      vue: 3.5.13(typescript@5.6.3)
+
+  '@iconify-prerendered/vue-pepicons-pencil@0.28.1722795416(vue@3.5.13(typescript@5.6.3))':
     dependencies:
       vue: 3.5.13(typescript@5.6.3)
 

@@ -26,7 +26,7 @@ onMounted(() => {
   <teleport to="body">
     <div class="flex pb-1 pl-1 flex-col gap-2 fixed bottom-0 left-0 z-1000 max-w-50">
       <transition-group name="fade-slide">
-        <Message :message v-for="(message, key) in messages" :key />
+        <Message v-bind="message" v-for="(message, key) in messages" :key />
       </transition-group>
     </div>
   </teleport>

@@ -1,8 +1,9 @@
 import { inject, type Ref } from 'vue'
 
 export type MessageProps = {
-  type?: 'error' | 'success' | 'warning' | 'info'
-  text: string
+  theme?: 'neutral' | 'danger' | 'success' | 'warning' | 'info'
+  title?: string
+  content: string
 }
 
 export type MessageOptionProps = {

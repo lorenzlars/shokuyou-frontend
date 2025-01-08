@@ -12,7 +12,7 @@ export function useMessage() {
     let messageType: MessageType
 
     if (typeof message === 'string') {
-      messageType = { ...options, text: message }
+      messageType = { ...options, content: message }
     } else {
       messageType = { ...options, ...message }
     }

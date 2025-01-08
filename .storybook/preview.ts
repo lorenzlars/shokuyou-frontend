@@ -1,5 +1,6 @@
 import type { Preview } from '@storybook/vue3'
-import { initialize, mswDecorator, mswLoader } from 'msw-storybook-addon'
+import { initialize, mswLoader } from 'msw-storybook-addon'
+import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport'
 
 import '@unocss/reset/normalize.css'
 import 'virtual:uno.css'
@@ -19,6 +20,9 @@ initialize({
 
 const preview: Preview = {
   parameters: {
+    viewport: {
+      options: INITIAL_VIEWPORTS,
+    },
     docs: {
       toc: true,
     },
@@ -31,7 +35,6 @@ const preview: Preview = {
     },
   },
   loaders: [mswLoader],
-  decorators: [mswDecorator],
 }
 
 export default preview
