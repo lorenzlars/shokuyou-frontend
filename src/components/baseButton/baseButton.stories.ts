@@ -25,6 +25,7 @@ const meta = {
   },
   args: {
     label: 'Button',
+    theme: 'accent',
   },
 } satisfies Meta<typeof BaseButton>
 

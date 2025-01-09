@@ -64,7 +64,7 @@ function onClick() {
         v-if="modelValueSrc"
         :src="modelValueSrc"
         alt="Recipe picture"
-        class="object-cover object-center w-full h-full"
+        class="object-cover object-center w-full h-full block"
       />
 
       <ImageSelectorEmpty v-else-if="!edit && !modelValueSrc" class="h-64" />

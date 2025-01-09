@@ -7,7 +7,7 @@ defineProps<{
 
 <template>
   <div
-    class="flex flex-col border-1 border-solid border-neutral-1 rounded-xl overflow-hidden text-dark bg-neutral-1"
+    class="flex flex-col border-4 border-solid border-neutral-3 rounded-xl overflow-hidden text-dark bg-neutral-3"
   >
     <div v-if="$slots.cover" class="h-56 overflow-hidden">
       <div class="flex justify-center items-center w-full h-full">
@@ -15,7 +15,7 @@ defineProps<{
       </div>
     </div>
 
-    <div class="px-3">
+    <div class="px-3 bg-neutral-1 grow">
       <slot>
         <h3 v-if="title">{{ title }}</h3>
 

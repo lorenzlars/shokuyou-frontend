@@ -17,37 +17,48 @@ withDefaults(
 )
 
 const themeToClass = {
-  neutral: 'bg-neutral-3 text-dark hover:bg-neutral-3/80',
+  neutral: 'bg-neutral-3 text-dark hover:bg-neutral-3/90',
   accent:
-    'bg-gradient-to-r from-primary to-secondary text-light hover:from-primary/90 hover:to-secondary/90 border-tertiary border-solid',
-  info: 'bg-info text-light hover:bg-info/80',
-  success: 'bg-success text-light hover:bg-success/80',
-  warning: 'bg-warning text-light hover:bg-warning/80',
-  danger: 'bg-danger text-light hover:bg-danger/80',
+    'bg-gradient-to-r from-primary to-secondary text-light hover:from-primary/90 hover:to-secondary/90',
+  info: 'bg-info text-light hover:bg-info/90',
+  success: 'bg-success text-light hover:bg-success/90',
+  warning: 'bg-warning text-light hover:bg-warning/90',
+  danger: 'bg-danger text-light hover:bg-danger/90',
 }
 </script>
 
 <template>
   <button
     :type
-    class="text-md border-none cursor-pointer transition-all duration-300"
+    class="font-semibold border-none cursor-pointer transition-bg duration-300"
     :class="[
       themeToClass[theme],
-      `${circle ? 'rounded-full p-0 h-10 w-10' : 'rounded-xl px-3 h-10'}`,
+      `${circle ? 'rounded-full p-0 h-10 w-10' : 'rounded-xl px-4 h-12'}`,
     ]"
   >
-    <span class="flex justify-between items-center gap-1">
-      <span>
-        <IconSpinner v-if="loading" class="animate-spin" />
-      </span>
-      <span>
-        <slot v-if="!circle">
+    <span class="flex justify-center items-center">
+      <transition name="fade">
+        <IconSpinner v-if="loading" class="animate-spin w-4" />
+      </transition>
+      <span v-if="!circle" class="mx-3">
+        <slot>
           {{ label }}
         </slot>
       </span>
-      <span>
-        <slot v-if="!circle || (circle && !loading)" name="icon" />
-      </span>
+      <slot name="icon" />
     </span>
   </button>
 </template>
+
+<style lang="scss" scoped>
+.fade-enter-active,
+.fade-leave-active {
+  transition: all 0.3s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+  width: 0;
+}
+</style>
