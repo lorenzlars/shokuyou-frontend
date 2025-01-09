@@ -1,24 +1,24 @@
 <script lang="ts" setup>
-import { getCurrentInstance, onMounted, ref } from 'vue'
-import {
-  messageKey,
-  type MessageOptionProps,
-  type MessageProps,
-  optionKey,
-} from '@/components/message/messageHelper.ts'
+import { ref } from 'vue'
 import Message from '@/components/message/Message.vue'
+import { useMessageContextProvider } from '@/components/message/useMessageContextProvider.ts'
+
+export type MessageProps = {
+  theme?: 'neutral' | 'danger' | 'success' | 'warning' | 'info'
+  title?: string
+  content: string
+}
+
+export type MessageOptionProps = {
+  timeout?: number
+}
+
+const { provideContext } = useMessageContextProvider()
 
 const props = defineProps<MessageOptionProps>()
 const messages = ref<MessageProps[]>([])
 
-onMounted(() => {
-  const context = getCurrentInstance()
-
-  if (context) {
-    context.appContext.app.provide(optionKey, props)
-    context.appContext.app.provide(messageKey, messages)
-  }
-})
+provideContext({ props, messages })
 </script>
 
 <template>
@@ -26,7 +26,12 @@ onMounted(() => {
   <teleport to="body">
     <div class="flex pb-1 pl-1 flex-col gap-2 fixed bottom-0 left-0 z-1000 max-w-50">
       <transition-group name="fade-slide">
-        <Message v-bind="message" v-for="(message, key) in messages" :key />
+        <Message
+          v-bind="message"
+          v-for="(message, key) in messages"
+          :key
+          @close="messages.splice(key, 1)"
+        />
       </transition-group>
     </div>
   </teleport>

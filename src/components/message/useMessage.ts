@@ -1,26 +1,26 @@
-import {
-  injectMessageOptions,
-  injectMessages,
-  type MessageType,
-} from '@/components/message/messageHelper.ts'
+import { useMessageContextProvider } from '@/components/message/useMessageContextProvider.ts'
+import type { MessageOptionProps, MessageProps } from '@/components/message/messageHelper.ts'
+
+export type MessageType = MessageProps & MessageOptionProps
 
 export function useMessage() {
-  const messages = injectMessages()
-  const options = injectMessageOptions()
+  const { injectContext } = useMessageContextProvider()
+  const { props, messages } = injectContext()
 
   function showMessage(message: MessageType | string) {
     let messageType: MessageType
 
     if (typeof message === 'string') {
-      messageType = { ...options, content: message }
+      messageType = { ...props, content: message }
     } else {
-      messageType = { ...options, ...message }
+      messageType = { ...props, ...message }
     }
 
     messages.value.push(messageType)
 
     setTimeout(() => {
-      messages.value.pop()
+      const index = messages.value.indexOf(messageType)
+      messages.value.splice(index, 1)
     }, messageType?.timeout ?? 3000)
   }
 
