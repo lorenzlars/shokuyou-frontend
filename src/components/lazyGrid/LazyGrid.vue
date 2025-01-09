@@ -79,7 +79,7 @@ async function loadNextPage(query?: Omit<GetRecipesData['query'], 'page' | 'page
 </script>
 
 <template>
-  <div class="grid gap-5" :class="[`grid-cols-${columns}`]">
+  <div class="grid gap-6" :class="[`grid-cols-${columns}`]">
     <transition-group name="fade-slide">
       <slot v-for="(item, key) in items" :key v-bind="{ data: item }" />
     </transition-group>

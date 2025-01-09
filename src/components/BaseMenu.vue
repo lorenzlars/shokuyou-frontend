@@ -16,21 +16,23 @@ function checkMatch(href?: string) {
 </script>
 
 <template>
-  <ul class="flex gap-2 list-none font-bold text-md">
-    <li v-for="(option, key) in options" :key>
-      <RouterLink
-        class="no-underline inline-block border-b-2 pb-1 font-normal border-transparent hover:decoration-none hover:border-gray-200 transition-border-color duration-300"
-        :to="(resolve) => resolve(option.name)"
-        v-slot="{ isMatch, isExactMatch, route }"
-      >
-        <span
-          :class="{
-            'text-primary font-bold': isExactMatch || isMatch || checkMatch(route?.href),
-          }"
+  <nav>
+    <ul class="flex gap-8 list-none font-bold text-md p-0">
+      <li v-for="(option, key) in options" :key>
+        <RouterLink
+          class="no-underline inline-block border-b-2 pb-1 font-normal border-transparent hover:decoration-none hover:border-gray-200 transition-border-color duration-300"
+          :to="(resolve) => resolve(option.name)"
+          v-slot="{ isMatch, isExactMatch, route }"
         >
-          {{ option.label }}
-        </span>
-      </RouterLink>
-    </li>
-  </ul>
+          <span
+            :class="{
+              'text-primary font-bold': isExactMatch || isMatch || checkMatch(route?.href),
+            }"
+          >
+            {{ option.label }}
+          </span>
+        </RouterLink>
+      </li>
+    </ul>
+  </nav>
 </template>

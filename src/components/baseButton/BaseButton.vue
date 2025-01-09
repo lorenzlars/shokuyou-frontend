@@ -19,11 +19,11 @@ withDefaults(
 const themeToClass = {
   neutral: 'bg-neutral-3 text-dark hover:bg-neutral-3/90',
   accent:
-    'bg-gradient-to-r from-primary to-secondary text-light hover:from-primary/90 hover:to-secondary/90',
-  info: 'bg-info text-light hover:bg-info/90',
-  success: 'bg-success text-light hover:bg-success/90',
-  warning: 'bg-warning text-light hover:bg-warning/90',
-  danger: 'bg-danger text-light hover:bg-danger/90',
+    'bg-gradient-to-r from-primary to-secondary text-dark hover:from-primary/90 hover:to-secondary/90',
+  info: 'bg-info text-dark hover:bg-info/90',
+  success: 'bg-success text-dark hover:bg-success/90',
+  warning: 'bg-warning text-dark hover:bg-warning/90',
+  danger: 'bg-danger text-dark hover:bg-danger/90',
 }
 </script>
 

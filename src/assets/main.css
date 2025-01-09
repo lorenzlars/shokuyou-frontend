@@ -6,28 +6,39 @@
   --static-color-dark: hsl(0, 0%, 2%);
 
   /* Used for contrast */
-  --color-neutral-1: hsl(0, 0%, 90%);
-  --color-neutral-2: hsl(0, 0%, 85%);
-  --color-neutral-3: hsl(0, 0%, 80%);
+  --color-neutral-1: hsl(0, 0%, 95%);
+  --color-neutral-2: hsl(0, 0%, 90%);
+  --color-neutral-3: hsl(0, 0%, 85%);
+  --color-neutral-4: hsl(0, 0%, 80%);
+  --color-neutral-5: hsl(0, 0%, 75%);
 
   --color-primary: hsl(271, 100%, 71%);
   --color-secondary: hsl(43, 84%, 60%);
-  --color-tertiary: hsl(187, 92%, 43%);
 
-  --color-info: hsl(212, 92%, 43%);
-  --color-warning: hsl(43, 84%, 60%);
-  --color-success: hsl(120, 50%, 46%);
-  --color-danger: hsl(0, 78%, 52%);
+  --color-info: hsl(211, 64%, 56%);
+  --color-warning: hsl(43, 74%, 63%);
+  --color-success: hsl(120, 40%, 58%);
+  --color-danger: hsl(0, 54%, 55%);
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --color-light: hsl(0, 0%, 2%);
+    --color-light: hsl(0, 0%, 10%);
     --color-dark: hsl(0, 0%, 90%);
 
-    --color-neutral-1: hsl(0, 0%, 20%);
-    --color-neutral-2: hsl(0, 0%, 25%);
-    --color-neutral-3: hsl(0, 0%, 30%);
+    --color-neutral-1: hsl(0, 0%, 30%);
+    --color-neutral-2: hsl(0, 0%, 26%);
+    --color-neutral-3: hsl(0, 0%, 22%);
+    --color-neutral-4: hsl(0, 0%, 18%);
+    --color-neutral-5: hsl(0, 0%, 15%);
+
+    --color-primary: hsl(271, 100%, 51%);
+    --color-secondary: hsl(43, 84%, 40%);
+
+    --color-info: hsl(211, 64%, 36%);
+    --color-warning: hsl(43, 74%, 43%);
+    --color-success: hsl(120, 40%, 38%);
+    --color-danger: hsl(0, 54%, 35%);
   }
 
   img {

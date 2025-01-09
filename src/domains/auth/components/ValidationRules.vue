@@ -24,13 +24,13 @@ function validate(rule: RegExp) {
 <template>
   <div class="text-text">
     <p class="m-0">
-      <small class="flex gap-2 items-center" v-for="(rule, key) in rules" :key>
+      <span class="flex gap-2 items-center mb-1" v-for="(rule, key) in rules" :key>
         <span class="leading-0 w-3">
           <IconCheck class="text-success" v-if="validate(rule.regex)" />
           <IconTimes class="text-danger" v-else />
         </span>
         <span>{{ rule.hint }}</span>
-      </small>
+      </span>
     </p>
   </div>
 </template>

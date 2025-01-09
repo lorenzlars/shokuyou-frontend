@@ -7,6 +7,7 @@ import type { PaginationResponse } from '@/composables/usePagination.ts'
 import RecipeCard from '@/domains/recipes/components/RecipeCard.vue'
 import BaseInput from '@/components/baseInput/BaseInput.vue'
 import BaseButton from '@/components/baseButton/BaseButton.vue'
+import { IconPlus } from '@iconify-prerendered/vue-fa-solid'
 
 const { push } = useRouter()
 const filter = shallowRef<string>()
@@ -23,19 +24,23 @@ async function loadMore(
 
 <template>
   <div class="flex flex-col gap-5 py-5">
-    <div class="flex justify-between items-center">
-      <h1 class="m-0">Recipes</h1>
+    <h1 class="text-12 font-black">Recipes</h1>
 
-      <BaseButton label="Create" @click="push('recipe-create')"></BaseButton>
+    <div class="flex justify-between items-center gap-8">
+      <BaseInput class="w-full" v-model="filter" placeholder="Search recipe name" />
+
+      <BaseButton label="Create" @click="push('recipe-create')">
+        <template #icon>
+          <IconPlus />
+        </template>
+      </BaseButton>
     </div>
-
-    <BaseInput v-model="filter" placeholder="Search recipe name" />
 
     <LazyGrid :loader="loadMore" :filter v-slot="{ data }">
       <RecipeCard
         :recipe="data"
         :to="`/recipes/${data.id}`"
-        class="@hover:scale-101 @hover:shadow-xl duration-300 transition h-full"
+        class="@hover:scale-101 @hover:shadow-xl duration-300 transition h-full w-full"
       />
     </LazyGrid>
   </div>
