@@ -28,6 +28,8 @@ const onSubmit = handleSubmit(async (values) => {
 
   emit('submitted', preprocessValues(values, ['passwordConfirm']))
 })
+
+// TODO: a11y errors on password field
 </script>
 
 <template>

@@ -61,6 +61,12 @@ export default defineConfig({
     colors,
   },
   rules: [
+    [
+      /^border-(.+)\/(\d+)$/,
+      ([, color, percentage]) => ({
+        'border-color': `color-mix(in hsl, var(--color-${color}), hsl(0, 0%, 0%) ${(parseInt(percentage) - 100) * -1}%)`,
+      }),
+    ],
     // Rule to make bg-{color}/{opacity} compatible with css variables
     [
       /^bg-(.+)\/(\d+)$/,

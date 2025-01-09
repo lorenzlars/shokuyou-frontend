@@ -9,7 +9,7 @@ const { push } = useRouter()
 const menuOptions: MenuOption[] = [
   {
     label: 'Planner',
-    name: 'recipes',
+    name: 'login',
   },
   {
     label: 'Recipes',
@@ -17,15 +17,15 @@ const menuOptions: MenuOption[] = [
   },
   {
     label: 'Organizer',
-    name: 'recipes',
+    name: 'login',
   },
   {
     label: 'Groceries',
-    name: 'recipes',
+    name: 'login',
   },
   {
     label: 'Profile',
-    name: 'recipes',
+    name: 'login',
   },
 ]
 

@@ -59,22 +59,26 @@ function onClick() {
 
 <template>
   <div class="relative">
-    <div class="rounded-xl overflow-hidden">
+    <div class="">
       <img
         v-if="modelValueSrc"
         :src="modelValueSrc"
         alt="Recipe picture"
-        class="object-cover object-center w-full h-full block"
+        class="object-cover object-center w-full h-full block rounded-xl"
       />
 
-      <ImageSelectorEmpty v-else-if="!edit && !modelValueSrc" class="h-64" />
+      <ImageSelectorEmpty v-else-if="!edit && !modelValueSrc" class="h-64 rounded-xl" />
 
       <ImageSelectorSelect
         v-else-if="edit && !modelValueSrc"
         @dragover.prevent
         @drop.prevent="onFileDrop"
         @click="onClick"
-        class="h-64"
+        @keydown.enter="onClick"
+        class="h-64 rounded-xl focus:ring-2 focus:ring-primary"
+        tabindex="0"
+        role="textbox"
+        label="Click or drag a file to this area to upload"
       />
     </div>
 

@@ -23,8 +23,6 @@ export function useRecipeService() {
       }),
     )
 
-    showMessage(t('messages.recipeUpdatedSuccessfully'))
-
     return recipe
   }
 

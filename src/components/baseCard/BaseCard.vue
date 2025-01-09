@@ -1,13 +1,18 @@
 <script lang="ts" setup>
+import { type RegisteredRouterRoute, RouterLink } from '@kitbag/router'
+
 defineProps<{
+  to?: RegisteredRouterRoute
   title?: string
   description?: string
 }>()
 </script>
 
 <template>
-  <div
-    class="flex flex-col border-4 border-solid border-neutral-3 rounded-xl overflow-hidden text-dark bg-neutral-3"
+  <component
+    :is="to ? RouterLink : 'div'"
+    :to
+    class="flex flex-col border-4 border-solid border-neutral-3 rounded-xl overflow-hidden text-dark bg-neutral-3 focus:outline-none focus:border-primary"
   >
     <div v-if="$slots.cover" class="h-56 overflow-hidden">
       <div class="flex justify-center items-center w-full h-full">
@@ -22,5 +27,5 @@ defineProps<{
         <p v-if="description">{{ description }}</p>
       </slot>
     </div>
-  </div>
+  </component>
 </template>

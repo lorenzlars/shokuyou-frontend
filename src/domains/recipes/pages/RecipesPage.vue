@@ -32,12 +32,11 @@ async function loadMore(
     <BaseInput v-model="filter" placeholder="Search recipe name" />
 
     <LazyGrid :loader="loadMore" :filter v-slot="{ data }">
-      <RouterLink :to="`/recipes/${data.id}`">
-        <RecipeCard
-          :recipe="data"
-          class="@hover:scale-101 @hover:shadow-xl duration-300 transition h-full"
-        />
-      </RouterLink>
+      <RecipeCard
+        :recipe="data"
+        :to="`/recipes/${data.id}`"
+        class="@hover:scale-101 @hover:shadow-xl duration-300 transition h-full"
+      />
     </LazyGrid>
   </div>
 </template>

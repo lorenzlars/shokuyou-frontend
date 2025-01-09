@@ -34,7 +34,7 @@ const fieldProps = reactive({
       <small class="font-semibold">{{ label }}</small>
       <span v-if="meta.required" class="text-danger">*</span>
     </label>
-    <slot :id="name" v-bind="fieldProps" />
+    <slot :id="name" :aria-labelledby="name" v-bind="fieldProps" />
     <div class="min-h-5">
       <slot name="feedback" v-bind="{ value, errorMessage }">
         <transition>

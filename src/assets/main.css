@@ -6,9 +6,9 @@
   --static-color-dark: hsl(0, 0%, 2%);
 
   /* Used for contrast */
-  --color-neutral-1: hsl(0, 0%, 95%);
-  --color-neutral-2: hsl(0, 0%, 90%);
-  --color-neutral-3: hsl(0, 0%, 85%);
+  --color-neutral-1: hsl(0, 0%, 90%);
+  --color-neutral-2: hsl(0, 0%, 85%);
+  --color-neutral-3: hsl(0, 0%, 80%);
 
   --color-primary: hsl(271, 100%, 71%);
   --color-secondary: hsl(43, 84%, 60%);
@@ -51,4 +51,8 @@ body {
 a {
   text-decoration: none;
   color: var(--color-dark);
+}
+
+:focus {
+  outline-color: var(--color-primary);
 }
