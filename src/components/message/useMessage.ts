@@ -1,26 +1,25 @@
 import { useMessageContextProvider } from '@/components/message/useMessageContextProvider.ts'
-import type { MessageOptionProps, MessageProps } from '@/components/message/messageHelper.ts'
+import type { MessageOptionProps, MessageProps } from '@/components/message/MessageProvider.vue'
 
-export type MessageType = MessageProps & MessageOptionProps
+export type MessageType = Omit<MessageProps, 'id'> & MessageOptionProps
 
 export function useMessage() {
   const { injectContext } = useMessageContextProvider()
   const { props, messages } = injectContext()
 
   function showMessage(message: MessageType | string) {
-    let messageType: MessageType
+    let messageType: MessageProps & MessageOptionProps
 
     if (typeof message === 'string') {
-      messageType = { ...props, content: message }
+      messageType = { ...props, content: message, id: crypto.randomUUID() }
     } else {
-      messageType = { ...props, ...message }
+      messageType = { ...props, ...message, id: crypto.randomUUID() }
     }
 
     messages.value.push(messageType)
 
     setTimeout(() => {
-      const index = messages.value.indexOf(messageType)
-      messages.value.splice(index, 1)
+      messages.value = messages.value.filter((m) => m.id !== messageType.id)
     }, messageType?.timeout ?? 3000)
   }
 

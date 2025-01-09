@@ -4,22 +4,32 @@ import MessageProvider from '@/components/message/MessageProvider.vue'
 
 import { useMessage } from '@/components/message/useMessage.ts'
 import BaseButton from '@/components/baseButton/BaseButton.vue'
+import { LoremIpsum } from 'lorem-ipsum'
+
+const lorem = new LoremIpsum()
 
 const meta: Meta<typeof MessageProvider> = {
   title: 'Components/MessageProvider',
   component: MessageProvider,
   tags: ['autodocs'],
+  args: {
+    timeout: 5000,
+  },
   render: (args) => ({
     components: { MessageProvider, BaseButton },
     setup() {
       function showMessageBasic() {
         const { showMessage } = useMessage()
-        showMessage('Content')
+        showMessage(lorem.generateWords(1))
       }
 
       function showMessageAdvanced() {
         const { showMessage } = useMessage()
-        showMessage({ theme: 'neutral', title: 'Title', content: 'Content' })
+        showMessage({
+          theme: 'neutral',
+          title: lorem.generateWords(2),
+          content: lorem.generateSentences(1),
+        })
       }
 
       return { args, showMessageBasic, showMessageAdvanced }

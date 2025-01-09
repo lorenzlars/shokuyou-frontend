@@ -1,7 +1,11 @@
 :root {
   --color-light: hsl(0, 0%, 100%);
-  --color-dark: hsl(0, 0%, 2%);
+  --static-color-light: hsl(0, 0%, 100%);
 
+  --color-dark: hsl(0, 0%, 2%);
+  --static-color-dark: hsl(0, 0%, 2%);
+
+  /* Used for contrast */
   --color-neutral-1: hsl(0, 0%, 95%);
   --color-neutral-2: hsl(0, 0%, 90%);
   --color-neutral-3: hsl(0, 0%, 85%);

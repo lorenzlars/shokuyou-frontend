@@ -4,6 +4,7 @@ import Message from '@/components/message/Message.vue'
 import { useMessageContextProvider } from '@/components/message/useMessageContextProvider.ts'
 
 export type MessageProps = {
+  id: string
   theme?: 'neutral' | 'danger' | 'success' | 'warning' | 'info'
   title?: string
   content: string
@@ -19,18 +20,25 @@ const props = defineProps<MessageOptionProps>()
 const messages = ref<MessageProps[]>([])
 
 provideContext({ props, messages })
+
+function removeMessage(id: string) {
+  messages.value = messages.value.filter((msg) => msg.id !== id)
+}
 </script>
 
 <template>
   <slot />
   <teleport to="body">
-    <div class="flex pb-1 pl-1 flex-col gap-2 fixed bottom-0 left-0 z-1000 max-w-50">
+    <div
+      class="flex mb-4 ml-4 flex-col gap-2 fixed bottom-0 left-0 z-1000 w-full md:w-128 items-stretch"
+    >
       <transition-group name="fade-slide">
         <Message
+          class="hover:shadow-md transition-all duration-300 w-full"
           v-bind="message"
-          v-for="(message, key) in messages"
-          :key
-          @close="messages.splice(key, 1)"
+          v-for="message in messages"
+          :key="message.id"
+          @close="removeMessage(message.id)"
         />
       </transition-group>
     </div>

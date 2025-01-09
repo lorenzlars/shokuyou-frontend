@@ -2,9 +2,15 @@ import { defineConfig, presetAttributify, presetWebFonts } from 'unocss'
 import presetUno from '@unocss/preset-uno'
 import { createLocalFontProcessor } from '@unocss/preset-web-fonts/local'
 
-const colors: Record<string, string> = {
-  light: 'var(--color-light)',
-  dark: 'var(--color-dark)',
+const colors = {
+  light: {
+    DEFAULT: 'var(--color-light)',
+    static: 'var(--static-color-light)',
+  },
+  dark: {
+    DEFAULT: 'var(--color-dark)',
+    static: 'var(--static-color-dark)',
+  },
   'neutral-1': 'var(--color-neutral-1)',
   'neutral-2': 'var(--color-neutral-2)',
   'neutral-3': 'var(--color-neutral-3)',
@@ -15,20 +21,6 @@ const colors: Record<string, string> = {
   warning: 'var(--color-warning)',
   success: 'var(--color-success)',
   danger: 'var(--color-danger)',
-}
-
-const generatePropertyDefinitions = (colors: Record<string, string>) => {
-  return Object.keys(colors)
-    .map(
-      (colorKey) => `
-        @property ${colors[colorKey].match(/var\((--[a-zA-Z0-9-_]+)\)/)[1]} {
-          syntax: '<color>';
-          initial-value: transparent;
-          inherits: true;
-        }
-      `,
-    )
-    .join('\n')
 }
 
 export default defineConfig({
@@ -52,11 +44,6 @@ export default defineConfig({
       }),
     }),
   ],
-  preflights: [
-    {
-      getCSS: () => generatePropertyDefinitions(colors),
-    },
-  ],
   safelist: [
     () => Array.from({ length: 5 }, (_, index) => `grid-cols-${index + 1}`),
     () => Object.keys(colors).map((color) => `bg-${color}`),
@@ -67,8 +54,8 @@ export default defineConfig({
   ],
   shortcuts: {
     container: 'm-auto px-5 max-w-screen-lg w-full',
-    'bg-gradient': 'bg-gradient-to-r from-primary to-secondary ',
-    'hover:bg-gradient/80': 'hover:bg-gradient-to-r hover:from-primary/80 hover:to-secondary/80',
+    'bg-accent': 'bg-gradient-to-r from-primary to-secondary ',
+    'hover:bg-accent/80': 'hover:bg-gradient-to-r hover:from-primary/80 hover:to-secondary/80',
   },
   theme: {
     colors,
@@ -78,7 +65,7 @@ export default defineConfig({
     [
       /^bg-(.+)\/(\d+)$/,
       ([, color, percentage]) => ({
-        'background-color': `color-mix(in srgb, var(--color-${color}), transparent ${100 - +percentage}%)`,
+        'background-color': `color-mix(in hsl, var(--color-${color}), hsl(0, 0%, 0%) ${(parseInt(percentage) - 100) * -1}%)`,
       }),
     ],
     // Rules to make gradient colors changeable by opacity
@@ -86,14 +73,14 @@ export default defineConfig({
       /^from-(.+)\/(\d+)$/,
       ([, color, percentage]) => ({
         '--un-gradient-from-position': '0%',
-        '--un-gradient-from': `color-mix(in srgb, var(--color-${color}), transparent ${100 - +percentage}%)`,
+        '--un-gradient-from': `color-mix(in hsl, var(--color-${color}), hsl(0, 0%, 0%) ${(parseInt(percentage) - 100) * -1}%)`,
       }),
     ],
     [
       /^to-(.+)\/(\d+)$/,
       ([, color, percentage]) => ({
         '--un-gradient-to-position': '100%',
-        '--un-gradient-to': `color-mix(in srgb, var(--color-${color}), transparent ${100 - +percentage}%)`,
+        '--un-gradient-to': `color-mix(in hsl, var(--color-${color}), hsl(0, 0%, 0%) ${(parseInt(percentage) - 100) * -1}%)`,
       }),
     ],
   ],

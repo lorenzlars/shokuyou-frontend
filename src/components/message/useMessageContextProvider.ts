@@ -1,5 +1,5 @@
-import type { MessageOptionProps, MessageProps } from '@/components/message/messageHelper.ts'
 import type { Ref } from 'vue'
+import type { MessageOptionProps, MessageProps } from '@/components/message/MessageProvider.vue'
 
 type MessageProviderContext = {
   props: MessageOptionProps
