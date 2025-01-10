@@ -30,7 +30,7 @@
     "@unocss/reset": "^0.65.3",
     "@vee-validate/i18n": "^4.15.0",
     "@vee-validate/yup": "^4.15.0",
-    "@vueuse/core": "^12.3.0",
+    "@vueuse/core": "^12.4.0",
     "axios": "^1.7.9",
     "localforage": "^1.10.0",
     "pinia": "^2.2.6",
