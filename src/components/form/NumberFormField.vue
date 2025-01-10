@@ -7,7 +7,11 @@ defineProps<FormFieldProps>()
 </script>
 
 <template>
-  <NumberFormField :path :label v-slot="field">
-    <BaseInput v-bind="{ ...field, ...$attrs }" type="number" />
+  <NumberFormField :path :label v-slot="{ fieldProps, meta }">
+    <BaseInput
+      v-bind="{ ...fieldProps, ...$attrs }"
+      type="number"
+      :class="{ '!border-danger': !meta.valid }"
+    />
   </NumberFormField>
 </template>

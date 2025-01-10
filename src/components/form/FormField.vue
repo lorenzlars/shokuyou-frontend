@@ -1,5 +1,5 @@
 <script lang="ts" setup generic="T">
-import { useField } from 'vee-validate'
+import { useField, type FieldMeta } from 'vee-validate'
 import { injectSchema, type Schema } from './formHelper.ts'
 import { useI18n } from 'vue-i18n'
 import { reactive } from 'vue'
@@ -10,7 +10,7 @@ export type FormFieldProps = {
   label?: string
 }
 
-type DefaultSlotProps<T> = {
+type DefaultSlotFieldProps<T> = {
   id: string
   name: string
   placeholder: string
@@ -21,6 +21,11 @@ type DefaultSlotProps<T> = {
   'aria-label': string
   'aria-invalid': boolean
   'aria-required': boolean
+}
+
+type DefaultSlotProps<T> = {
+  fieldProps: DefaultSlotFieldProps<T>
+  meta: FieldMeta<T>
 }
 
 const props = defineProps<FormFieldProps>()
@@ -59,7 +64,7 @@ const fieldProps = reactive({
       <strong>{{ label }}</strong>
       <span v-if="meta.required" class="text-danger" aria-hidden="true">*</span>
     </label>
-    <slot v-bind="fieldProps" />
+    <slot v-bind="{ fieldProps, meta }" />
     <div class="min-h-5">
       <slot name="feedback" v-bind="{ value, errorMessage }">
         <transition>
