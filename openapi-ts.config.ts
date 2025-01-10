@@ -17,7 +17,8 @@ export default defineConfig({
     {
       name: '@hey-api/sdk',
       transformer: true,
-      validator: true,
+      // This should be false. Is injecting zod. And zod is stripping off values.
+      validator: false,
       asClass: true,
     },
   ],

@@ -9,6 +9,7 @@ withDefaults(
     loading?: boolean
     circle?: boolean
     small?: boolean // TODO: Not implemented
+    disabled?: boolean
   }>(),
   {
     type: 'button',
@@ -34,6 +35,7 @@ const themeToClass = {
     :class="[
       themeToClass[theme],
       `${circle ? 'rounded-full p-0 h-10 w-10' : 'rounded-xl px-4 h-12'}`,
+      `${disabled ? 'cursor-not-allowed' : ''}`,
     ]"
   >
     <span class="flex justify-center items-center">

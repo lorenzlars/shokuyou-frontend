@@ -1,6 +1,6 @@
 import { useForm } from 'vee-validate'
 import type { RecipeRequestDto } from '@/api'
-import { object, string, number, mixed } from 'yup'
+import { object, string, number, mixed, array } from 'yup'
 import { toProvidedTypedSchema } from '@/components/form'
 
 export type RecipeFormValues = RecipeRequestDto & {
@@ -16,7 +16,11 @@ export function useRecipeForm(initialValues?: RecipeRequestDto) {
     source: string().label('Source'),
     servings: number().label('Servings'),
     duration: number().label('Duration'),
-    ingredients: string().label('Ingredients'),
+    ingredients: array(
+      object({
+        name: string().required(),
+      }),
+    ).label('Ingredients'),
     instructions: string().label('Instructions'),
     nutrition: string().label('Nutrition'),
     notes: string().label('Notes'),

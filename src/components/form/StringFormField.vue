@@ -2,7 +2,7 @@
 import BaseInput from '@/components/baseInput/BaseInput.vue'
 import FormField, { type FormFieldProps } from './FormField.vue'
 import BaseTextarea from '@/components/baseTextarea/BaseTextarea.vue'
-const NumberFormField = FormField<string>
+const StringFormField = FormField<string>
 
 defineProps<
   FormFieldProps & {
@@ -12,7 +12,7 @@ defineProps<
 </script>
 
 <template>
-  <NumberFormField :name :label>
+  <StringFormField :name :label>
     <template #default="field">
       <BaseInput v-if="type !== 'textarea'" v-bind="{ ...field, ...$attrs }" :type />
       <BaseTextarea v-else v-bind="{ ...field, ...$attrs }" />
@@ -21,5 +21,5 @@ defineProps<
     <template #feedback="props">
       <slot name="feedback" v-bind="props" />
     </template>
-  </NumberFormField>
+  </StringFormField>
 </template>

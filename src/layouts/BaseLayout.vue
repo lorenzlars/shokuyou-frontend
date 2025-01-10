@@ -17,8 +17,8 @@ const menuOptions: MenuOption[] = [
     name: 'recipes',
   },
   {
-    label: 'Organizer',
-    name: 'login',
+    label: 'Ingredients',
+    name: 'ingredients',
   },
   {
     label: 'Groceries',

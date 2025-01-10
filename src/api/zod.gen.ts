@@ -2,16 +2,25 @@
 
 import { z } from 'zod';
 
+export const zIngredientRequestDto = z.object({
+    name: z.string()
+});
+
 export const zRecipeRequestDto = z.object({
     name: z.string(),
     description: z.string().optional(),
     source: z.string().optional(),
     servings: z.number().optional(),
     duration: z.number().optional(),
-    ingredients: z.string().optional(),
+    ingredients: z.array(zIngredientRequestDto).optional(),
     instructions: z.string().optional(),
     nutrition: z.string().optional(),
     notes: z.string().optional()
+});
+
+export const zIngredientResponseDto = z.object({
+    id: z.string(),
+    name: z.string()
 });
 
 export const zRecipeResponseDto = z.object({
@@ -21,7 +30,7 @@ export const zRecipeResponseDto = z.object({
     source: z.string().optional(),
     servings: z.number().optional(),
     duration: z.number().optional(),
-    ingredients: z.string().optional(),
+    ingredients: z.array(zIngredientResponseDto).optional(),
     instructions: z.string().optional(),
     nutrition: z.string().optional(),
     notes: z.string().optional(),
@@ -75,6 +84,12 @@ export const zUpdateRecipeResponse = zRecipeResponseDto;
 export const zUploadImageResponse = zRecipeResponseDto;
 
 export const zUpdateImageResponse = zRecipeResponseDto;
+
+export const zGetIngredientsResponse = zPaginationResponseDto.merge(z.object({
+    content: z.array(zIngredientResponseDto).optional()
+}));
+
+export const zCreateIngredientResponse = zIngredientResponseDto;
 
 export const zUserLoginResponse = zAuthResponseDto;
 

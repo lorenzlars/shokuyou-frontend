@@ -9,6 +9,7 @@ import { useSafeAsyncState } from '@/composables/useSafeAsyncState.ts'
 import { StringFormField, NumberFormField, preprocessValues } from '@/components/form'
 import BaseButton from '@/components/baseButton/BaseButton.vue'
 import ImageSelector from '@/components/imageSelector/ImageSelector.vue'
+import IngredientsFormField from '@/domains/recipes/components/IngredientsFormField.vue'
 
 const emit = defineEmits<{
   submitted: [values?: RecipeRequestDto]
@@ -94,12 +95,7 @@ function onEditToggle() {
       </div>
 
       <div class="flex flex-col gap-3 col-span-2">
-        <StringFormField
-          name="ingredients"
-          :disabled="!isEditMode"
-          class="w-full"
-          type="textarea"
-        />
+        <IngredientsFormField name="ingredients" :disabled="!isEditMode" class="w-full" />
 
         <StringFormField
           name="instructions"

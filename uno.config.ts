@@ -54,7 +54,7 @@ export default defineConfig({
     'rounded-full',
   ],
   shortcuts: {
-    container: 'm-auto px-5 max-w-screen-lg w-full',
+    container: 'mx-auto px-5 max-w-screen-lg w-full',
     'bg-accent': 'bg-gradient-to-r from-primary to-secondary ',
     'hover:bg-accent/80': 'hover:bg-gradient-to-r hover:from-primary/80 hover:to-secondary/80',
   },
