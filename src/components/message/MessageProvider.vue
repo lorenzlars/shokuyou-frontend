@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { ref } from 'vue'
-import Message from '@/components/message/Message.vue'
+import BaseMessage from '@/components/message/BaseMessage.vue'
 import { useMessageContextProvider } from '@/components/message/useMessageContextProvider.ts'
 
 export type MessageProps = {
@@ -33,7 +33,7 @@ function removeMessage(id: string) {
       class="flex mb-4 ml-4 flex-col gap-2 fixed bottom-0 left-0 z-1000 w-full md:w-128 items-stretch"
     >
       <transition-group name="fade-slide">
-        <Message
+        <BaseMessage
           class="hover:shadow-md transition-all duration-300 w-full"
           v-bind="message"
           v-for="message in messages"

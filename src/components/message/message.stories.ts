@@ -1,14 +1,14 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
 
-import Message from '@/components/message/Message.vue'
+import BaseMessage from '@/components/message/BaseMessage.vue'
 import { LoremIpsum } from 'lorem-ipsum'
 
 const lorem = new LoremIpsum()
 
-const meta: Meta<typeof Message> = {
+const meta: Meta<typeof BaseMessage> = {
   title: 'Components/Message',
-  component: Message,
-  subcomponents: { Message },
+  component: BaseMessage,
+  subcomponents: { Message: BaseMessage },
   tags: ['autodocs'],
   argTypes: {
     theme: {
@@ -23,6 +23,6 @@ const meta: Meta<typeof Message> = {
 }
 export default meta
 
-type Story = StoryObj<typeof Message>
+type Story = StoryObj<typeof BaseMessage>
 
 export const Primary: Story = {}
