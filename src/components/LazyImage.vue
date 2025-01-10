@@ -12,10 +12,12 @@ const loading = shallowRef(true)
 
 watch(
   imgElement,
-  () => {
-    imgElement.value.addEventListener('loaded', () => {
-      loading.value = false
-    })
+  (element) => {
+    if (element) {
+      element.addEventListener('loaded', () => {
+        loading.value = false
+      })
+    }
   },
   { once: true },
 )
