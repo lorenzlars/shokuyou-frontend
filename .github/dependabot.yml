@@ -2,7 +2,6 @@ version: 2
 updates:
   - package-ecosystem: 'github-actions'
     target-branch: main
-    versioning-strategy: increase
     directory: '/'
     open-pull-requests-limit: 10
     commit-message:
