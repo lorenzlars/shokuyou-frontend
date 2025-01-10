@@ -34,15 +34,15 @@ const onSubmit = handleSubmit(async (values) => {
 
 <template>
   <form class="flex flex-col gap-3" @submit="onSubmit">
-    <StringFormField class="w-full" name="username" />
+    <StringFormField class="w-full" path="username" />
 
-    <StringFormField class="w-full" type="password" name="password">
+    <StringFormField class="w-full" type="password" path="password">
       <template #feedback="{ value }">
         <ValidationRules :value :rules="passwordRules" />
       </template>
     </StringFormField>
 
-    <StringFormField class="w-full" type="password" name="passwordConfirm" />
+    <StringFormField class="w-full" type="password" path="passwordConfirm" />
 
     <BaseButton theme="accent" type="submit" :loading>
       {{ t('general.register') }}

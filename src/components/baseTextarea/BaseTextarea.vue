@@ -11,6 +11,8 @@ const modelValue = defineModel<string>()
     v-model="modelValue"
     :placeholder
     :disabled
-    class="bg-neutral-3 h-20 resize-y text-dark p-3 h-10 border-neutral-1 border-solid rounded-xl box-border font-sans"
+    bg="light disabled:neutral-1"
+    border="2 solid neutral-3 hover:neutral-3/90"
+    class="text-dark p-3 h-32 rounded-xl box-border disabled:cursor-not-allowed font-sans"
   />
 </template>

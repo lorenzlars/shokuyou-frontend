@@ -9,7 +9,7 @@ import { useSafeAsyncState } from '@/composables/useSafeAsyncState.ts'
 import { StringFormField, NumberFormField, preprocessValues } from '@/components/form'
 import BaseButton from '@/components/baseButton/BaseButton.vue'
 import ImageSelector from '@/components/imageSelector/ImageSelector.vue'
-import IngredientsFormField from '@/domains/recipes/components/IngredientsFormField.vue'
+import IngredientsEditor from '@/domains/recipes/components/IngredientsEditor.vue'
 
 const emit = defineEmits<{
   submitted: [values?: RecipeRequestDto]
@@ -78,16 +78,16 @@ function onEditToggle() {
       <div class="flex flex-col gap-3">
         <ImageSelector v-model="image" v-model:src="imageUrl" :edit="isEditMode" />
 
-        <StringFormField name="name" :disabled="!isEditMode" class="w-full" />
+        <StringFormField path="name" :disabled="!isEditMode" class="w-full" />
 
-        <NumberFormField name="servings" :disabled="!isEditMode" class="w-full" />
+        <NumberFormField path="servings" :disabled="!isEditMode" class="w-full" />
 
-        <StringFormField name="source" :disabled="!isEditMode" class="w-full" />
+        <StringFormField path="source" :disabled="!isEditMode" class="w-full" />
 
-        <NumberFormField name="duration" :disabled="!isEditMode" class="w-full" />
+        <NumberFormField path="duration" :disabled="!isEditMode" class="w-full" />
 
         <StringFormField
-          name="description"
+          path="description"
           type="textarea"
           :disabled="!isEditMode"
           class="w-full"
@@ -95,18 +95,18 @@ function onEditToggle() {
       </div>
 
       <div class="flex flex-col gap-3 col-span-2">
-        <IngredientsFormField name="ingredients" :disabled="!isEditMode" class="w-full" />
+        <IngredientsEditor path="ingredients" :disabled="!isEditMode" class="w-full" />
 
         <StringFormField
-          name="instructions"
+          path="instructions"
           :disabled="!isEditMode"
           class="w-full"
           type="textarea"
         />
 
-        <StringFormField name="notes" :disabled="!isEditMode" class="w-full" type="textarea" />
+        <StringFormField path="notes" :disabled="!isEditMode" class="w-full" type="textarea" />
 
-        <StringFormField name="nutrition" :disabled="!isEditMode" class="w-full" type="textarea" />
+        <StringFormField path="nutrition" :disabled="!isEditMode" class="w-full" type="textarea" />
       </div>
     </div>
 

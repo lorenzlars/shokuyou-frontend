@@ -4,14 +4,11 @@ import { useAuthStore } from '@/domains/auth/stores/authStore.ts'
 import BaseMenu, { type MenuOption } from '@/components/BaseMenu.vue'
 import BaseButton from '@/components/baseButton/BaseButton.vue'
 import { IconArrowRight } from '@iconify-prerendered/vue-fa-solid'
+import BaseSkeleton from '@/components/BaseSkeleton.vue'
 
 const { logout } = useAuthStore()
 const { push } = useRouter()
 const menuOptions: MenuOption[] = [
-  {
-    label: 'Planner',
-    name: 'login',
-  },
   {
     label: 'Recipes',
     name: 'recipes',
@@ -19,14 +16,6 @@ const menuOptions: MenuOption[] = [
   {
     label: 'Ingredients',
     name: 'ingredients',
-  },
-  {
-    label: 'Groceries',
-    name: 'login',
-  },
-  {
-    label: 'Profile',
-    name: 'login',
   },
 ]
 
@@ -56,8 +45,31 @@ function handleLogout() {
   </header>
 
   <main class="container mt-18">
-    <RouterView />
+    <RouterView v-slot="{ component: Component }">
+      <Transition name="fade" mode="out-in">
+        <Suspense>
+          <component :is="Component" />
+
+          <template #fallback>
+            <BaseSkeleton />
+          </template>
+        </Suspense>
+      </Transition>
+    </RouterView>
   </main>
 
   <footer></footer>
 </template>
+
+<style lang="scss" scoped>
+.fade-enter-active,
+.fade-leave-active {
+  transition: all 0.3s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+  transform: translateY(20px);
+}
+</style>

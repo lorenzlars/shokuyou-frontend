@@ -2,6 +2,8 @@
 
 export type IngredientRequestDto = {
     name: string;
+    unit: string;
+    amount: number;
 };
 
 export type RecipeRequestDto = {
@@ -46,6 +48,8 @@ export type RecipeRequestDto = {
 export type IngredientResponseDto = {
     id: string;
     name: string;
+    unit: string;
+    amount: number;
 };
 
 export type RecipeResponseDto = {
@@ -418,6 +422,67 @@ export type CreateIngredientResponses = {
 };
 
 export type CreateIngredientResponse = CreateIngredientResponses[keyof CreateIngredientResponses];
+
+export type DeleteIngredientsData = {
+    body?: never;
+    path: {
+        id: string;
+    };
+    query?: never;
+    url: '/v1/ingredients/{id}';
+};
+
+export type DeleteIngredientsErrors = {
+    /**
+     * Ingredient not found
+     */
+    404: unknown;
+};
+
+export type DeleteIngredientsResponses = {
+    /**
+     * Successfully deleted the ingredient
+     */
+    200: unknown;
+};
+
+export type GetIngredientData = {
+    body?: never;
+    path: {
+        id: string;
+    };
+    query?: never;
+    url: '/v1/ingredients/{id}';
+};
+
+export type GetIngredientErrors = {
+    404: unknown;
+};
+
+export type GetIngredientResponses = {
+    200: IngredientResponseDto;
+};
+
+export type GetIngredientResponse = GetIngredientResponses[keyof GetIngredientResponses];
+
+export type UpdateIngredientsData = {
+    body: IngredientRequestDto;
+    path: {
+        id: string;
+    };
+    query?: never;
+    url: '/v1/ingredients/{id}';
+};
+
+export type UpdateIngredientsErrors = {
+    404: unknown;
+};
+
+export type UpdateIngredientsResponses = {
+    200: IngredientResponseDto;
+};
+
+export type UpdateIngredientsResponse = UpdateIngredientsResponses[keyof UpdateIngredientsResponses];
 
 export type UserLoginData = {
     body: AuthRequestDto;

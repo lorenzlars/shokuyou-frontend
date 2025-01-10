@@ -1,29 +1,29 @@
 <script lang="ts" setup>
-import BaseInput from '@/components/baseInput/BaseInput.vue'
-import type { IngredientRequestDto } from '@/api'
 import BaseButton from '@/components/baseButton/BaseButton.vue'
-import { shallowRef } from 'vue'
+import { NumberFormField, StringFormField } from '@/components/form'
+import { useFieldArray } from 'vee-validate'
+import type { IngredientRequestDto } from '@/api'
 
-const modelValue = defineModel<IngredientRequestDto[]>({ default: () => [] })
-const name = shallowRef<string>()
+const props = defineProps<{
+  path: string
+  disabled?: boolean
+}>()
+const { fields, remove, push } = useFieldArray<IngredientRequestDto>(props.path)
 
 function addEntry() {
-  if (name.value) {
-    modelValue.value.push({ name: name.value })
-  }
-
-  name.value = ''
+  push({ name: '', amount: 0, unit: '' })
 }
 </script>
 
 <template>
   <div>
-    <div class="flex gap-8">
-      <BaseButton @click="addEntry" :disabled="!name" label="Add" />
-      <BaseInput v-model="name" />
-    </div>
-    <div class="flex flex-col gap-3">
-      <span v-for="(ingredient, key) in modelValue" :key> {{ ingredient.name }}</span>
-    </div>
+    <fieldset class="flex gap-4" v-for="(field, id) in fields" :key="field.key" :disabled>
+      <NumberFormField :path="`${props.path}[${id}].amount`" />
+      <StringFormField :path="`${props.path}[${id}].unit`" />
+      <StringFormField :path="`${props.path}[${id}].name`" />
+      <BaseButton @click="remove(id)" label="Delete" />
+    </fieldset>
+
+    <BaseButton @click="addEntry" label="Add" :disabled />
   </div>
 </template>

@@ -1,16 +1,11 @@
 import { AxiosError, type AxiosResponse } from 'axios'
 import { toTypedSchema } from '@vee-validate/yup'
 import { inject, provide } from 'vue'
-import type { AnyObject, ObjectSchema } from 'yup'
-import { string } from 'yup'
+import type { AnyObject, ISchema } from 'yup'
 
-export type Schema = {
-  fields: {
-    [key: string]: {
-      spec: {
-        label: string
-      }
-    }
+export type Schema = ISchema<AnyObject> & {
+  spec?: {
+    label?: string
   }
 }
 

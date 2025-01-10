@@ -7,9 +7,7 @@ import MessageProvider from '@/components/message/MessageProvider.vue'
 <template>
   <MessageProvider :timeout="5_000">
     <ErrorHandlingProvider>
-      <Suspense>
-        <RouterView />
-      </Suspense>
+      <RouterView />
     </ErrorHandlingProvider>
   </MessageProvider>
 </template>

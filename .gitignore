@@ -31,3 +31,5 @@ coverage
 
 *storybook.log
 public/mockServiceWorker.js
+
+.env

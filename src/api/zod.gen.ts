@@ -3,7 +3,9 @@
 import { z } from 'zod';
 
 export const zIngredientRequestDto = z.object({
-    name: z.string()
+    name: z.string(),
+    unit: z.string(),
+    amount: z.number()
 });
 
 export const zRecipeRequestDto = z.object({
@@ -20,7 +22,9 @@ export const zRecipeRequestDto = z.object({
 
 export const zIngredientResponseDto = z.object({
     id: z.string(),
-    name: z.string()
+    name: z.string(),
+    unit: z.string(),
+    amount: z.number()
 });
 
 export const zRecipeResponseDto = z.object({
@@ -90,6 +94,10 @@ export const zGetIngredientsResponse = zPaginationResponseDto.merge(z.object({
 }));
 
 export const zCreateIngredientResponse = zIngredientResponseDto;
+
+export const zGetIngredientResponse = zIngredientResponseDto;
+
+export const zUpdateIngredientsResponse = zIngredientResponseDto;
 
 export const zUserLoginResponse = zAuthResponseDto;
 

@@ -38,9 +38,9 @@ const onSubmit = handleSubmit(async (values) => {
 
 <template>
   <form class="flex flex-col gap-3" @submit="onSubmit">
-    <StringFormField class="w-full" name="username" />
+    <StringFormField class="w-full" path="username" />
 
-    <StringFormField class="w-full" name="password" type="password" />
+    <StringFormField class="w-full" path="password" type="password" />
 
     <BaseCheckbox class="mb-5" v-model="rememberMe" :label="t('general.remember')" />
 

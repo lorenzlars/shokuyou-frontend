@@ -31,6 +31,7 @@ const themeToClass = {
 <template>
   <button
     :type
+    :disabled
     class="font-semibold border-none cursor-pointer transition-bg duration-300"
     :class="[
       themeToClass[theme],

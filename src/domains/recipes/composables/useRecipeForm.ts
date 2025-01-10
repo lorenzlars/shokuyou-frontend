@@ -9,7 +9,7 @@ export type RecipeFormValues = RecipeRequestDto & {
   imageUrl?: string
 }
 
-export function useRecipeForm(initialValues?: RecipeRequestDto) {
+export function useRecipeForm(initialValues?: Partial<RecipeRequestDto>) {
   const schema = object({
     name: string().required().label('Name'),
     description: string().label('Description'),
@@ -18,7 +18,9 @@ export function useRecipeForm(initialValues?: RecipeRequestDto) {
     duration: number().label('Duration'),
     ingredients: array(
       object({
-        name: string().required(),
+        amount: number().required().label('Amount'),
+        unit: string().required().label('Unit'),
+        name: string().required().label('Name'),
       }),
     ).label('Ingredients'),
     instructions: string().label('Instructions'),

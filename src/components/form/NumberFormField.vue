@@ -7,7 +7,7 @@ defineProps<FormFieldProps>()
 </script>
 
 <template>
-  <NumberFormField :name :label v-slot="field">
+  <NumberFormField :path :label v-slot="field">
     <BaseInput v-bind="{ ...field, ...$attrs }" type="number" />
   </NumberFormField>
 </template>

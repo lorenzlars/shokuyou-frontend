@@ -12,7 +12,7 @@ defineProps<
 </script>
 
 <template>
-  <StringFormField :name :label>
+  <StringFormField :path :label>
     <template #default="field">
       <BaseInput v-if="type !== 'textarea'" v-bind="{ ...field, ...$attrs }" :type />
       <BaseTextarea v-else v-bind="{ ...field, ...$attrs }" />
