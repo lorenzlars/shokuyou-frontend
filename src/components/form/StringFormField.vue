@@ -23,7 +23,7 @@ defineProps<
       <BaseTextarea
         v-else
         v-bind="{ ...fieldProps, ...$attrs }"
-        :class="{ '!border-danger': !meta.valid }"
+        :class="{ '!border-danger': !meta.valid && meta.dirty }"
       />
     </template>
 

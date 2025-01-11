@@ -17,7 +17,12 @@ function addEntry() {
 
 <template>
   <div>
-    <fieldset class="flex gap-4" v-for="(field, id) in fields" :key="field.key" :disabled>
+    <fieldset
+      class="flex items-center gap-4 border-none p-0"
+      v-for="(field, id) in fields"
+      :key="field.key"
+      :disabled
+    >
       <NumberFormField :path="`${props.path}[${id}].amount`" />
       <StringFormField :path="`${props.path}[${id}].unit`" />
       <StringFormField :path="`${props.path}[${id}].name`" />

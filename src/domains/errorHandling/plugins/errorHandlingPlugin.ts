@@ -20,7 +20,7 @@ export const ErrorHandlingPlugin: Plugin = {
       if (error instanceof AxiosError) {
         const axiosResponse = error.response as AxiosResponse<NestJsError>
 
-        if (axiosResponse.status === 400) {
+        if (axiosResponse?.status === 400) {
           return showMessage({ content: axiosResponse.data.message.join('\n'), theme: 'warning' })
         }
 

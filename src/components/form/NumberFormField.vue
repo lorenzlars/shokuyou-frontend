@@ -11,7 +11,7 @@ defineProps<FormFieldProps>()
     <BaseInput
       v-bind="{ ...fieldProps, ...$attrs }"
       type="number"
-      :class="{ '!border-danger': !meta.valid }"
+      :class="{ '!border-danger': !meta.valid && meta.dirty }"
     />
   </NumberFormField>
 </template>
