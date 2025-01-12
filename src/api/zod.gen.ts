@@ -2,7 +2,7 @@
 
 import { z } from 'zod';
 
-export const zIngredientRequestDto = z.object({
+export const zRecipeIngredientRequestDto = z.object({
     name: z.string(),
     unit: z.string(),
     amount: z.number()
@@ -14,14 +14,13 @@ export const zRecipeRequestDto = z.object({
     source: z.string().optional(),
     servings: z.number().optional(),
     duration: z.number().optional(),
-    ingredients: z.array(zIngredientRequestDto).optional(),
+    ingredients: z.array(zRecipeIngredientRequestDto).optional(),
     instructions: z.string().optional(),
     nutrition: z.string().optional(),
     notes: z.string().optional()
 });
 
-export const zIngredientResponseDto = z.object({
-    id: z.string(),
+export const zRecipeIngredientResponseDto = z.object({
     name: z.string(),
     unit: z.string(),
     amount: z.number()
@@ -34,7 +33,7 @@ export const zRecipeResponseDto = z.object({
     source: z.string().optional(),
     servings: z.number().optional(),
     duration: z.number().optional(),
-    ingredients: z.array(zIngredientResponseDto).optional(),
+    ingredients: z.array(zRecipeIngredientResponseDto).optional(),
     instructions: z.string().optional(),
     nutrition: z.string().optional(),
     notes: z.string().optional(),
@@ -54,6 +53,15 @@ export const zPaginationResponseDto = z.object({
     filter: z.string().optional(),
     content: z.array(z.array(z.unknown())),
     total: z.number()
+});
+
+export const zIngredientRequestDto = z.object({
+    name: z.string()
+});
+
+export const zIngredientResponseDto = z.object({
+    id: z.string(),
+    name: z.string()
 });
 
 export const zAuthRequestDto = z.object({

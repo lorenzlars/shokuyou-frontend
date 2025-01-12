@@ -2,13 +2,18 @@
 import BaseButton from '@/components/baseButton/BaseButton.vue'
 import { NumberFormField, StringFormField } from '@/components/form'
 import { useFieldArray } from 'vee-validate'
-import type { IngredientRequestDto } from '@/api'
+
+type Ingredient = {
+  name: string
+  amount: number
+  unit: string
+}
 
 const props = defineProps<{
   path: string
   disabled?: boolean
 }>()
-const { fields, remove, push } = useFieldArray<IngredientRequestDto>(props.path)
+const { fields, remove, push } = useFieldArray<Ingredient>(props.path)
 
 function addEntry() {
   push({ name: '', amount: 0, unit: '' })
