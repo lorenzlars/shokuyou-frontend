@@ -1,6 +1,6 @@
 import { useForm } from 'vee-validate'
 import type { RecipeRequestDto } from '@/api'
-import { object, string, number, mixed, array } from 'yup'
+import { array, mixed, number, object, string } from 'yup'
 import { toProvidedTypedSchema } from '@/components/form'
 
 export type RecipeFormValues = RecipeRequestDto & {
@@ -21,6 +21,19 @@ export function useRecipeForm(initialValues?: Partial<RecipeRequestDto>) {
         amount: number().required().label('Amount'),
         unit: string().required().label('Unit'),
         name: string().required().label('Name'),
+      }).test('unique-name', (value, context) => {
+        if (
+          value?.name &&
+          context.parent.filter((ingredient: { name: string }) => ingredient.name === value.name)
+            ?.length > 1
+        ) {
+          return context.createError({
+            path: `${context.path}.name`,
+            message: 'duplicated',
+          })
+        }
+
+        return true
       }),
     ).label('Ingredients'),
     instructions: string().label('Instructions'),
