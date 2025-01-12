@@ -2,7 +2,7 @@
 import { useField, type FieldMeta } from 'vee-validate'
 import { injectSchema, type Schema } from './formHelper.ts'
 import { useI18n } from 'vue-i18n'
-import { reactive } from 'vue'
+import { reactive, toRefs, watch } from 'vue'
 import { reach } from 'yup'
 
 export type FormFieldProps = {
@@ -26,6 +26,7 @@ type DefaultSlotFieldProps<T> = {
 type DefaultSlotProps<T> = {
   fieldProps: DefaultSlotFieldProps<T>
   meta: FieldMeta<T>
+  errorMessage?: string
 }
 
 const props = defineProps<FormFieldProps>()
@@ -35,6 +36,7 @@ defineSlots<{
 }>()
 const { t } = useI18n()
 const schema = injectSchema()
+const { meta, errorMessage, handleBlur, handleChange, value } = useField<T>(props.path)
 const field = reach(schema, props.path) as Schema
 
 if (!field) {
@@ -42,7 +44,8 @@ if (!field) {
 }
 
 const label = props.label ?? field.spec?.label ?? ''
-const { meta, errorMessage, handleBlur, handleChange, value } = useField<T>(props.path)
+const { valid, required } = toRefs(meta)
+// TODO: WTF is not working here?
 const fieldProps = reactive({
   id: props.path,
   name: props.path,
@@ -51,11 +54,16 @@ const fieldProps = reactive({
   onblur: handleBlur,
   'onUpdate:modelValue': handleChange,
   // Force, keeping attribute casing
-  'aria-errormessage': `${props.path}-error`,
+  'aria-errormessage': errorMessage.value ? `${props.path}-error` : '',
   'aria-label': label,
-  'aria-invalid': !meta.valid,
-  'aria-required': meta.required,
+  'aria-invalid': !valid.value,
+  'aria-required': required.value,
 })
+
+watch(
+  () => fieldProps['aria-invalid'],
+  () => console.log(fieldProps),
+)
 </script>
 
 <template>
@@ -64,7 +72,9 @@ const fieldProps = reactive({
       <strong>{{ label }}</strong>
       <span v-if="meta.required" class="text-danger" aria-hidden="true">*</span>
     </label>
-    <slot v-bind="{ fieldProps, meta }" />
+
+    <slot v-bind="{ fieldProps, meta, errorMessage }" />
+
     <div class="min-h-5">
       <slot name="feedback" v-bind="{ value, errorMessage }">
         <transition>

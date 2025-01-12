@@ -13,17 +13,17 @@ defineProps<
 
 <template>
   <StringFormField :path :label>
-    <template #default="{ fieldProps, meta }">
+    <template #default="{ fieldProps, errorMessage }">
       <BaseInput
         v-if="type !== 'textarea'"
         v-bind="{ ...fieldProps, ...$attrs }"
         :type
-        :class="{ '!border-danger': !meta.valid }"
+        :class="{ '!border-danger': errorMessage }"
       />
       <BaseTextarea
         v-else
         v-bind="{ ...fieldProps, ...$attrs }"
-        :class="{ '!border-danger': !meta.valid && meta.dirty }"
+        :class="{ '!border-danger': errorMessage }"
       />
     </template>
 
