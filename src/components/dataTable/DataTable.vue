@@ -10,7 +10,7 @@ const slots = defineSlots<{
   default(): typeof DataTableColumn
 }>()
 
-const columns = computed(() => slots.default())
+const columns = computed(() => slots?.default())
 </script>
 
 <template>
