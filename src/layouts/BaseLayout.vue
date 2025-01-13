@@ -10,6 +10,10 @@ const { logout } = useAuthStore()
 const { push } = useRouter()
 const menuOptions: MenuOption[] = [
   {
+    label: 'Plans',
+    name: 'plans',
+  },
+  {
     label: 'Recipes',
     name: 'recipes',
   },

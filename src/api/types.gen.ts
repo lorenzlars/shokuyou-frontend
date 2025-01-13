@@ -180,6 +180,36 @@ export type UserResponseDto = {
     username: string;
 };
 
+export type MealRequestDto = {
+    dayIndex: number;
+    timeIndex: number;
+    recipeId: string;
+};
+
+export type PlanRequestDto = {
+    name: string;
+    /**
+     * The plan meals
+     */
+    meals?: Array<MealRequestDto>;
+};
+
+export type MealResponseDto = {
+    id: string;
+    dayIndex: number;
+    timeIndex: number;
+    recipe: RecipeResponseDto;
+};
+
+export type PlanResponseDto = {
+    id: string;
+    name: string;
+    /**
+     * The plan meals
+     */
+    meals?: Array<MealResponseDto>;
+};
+
 export type GetRecipesData = {
     body?: never;
     path?: never;
@@ -551,3 +581,107 @@ export type GetProfileResponses = {
 };
 
 export type GetProfileResponse = GetProfileResponses[keyof GetProfileResponses];
+
+export type GetPlansData = {
+    body?: never;
+    path?: never;
+    query: {
+        /**
+         * The page number
+         */
+        page: unknown;
+        /**
+         * The page size
+         */
+        pageSize: unknown;
+        /**
+         * The order by attribute
+         */
+        orderBy?: string;
+        /**
+         * The sort order
+         */
+        sortOrder?: PaginationSortOrder;
+        /**
+         * The filter
+         */
+        filter?: string;
+    };
+    url: '/v1/plans';
+};
+
+export type GetPlansResponses = {
+    200: PaginationResponseDto & {
+        content?: Array<PlanResponseDto>;
+    };
+};
+
+export type GetPlansResponse = GetPlansResponses[keyof GetPlansResponses];
+
+export type CreatePlanData = {
+    body: PlanRequestDto;
+    path?: never;
+    query?: never;
+    url: '/v1/plans';
+};
+
+export type CreatePlanResponses = {
+    201: PlanResponseDto;
+};
+
+export type CreatePlanResponse = CreatePlanResponses[keyof CreatePlanResponses];
+
+export type RemovePlanData = {
+    body?: never;
+    path: {
+        id: string;
+    };
+    query?: never;
+    url: '/v1/plans/{id}';
+};
+
+export type RemovePlanErrors = {
+    404: unknown;
+};
+
+export type RemovePlanResponses = {
+    200: unknown;
+};
+
+export type GetPlanData = {
+    body?: never;
+    path: {
+        id: string;
+    };
+    query?: never;
+    url: '/v1/plans/{id}';
+};
+
+export type GetPlanErrors = {
+    404: unknown;
+};
+
+export type GetPlanResponses = {
+    200: PlanResponseDto;
+};
+
+export type GetPlanResponse = GetPlanResponses[keyof GetPlanResponses];
+
+export type UpdatePlanData = {
+    body: PlanRequestDto;
+    path: {
+        id: string;
+    };
+    query?: never;
+    url: '/v1/plans/{id}';
+};
+
+export type UpdatePlanErrors = {
+    404: unknown;
+};
+
+export type UpdatePlanResponses = {
+    200: PlanResponseDto;
+};
+
+export type UpdatePlanResponse = UpdatePlanResponses[keyof UpdatePlanResponses];

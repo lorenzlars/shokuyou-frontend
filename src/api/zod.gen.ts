@@ -83,6 +83,30 @@ export const zUserResponseDto = z.object({
     username: z.string()
 });
 
+export const zMealRequestDto = z.object({
+    dayIndex: z.number(),
+    timeIndex: z.number(),
+    recipeId: z.string()
+});
+
+export const zPlanRequestDto = z.object({
+    name: z.string(),
+    meals: z.array(zMealRequestDto).optional()
+});
+
+export const zMealResponseDto = z.object({
+    id: z.string(),
+    dayIndex: z.number(),
+    timeIndex: z.number(),
+    recipe: zRecipeResponseDto
+});
+
+export const zPlanResponseDto = z.object({
+    id: z.string(),
+    name: z.string(),
+    meals: z.array(zMealResponseDto).optional()
+});
+
 export const zGetRecipesResponse = zPaginationResponseDto.merge(z.object({
     content: z.array(zRecipeResponseDto).optional()
 }));
@@ -110,3 +134,13 @@ export const zUpdateIngredientsResponse = zIngredientResponseDto;
 export const zUserLoginResponse = zAuthResponseDto;
 
 export const zGetProfileResponse = zUserResponseDto;
+
+export const zGetPlansResponse = zPaginationResponseDto.merge(z.object({
+    content: z.array(zPlanResponseDto).optional()
+}));
+
+export const zCreatePlanResponse = zPlanResponseDto;
+
+export const zGetPlanResponse = zPlanResponseDto;
+
+export const zUpdatePlanResponse = zPlanResponseDto;
