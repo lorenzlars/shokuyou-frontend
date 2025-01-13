@@ -14,7 +14,7 @@ const meta = {
     },
     theme: {
       control: 'select',
-      options: ['neutral', 'accent', 'info', 'warning', 'success', 'danger'],
+      options: ['neutral', 'accent', 'info', 'warning', 'success', 'danger', 'passive'],
     },
     loading: {
       control: 'boolean',

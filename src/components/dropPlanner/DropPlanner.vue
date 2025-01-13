@@ -1,5 +1,6 @@
 <script lang="ts" setup generic="T extends Record<string, unknown> & { dayIndex: number }">
 import { computed } from 'vue'
+import BaseButton from '@/components/baseButton/BaseButton.vue'
 
 type Column = {
   title: string
@@ -8,6 +9,9 @@ type Column = {
 const modelValue = defineModel<T[]>({ required: true })
 defineProps<{
   columns: Column[]
+}>()
+const emit = defineEmits<{
+  add: [dayIndex: number]
 }>()
 
 const columnsMap = computed(() => {
@@ -84,6 +88,7 @@ async function onDrop(event: DragEvent, dayIndex: number) {
             },
           }"
         />
+        <BaseButton label="Add" theme="passive" @click="emit('add', dayIndex)" />
       </div>
     </div>
   </div>

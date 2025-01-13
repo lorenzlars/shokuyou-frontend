@@ -194,7 +194,7 @@ export class AuthService {
 }
 
 export class PlansService {
-    public static getPlans<ThrowOnError extends boolean = false>(options: Options<GetPlansData, ThrowOnError>) {
+    public static getPlans<ThrowOnError extends boolean = false>(options?: Options<GetPlansData, ThrowOnError>) {
         return (options?.client ?? client).get<GetPlansResponse, unknown, ThrowOnError>({
             ...options,
             url: '/v1/plans'

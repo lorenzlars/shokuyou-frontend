@@ -107,8 +107,18 @@ export const zPlanResponseDto = z.object({
     meals: z.array(zMealResponseDto).optional()
 });
 
+export const zListResponseDto = z.object({
+    content: z.array(z.array(z.unknown())),
+    total: z.number()
+});
+
+export const zPlanResponseSimpleDto = z.object({
+    id: z.string(),
+    name: z.string()
+});
+
 export const zGetRecipesResponse = zPaginationResponseDto.merge(z.object({
-    content: z.array(zRecipeResponseDto).optional()
+    content: z.array(zRecipeResponseDto)
 }));
 
 export const zCreateRecipeResponse = zRecipeResponseDto;
@@ -122,7 +132,7 @@ export const zUploadImageResponse = zRecipeResponseDto;
 export const zUpdateImageResponse = zRecipeResponseDto;
 
 export const zGetIngredientsResponse = zPaginationResponseDto.merge(z.object({
-    content: z.array(zIngredientResponseDto).optional()
+    content: z.array(zIngredientResponseDto)
 }));
 
 export const zCreateIngredientResponse = zIngredientResponseDto;
@@ -135,8 +145,8 @@ export const zUserLoginResponse = zAuthResponseDto;
 
 export const zGetProfileResponse = zUserResponseDto;
 
-export const zGetPlansResponse = zPaginationResponseDto.merge(z.object({
-    content: z.array(zPlanResponseDto).optional()
+export const zGetPlansResponse = zListResponseDto.merge(z.object({
+    content: z.array(zPlanResponseSimpleDto)
 }));
 
 export const zCreatePlanResponse = zPlanResponseDto;

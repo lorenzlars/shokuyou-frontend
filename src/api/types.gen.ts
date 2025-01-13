@@ -121,13 +121,7 @@ export type PaginationResponseDto = {
      * The filter
      */
     filter?: string;
-    /**
-     * The content of the page
-     */
     content: Array<Array<unknown>>;
-    /**
-     * The total number of items
-     */
     total: number;
 };
 
@@ -210,6 +204,16 @@ export type PlanResponseDto = {
     meals?: Array<MealResponseDto>;
 };
 
+export type ListResponseDto = {
+    content: Array<Array<unknown>>;
+    total: number;
+};
+
+export type PlanResponseSimpleDto = {
+    id: string;
+    name: string;
+};
+
 export type GetRecipesData = {
     body?: never;
     path?: never;
@@ -240,7 +244,7 @@ export type GetRecipesData = {
 
 export type GetRecipesResponses = {
     200: PaginationResponseDto & {
-        content?: Array<RecipeResponseDto>;
+        content: Array<RecipeResponseDto>;
     };
 };
 
@@ -442,7 +446,7 @@ export type GetIngredientsData = {
 
 export type GetIngredientsResponses = {
     200: PaginationResponseDto & {
-        content?: Array<IngredientResponseDto>;
+        content: Array<IngredientResponseDto>;
     };
 };
 
@@ -585,34 +589,13 @@ export type GetProfileResponse = GetProfileResponses[keyof GetProfileResponses];
 export type GetPlansData = {
     body?: never;
     path?: never;
-    query: {
-        /**
-         * The page number
-         */
-        page: unknown;
-        /**
-         * The page size
-         */
-        pageSize: unknown;
-        /**
-         * The order by attribute
-         */
-        orderBy?: string;
-        /**
-         * The sort order
-         */
-        sortOrder?: PaginationSortOrder;
-        /**
-         * The filter
-         */
-        filter?: string;
-    };
+    query?: never;
     url: '/v1/plans';
 };
 
 export type GetPlansResponses = {
-    200: PaginationResponseDto & {
-        content?: Array<PlanResponseDto>;
+    200: ListResponseDto & {
+        content: Array<PlanResponseSimpleDto>;
     };
 };
 

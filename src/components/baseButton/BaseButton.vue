@@ -5,7 +5,7 @@ withDefaults(
   defineProps<{
     label?: string
     type?: HTMLButtonElement['type']
-    theme?: 'neutral' | 'accent' | 'info' | 'warning' | 'success' | 'danger'
+    theme?: 'neutral' | 'accent' | 'info' | 'warning' | 'success' | 'danger' | 'passive'
     loading?: boolean
     circle?: boolean
     small?: boolean // TODO: Not implemented
@@ -18,13 +18,15 @@ withDefaults(
 )
 
 const themeToClass = {
-  neutral: 'bg-neutral-3 text-dark hover:bg-neutral-3/90',
+  neutral: 'bg-neutral-3 text-dark hover:bg-neutral-3/90 border-none',
   accent:
-    'bg-gradient-to-r from-primary to-secondary text-dark hover:from-primary/90 hover:to-secondary/90',
-  info: 'bg-info text-dark hover:bg-info/90',
-  success: 'bg-success text-dark hover:bg-success/90',
-  warning: 'bg-warning text-dark hover:bg-warning/90',
-  danger: 'bg-danger text-dark hover:bg-danger/90',
+    'bg-gradient-to-r from-primary to-secondary text-dark hover:from-primary/90 hover:to-secondary/90 border-none',
+  info: 'bg-info text-dark hover:bg-info/90 border-none',
+  success: 'bg-success text-dark hover:bg-success/90 border-none',
+  warning: 'bg-warning text-dark hover:bg-warning/90 border-none',
+  danger: 'bg-danger text-dark hover:bg-danger/90 border-none',
+  passive:
+    'bg-transparent text-neutral-3 hover:bg-neutral-1/90 border-dashed border-neutral-3 border-1',
 }
 </script>
 
@@ -32,7 +34,7 @@ const themeToClass = {
   <button
     :type
     :disabled
-    class="font-semibold border-none cursor-pointer transition-bg duration-300"
+    class="font-semibold cursor-pointer transition-bg duration-300"
     :class="[
       themeToClass[theme],
       `${circle ? 'rounded-full p-0 h-10 w-10' : 'rounded-xl px-4 h-12'}`,
