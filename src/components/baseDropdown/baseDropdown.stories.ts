@@ -1,17 +1,19 @@
-import BaseSelect from './BaseSelect.vue'
+import BaseDropdown from './BaseDropdown.vue'
 import type { Meta, StoryObj } from '@storybook/vue3'
 
 const meta = {
-  title: 'Components/Base/BaseSelect',
-  component: BaseSelect,
+  title: 'Components/Base/BaseDropdown',
+  component: BaseDropdown,
   tags: ['autodocs'],
   args: {
+    valueName: 'value',
+    labelName: 'label',
     options: [
       { label: 'Option 1', value: '1' },
       { label: 'Option 2', value: '2' },
     ],
   },
-} as Meta<typeof BaseSelect>
+} as Meta<typeof BaseDropdown<{ label: string; value: string }>>
 
 export default meta
 

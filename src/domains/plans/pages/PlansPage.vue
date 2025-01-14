@@ -8,7 +8,7 @@ import { useI18n } from 'vue-i18n'
 import BaseButton from '@/components/baseButton/BaseButton.vue'
 import RecipeSearch from '@/domains/plans/components/RecipeSearch.vue'
 import { getWeekdays } from '@/utils/intlUtils.ts'
-import BaseSelect from '@/components/baseSelect/BaseSelect.vue'
+import BaseDropdown from '@/components/baseDropdown/BaseDropdown.vue'
 import { useMessage } from '@/components/message/useMessage.ts'
 import DropPlanner from '@/components/dropPlanner/DropPlanner.vue'
 import { usePlanForm } from '@/domains/plans/composables/usePlanForm.ts'
@@ -23,7 +23,7 @@ const {
   async () => {
     const plans = unwrapResponseData(await PlansService.getPlans())
 
-    return plans.content.map((plan) => ({ value: plan.id, label: plan.name }))
+    return plans.content
   },
   () => [],
 )
@@ -94,7 +94,7 @@ await execute()
     <form @submit="onSubmit">
       <div class="flex gap-4">
         <StringFormField path="name" />
-        <BaseSelect v-model="selectedPlanId" :options="plans" />
+        <BaseDropdown v-model="selectedPlanId" :options="plans" label-name="name" value-name="id" />
         <BaseButton @click="loadPlan" label="Load" :disabled="!selectedPlanId" :loading />
         <BaseButton @click="planUpdated" label="Update" :disabled="!selectedPlanId" :loading />
         <BaseButton @click="deletePlan" label="Delete" :disabled="!selectedPlanId" :loading />
