@@ -1,7 +1,11 @@
-import type { PaginationResponseDto } from '@/api'
 import { computed, reactive, shallowRef } from 'vue'
 
-export type PaginationResponse<T> = PaginationResponseDto & { content?: T[] }
+export type PaginationResponse<T> = {
+  page: number
+  pageSize: number
+  total: number
+  content?: T[]
+}
 
 export type PaginationParameters = {
   page: number

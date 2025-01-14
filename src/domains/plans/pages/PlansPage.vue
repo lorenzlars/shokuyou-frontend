@@ -1,9 +1,9 @@
 <script lang="ts" setup>
-import { PlansService } from '@/api'
-import { unwrapResponseData } from '@/components/form'
+import { type PlanResponseMealDto, PlansService } from '@/api'
+import { StringFormField, unwrapResponseData } from '@/components/form'
 import PageLayout from '@/components/PageLayout.vue'
 import RecipeCard from '@/domains/plans/components/RecipeCard.vue'
-import { ref, shallowRef, watch } from 'vue'
+import { shallowRef } from 'vue'
 import { useI18n } from 'vue-i18n'
 import BaseButton from '@/components/baseButton/BaseButton.vue'
 import RecipeSearch from '@/domains/plans/components/RecipeSearch.vue'
@@ -11,55 +11,108 @@ import { getWeekdays } from '@/utils/intlUtils.ts'
 import BaseSelect from '@/components/baseSelect/BaseSelect.vue'
 import { useMessage } from '@/components/message/useMessage.ts'
 import DropPlanner from '@/components/dropPlanner/DropPlanner.vue'
+import { usePlanForm } from '@/domains/plans/composables/usePlanForm.ts'
+import { useField } from 'vee-validate'
+import { useAsyncPromise } from '@/composables/useAsyncPromise.ts'
 
-const plansList = unwrapResponseData(await PlansService.getPlans())
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-expect-error
-const plans = plansList.content.map((plan) => ({ value: plan.id, label: plan.name }))
-const selectedPlan = shallowRef()
+const {
+  execute,
+  loading,
+  data: plans,
+} = useAsyncPromise(
+  async () => {
+    const plans = unwrapResponseData(await PlansService.getPlans())
+
+    return plans.content.map((plan) => ({ value: plan.id, label: plan.name }))
+  },
+  () => [],
+)
+const selectedPlanId = shallowRef<string>()
+const { setValues, resetForm, handleSubmit, values } = usePlanForm()
+const { value: meals } = useField<PlanResponseMealDto[]>('meals')
 const { locale } = useI18n()
 const { showMessage } = useMessage()
-const plan = ref([])
 const columns = getWeekdays(locale.value).map((day) => ({ title: day }))
 
-watch(selectedPlan, async () => {
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-expect-error
-  plan.value = unwrapResponseData(
-    await PlansService.getPlan({ path: { id: selectedPlan.value } }),
-  ).meals
-})
-
-async function save() {
+const onSubmit = handleSubmit(async (values) => {
   await PlansService.createPlan({
     body: {
-      name: 'test',
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-expect-error
-      meals: plan.value.map((recipe) => ({ recipeId: recipe.id, dayIndex: recipe.dayIndex })),
+      ...values,
+      meals: values.meals?.map((meal) => ({ ...meal, recipeId: meal.recipe.id })),
     },
   })
+  await execute()
+
+  showMessage('Saved')
+})
+
+async function loadPlan() {
+  if (selectedPlanId.value) {
+    const plan = unwrapResponseData(
+      await PlansService.getPlan({
+        path: { id: selectedPlanId.value },
+      }),
+    )
+
+    setValues(plan)
+    showMessage('Loaded')
+  }
 }
+
+async function deletePlan() {
+  if (selectedPlanId.value) {
+    await PlansService.removePlan({
+      path: { id: selectedPlanId.value },
+    })
+    await execute()
+
+    resetForm()
+    showMessage('Deleted')
+  }
+}
+
+async function planUpdated() {
+  if (selectedPlanId.value) {
+    await PlansService.updatePlan({
+      path: { id: selectedPlanId.value },
+      body: {
+        name: values.name,
+        meals: values.meals?.map((meal) => ({ dayIndex: meal.dayIndex, recipeId: meal.recipe.id })),
+      },
+    })
+    await execute()
+
+    showMessage('Updated')
+  }
+}
+
+await execute()
 </script>
 
 <template>
   <PageLayout title="Plans">
-    <div class="flex gap-4">
-      <BaseButton @click="save" label="Save" />
-      <BaseSelect v-model="selectedPlan" :options="plans" />
-    </div>
+    <form @submit="onSubmit">
+      <div class="flex gap-4">
+        <StringFormField path="name" />
+        <BaseSelect v-model="selectedPlanId" :options="plans" />
+        <BaseButton @click="loadPlan" label="Load" :disabled="!selectedPlanId" :loading />
+        <BaseButton @click="planUpdated" label="Update" :disabled="!selectedPlanId" :loading />
+        <BaseButton @click="deletePlan" label="Delete" :disabled="!selectedPlanId" :loading />
+        <BaseButton type="submit" label="Save" :loading />
+      </div>
 
-    <div class="flex gap-4">
-      <RecipeSearch />
+      <div class="flex gap-4">
+        <RecipeSearch />
 
-      <DropPlanner
-        :columns
-        v-model="plan"
-        v-slot="{ value, itemProps }"
-        @add="showMessage('Not implemented')"
-      >
-        <RecipeCard :recipe="value" v-bind="itemProps" />
-      </DropPlanner>
-    </div>
+        <DropPlanner
+          :columns
+          v-model="meals"
+          v-slot="{ value, itemProps }"
+          @add="showMessage('Not implemented')"
+        >
+          <RecipeCard :recipe="value.recipe" v-bind="itemProps" />
+        </DropPlanner>
+      </div>
+    </form>
   </PageLayout>
 </template>

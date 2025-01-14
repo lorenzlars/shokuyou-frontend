@@ -68,7 +68,7 @@ function handleLogout() {
 <style lang="scss" scoped>
 .fade-enter-active,
 .fade-leave-active {
-  transition: all 0.3s ease;
+  transition: all 180ms ease;
 }
 
 .fade-enter-from,

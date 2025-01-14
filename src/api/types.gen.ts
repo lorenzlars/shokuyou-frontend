@@ -100,7 +100,50 @@ export type RecipeResponseDto = {
 
 export type PaginationSortOrder = 'ASC' | 'DESC';
 
-export type PaginationResponseDto = {
+export type RecipeResponseFlatDto = {
+    /**
+     * The id of the recipe
+     */
+    id: string;
+    /**
+     * Name of the recipe
+     */
+    name: string;
+    /**
+     * Description of the recipe
+     */
+    description?: string;
+    /**
+     * The recipe source
+     */
+    source?: string;
+    /**
+     * The number of servings
+     */
+    servings?: number;
+    /**
+     * The recipe duration in minutes
+     */
+    duration?: number;
+    /**
+     * The recipe instructions
+     */
+    instructions?: string;
+    /**
+     * The recipe nutrition
+     */
+    nutrition?: string;
+    /**
+     * The recipe notes
+     */
+    notes?: string;
+    /**
+     * The image url the recipe image
+     */
+    imageUrl?: string;
+};
+
+export type RecipePaginatedResponseDto = {
     /**
      * The page number
      */
@@ -121,8 +164,8 @@ export type PaginationResponseDto = {
      * The filter
      */
     filter?: string;
-    content: Array<Array<unknown>>;
     total: number;
+    content: Array<RecipeResponseFlatDto>;
 };
 
 export type IngredientRequestDto = {
@@ -132,6 +175,31 @@ export type IngredientRequestDto = {
 export type IngredientResponseDto = {
     id: string;
     name: string;
+};
+
+export type IngredientPaginatedResponseDto = {
+    /**
+     * The page number
+     */
+    page: number;
+    /**
+     * The page size
+     */
+    pageSize: number;
+    /**
+     * The order by attribute
+     */
+    orderBy?: string;
+    /**
+     * The sort order
+     */
+    sortOrder?: PaginationSortOrder;
+    /**
+     * The filter
+     */
+    filter?: string;
+    total: number;
+    content: Array<IngredientResponseDto>;
 };
 
 export type AuthRequestDto = {
@@ -174,25 +242,63 @@ export type UserResponseDto = {
     username: string;
 };
 
-export type MealRequestDto = {
+export type CreatePlanMealDto = {
     dayIndex: number;
-    timeIndex: number;
     recipeId: string;
 };
 
-export type PlanRequestDto = {
+export type CreatePlanDto = {
     name: string;
-    /**
-     * The plan meals
-     */
-    meals?: Array<MealRequestDto>;
+    meals?: Array<CreatePlanMealDto>;
 };
 
-export type MealResponseDto = {
+export type PlanResponseMealRecipeDto = {
+    /**
+     * The id of the recipe
+     */
+    id: string;
+    /**
+     * Name of the recipe
+     */
+    name: string;
+    /**
+     * Description of the recipe
+     */
+    description?: string;
+    /**
+     * The recipe source
+     */
+    source?: string;
+    /**
+     * The number of servings
+     */
+    servings?: number;
+    /**
+     * The recipe duration in minutes
+     */
+    duration?: number;
+    /**
+     * The recipe instructions
+     */
+    instructions?: string;
+    /**
+     * The recipe nutrition
+     */
+    nutrition?: string;
+    /**
+     * The recipe notes
+     */
+    notes?: string;
+    /**
+     * The image url the recipe image
+     */
+    imageUrl?: string;
+};
+
+export type PlanResponseMealDto = {
     id: string;
     dayIndex: number;
-    timeIndex: number;
-    recipe: RecipeResponseDto;
+    recipe: PlanResponseMealRecipeDto;
 };
 
 export type PlanResponseDto = {
@@ -201,17 +307,27 @@ export type PlanResponseDto = {
     /**
      * The plan meals
      */
-    meals?: Array<MealResponseDto>;
+    meals?: Array<PlanResponseMealDto>;
 };
 
-export type ListResponseDto = {
-    content: Array<Array<unknown>>;
-    total: number;
-};
-
-export type PlanResponseSimpleDto = {
+export type PlanResponseFlatDto = {
     id: string;
     name: string;
+};
+
+export type PlanResponsePaginatedSimpleDto = {
+    total: number;
+    content: Array<PlanResponseFlatDto>;
+};
+
+export type PlanRequestMealDto = {
+    dayIndex: number;
+    recipeId: string;
+};
+
+export type PlanRequestDto = {
+    name: string;
+    meals?: Array<PlanRequestMealDto>;
 };
 
 export type GetRecipesData = {
@@ -243,9 +359,7 @@ export type GetRecipesData = {
 };
 
 export type GetRecipesResponses = {
-    200: PaginationResponseDto & {
-        content: Array<RecipeResponseDto>;
-    };
+    200: RecipePaginatedResponseDto;
 };
 
 export type GetRecipesResponse = GetRecipesResponses[keyof GetRecipesResponses];
@@ -280,6 +394,10 @@ export type DeleteRecipeErrors = {
      * Recipe not found
      */
     404: unknown;
+    /**
+     * Recipe is in use by a plan
+     */
+    409: unknown;
 };
 
 export type DeleteRecipeResponses = {
@@ -445,9 +563,7 @@ export type GetIngredientsData = {
 };
 
 export type GetIngredientsResponses = {
-    200: PaginationResponseDto & {
-        content: Array<IngredientResponseDto>;
-    };
+    200: IngredientPaginatedResponseDto;
 };
 
 export type GetIngredientsResponse = GetIngredientsResponses[keyof GetIngredientsResponses];
@@ -594,15 +710,13 @@ export type GetPlansData = {
 };
 
 export type GetPlansResponses = {
-    200: ListResponseDto & {
-        content: Array<PlanResponseSimpleDto>;
-    };
+    200: PlanResponsePaginatedSimpleDto;
 };
 
 export type GetPlansResponse = GetPlansResponses[keyof GetPlansResponses];
 
 export type CreatePlanData = {
-    body: PlanRequestDto;
+    body: CreatePlanDto;
     path?: never;
     query?: never;
     url: '/v1/plans';

@@ -45,14 +45,27 @@ export const zPaginationSortOrder = z.enum([
     'DESC'
 ]);
 
-export const zPaginationResponseDto = z.object({
+export const zRecipeResponseFlatDto = z.object({
+    id: z.string(),
+    name: z.string(),
+    description: z.string().optional(),
+    source: z.string().optional(),
+    servings: z.number().optional(),
+    duration: z.number().optional(),
+    instructions: z.string().optional(),
+    nutrition: z.string().optional(),
+    notes: z.string().optional(),
+    imageUrl: z.string().optional()
+});
+
+export const zRecipePaginatedResponseDto = z.object({
     page: z.number().default(1),
     pageSize: z.number().default(10),
     orderBy: z.string().optional(),
     sortOrder: zPaginationSortOrder.optional(),
     filter: z.string().optional(),
-    content: z.array(z.array(z.unknown())),
-    total: z.number()
+    total: z.number(),
+    content: z.array(zRecipeResponseFlatDto)
 });
 
 export const zIngredientRequestDto = z.object({
@@ -62,6 +75,16 @@ export const zIngredientRequestDto = z.object({
 export const zIngredientResponseDto = z.object({
     id: z.string(),
     name: z.string()
+});
+
+export const zIngredientPaginatedResponseDto = z.object({
+    page: z.number().default(1),
+    pageSize: z.number().default(10),
+    orderBy: z.string().optional(),
+    sortOrder: zPaginationSortOrder.optional(),
+    filter: z.string().optional(),
+    total: z.number(),
+    content: z.array(zIngredientResponseDto)
 });
 
 export const zAuthRequestDto = z.object({
@@ -83,43 +106,62 @@ export const zUserResponseDto = z.object({
     username: z.string()
 });
 
-export const zMealRequestDto = z.object({
+export const zCreatePlanMealDto = z.object({
     dayIndex: z.number(),
-    timeIndex: z.number(),
     recipeId: z.string()
 });
 
-export const zPlanRequestDto = z.object({
+export const zCreatePlanDto = z.object({
     name: z.string(),
-    meals: z.array(zMealRequestDto).optional()
+    meals: z.array(zCreatePlanMealDto).optional()
 });
 
-export const zMealResponseDto = z.object({
+export const zPlanResponseMealRecipeDto = z.object({
+    id: z.string(),
+    name: z.string(),
+    description: z.string().optional(),
+    source: z.string().optional(),
+    servings: z.number().optional(),
+    duration: z.number().optional(),
+    instructions: z.string().optional(),
+    nutrition: z.string().optional(),
+    notes: z.string().optional(),
+    imageUrl: z.string().optional()
+});
+
+export const zPlanResponseMealDto = z.object({
     id: z.string(),
     dayIndex: z.number(),
-    timeIndex: z.number(),
-    recipe: zRecipeResponseDto
+    recipe: zPlanResponseMealRecipeDto
 });
 
 export const zPlanResponseDto = z.object({
     id: z.string(),
     name: z.string(),
-    meals: z.array(zMealResponseDto).optional()
+    meals: z.array(zPlanResponseMealDto).optional()
 });
 
-export const zListResponseDto = z.object({
-    content: z.array(z.array(z.unknown())),
-    total: z.number()
-});
-
-export const zPlanResponseSimpleDto = z.object({
+export const zPlanResponseFlatDto = z.object({
     id: z.string(),
     name: z.string()
 });
 
-export const zGetRecipesResponse = zPaginationResponseDto.merge(z.object({
-    content: z.array(zRecipeResponseDto)
-}));
+export const zPlanResponsePaginatedSimpleDto = z.object({
+    total: z.number(),
+    content: z.array(zPlanResponseFlatDto)
+});
+
+export const zPlanRequestMealDto = z.object({
+    dayIndex: z.number(),
+    recipeId: z.string()
+});
+
+export const zPlanRequestDto = z.object({
+    name: z.string(),
+    meals: z.array(zPlanRequestMealDto).optional()
+});
+
+export const zGetRecipesResponse = zRecipePaginatedResponseDto;
 
 export const zCreateRecipeResponse = zRecipeResponseDto;
 
@@ -131,9 +173,7 @@ export const zUploadImageResponse = zRecipeResponseDto;
 
 export const zUpdateImageResponse = zRecipeResponseDto;
 
-export const zGetIngredientsResponse = zPaginationResponseDto.merge(z.object({
-    content: z.array(zIngredientResponseDto)
-}));
+export const zGetIngredientsResponse = zIngredientPaginatedResponseDto;
 
 export const zCreateIngredientResponse = zIngredientResponseDto;
 
@@ -145,9 +185,7 @@ export const zUserLoginResponse = zAuthResponseDto;
 
 export const zGetProfileResponse = zUserResponseDto;
 
-export const zGetPlansResponse = zListResponseDto.merge(z.object({
-    content: z.array(zPlanResponseSimpleDto)
-}));
+export const zGetPlansResponse = zPlanResponsePaginatedSimpleDto;
 
 export const zCreatePlanResponse = zPlanResponseDto;
 

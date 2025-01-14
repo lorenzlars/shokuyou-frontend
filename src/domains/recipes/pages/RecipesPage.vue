@@ -1,25 +1,23 @@
 <script lang="ts" setup>
-import { type GetRecipesData, type RecipeResponseDto, RecipesService } from '@/api'
+import { type GetRecipesData, RecipesService } from '@/api'
 import { useRouter } from '@kitbag/router'
 import LazyGrid from '@/components/lazyGrid/LazyGrid.vue'
 import { shallowRef } from 'vue'
-import type { PaginationResponse } from '@/composables/usePagination.ts'
 import RecipeCard from '@/domains/recipes/components/RecipeCard.vue'
 import BaseInput from '@/components/baseInput/BaseInput.vue'
 import BaseButton from '@/components/baseButton/BaseButton.vue'
 import { IconPlus } from '@iconify-prerendered/vue-fa-solid'
 import PageLayout from '@/components/PageLayout.vue'
+import { unwrapResponseData } from '@/components/form'
 
 const { push } = useRouter()
 const filter = shallowRef<string>()
-async function loadMore(
-  query: GetRecipesData['query'],
-): Promise<PaginationResponse<RecipeResponseDto>> {
-  const { data } = await RecipesService.getRecipes({
-    query,
-  })
-
-  return data as PaginationResponse<RecipeResponseDto>
+async function loadMore(query: GetRecipesData['query']) {
+  return unwrapResponseData(
+    await RecipesService.getRecipes({
+      query,
+    }),
+  )
 }
 </script>
 

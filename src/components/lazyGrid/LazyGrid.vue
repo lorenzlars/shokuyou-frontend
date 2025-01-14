@@ -70,6 +70,8 @@ async function loadNextPage(query?: Omit<GetRecipesData['query'], 'page' | 'page
       ...query,
     })
 
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-expect-error
     items.value = items.value.concat(content)
     state.value = meta
   }

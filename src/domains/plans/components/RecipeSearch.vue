@@ -24,7 +24,7 @@ function startDrag(event: DragEvent, value: RecipeResponseDto) {
     event.dataTransfer.effectAllowed = 'copy'
 
     if (event.target instanceof HTMLElement) {
-      event.dataTransfer.setData('value', JSON.stringify(value))
+      event.dataTransfer.setData('value', JSON.stringify({ recipe: value }))
     }
   }
 }
