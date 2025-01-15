@@ -64,8 +64,8 @@ importers:
         specifier: ^3.2.3
         version: 3.2.3(react@18.3.1)(storybook@8.4.7(prettier@3.4.2))
       '@hey-api/openapi-ts':
-        specifier: ^0.60.1
-        version: 0.60.1(typescript@5.6.3)
+        specifier: ^0.62.1
+        version: 0.62.1(typescript@5.6.3)
       '@storybook/addon-essentials':
         specifier: ^8.4.7
         version: 8.4.7(@types/react@19.0.3)(storybook@8.4.7(prettier@3.4.2))
@@ -201,10 +201,6 @@ packages:
 
   '@antfu/utils@0.7.10':
     resolution: {integrity: sha512-+562v9k4aI80m1+VuMHehNJWLOFjBnXn3tdOitzD0il5b7smkSBal4+a3oKiQTbrwMmN/TBUMDvbdoWDehgOww==}
-
-  '@apidevtools/json-schema-ref-parser@11.7.3':
-    resolution: {integrity: sha512-WApSdLdXEBb/1FUPca2lteASewEfpjEYJ8oXZP+0gExK5qSfsEKBKcA+WjY6Q4wvXwyv0+W6Kvc372pSceib9w==}
-    engines: {node: '>= 16'}
 
   '@babel/code-frame@7.26.2':
     resolution: {integrity: sha512-RJlIHRueQgwWitWgF8OdFYGZX328Ax5BCemNGlqHfplnRT9ESi8JkFlvaVYbS+UubVY6dpv87Fs2u5M29iNFVQ==}
@@ -846,12 +842,16 @@ packages:
     peerDependencies:
       axios: '>= 1.0.0 < 2'
 
-  '@hey-api/openapi-ts@0.60.1':
-    resolution: {integrity: sha512-W3fW6pjQ3rwRsmvp9+hDEStyedTWgNjd6PfdVOIegtPBKj3o4ThK3J14kXeqdH2tJXrudfLpXHRp43+ahi4QSg==}
-    engines: {node: ^18.0.0 || >=20.0.0}
+  '@hey-api/json-schema-ref-parser@1.0.1':
+    resolution: {integrity: sha512-dBt0A7op9kf4BcK++x6HBYDmvCvnJUZEGe5QytghPFHnMXPyKwDKomwL/v5e9ERk6E0e1GzL/e/y6pWUso9zrQ==}
+    engines: {node: '>= 16'}
+
+  '@hey-api/openapi-ts@0.62.1':
+    resolution: {integrity: sha512-iCqeu3jhlMBBhAFu3ZCSww5fV4M9xhYhL06QXjwXso4CSfrCpEGw03wTXOphWI1mmZUl8/eNn3DKdP7QpewhHA==}
+    engines: {node: ^18.20.5 || ^20.11.1 || >=22.11.0}
     hasBin: true
     peerDependencies:
-      typescript: ^5.x
+      typescript: ^5.5.3
 
   '@humanfs/core@0.19.1':
     resolution: {integrity: sha512-5DyQ4+1JEUzejeK1JGICcideyfUbGixgS9jNgex5nqkW+cY7WZhxBigmieN5Qnw9ZosSNVC9KQKyb+GUaGyKUA==}
@@ -2012,8 +2012,8 @@ packages:
     resolution: {integrity: sha512-y4Mg2tXshplEbSGzx7amzPwKKOCGuoSRP/CjEdwwk0FOGlUbq6lKuoyDZTNZkmxHdJtp54hdfY/JUrdL7Xfdug==}
     engines: {node: '>=14'}
 
-  commander@12.1.0:
-    resolution: {integrity: sha512-Vw8qHK3bZM9y/P10u3Vib8o/DdkvA2OtPtZvD871QKjy74Wj1WSKFILMPRPSdUSx5RFK1arlJzEtA4PkFgnbuA==}
+  commander@13.0.0:
+    resolution: {integrity: sha512-oPYleIY8wmTVzkvQq10AEok6YcTC4sRUBl8F9gVuwchGVUCTbl/vhLTaQqutuuySYOsu8YTgV+OxKc/8Yvx+mQ==}
     engines: {node: '>=18'}
 
   commander@6.2.1:
@@ -4481,12 +4481,6 @@ snapshots:
 
   '@antfu/utils@0.7.10': {}
 
-  '@apidevtools/json-schema-ref-parser@11.7.3':
-    dependencies:
-      '@jsdevtools/ono': 7.1.3
-      '@types/json-schema': 7.0.15
-      js-yaml: 4.1.0
-
   '@babel/code-frame@7.26.2':
     dependencies:
       '@babel/helper-validator-identifier': 7.25.9
@@ -5003,11 +4997,17 @@ snapshots:
     dependencies:
       axios: 1.7.9(debug@4.4.0)
 
-  '@hey-api/openapi-ts@0.60.1(typescript@5.6.3)':
+  '@hey-api/json-schema-ref-parser@1.0.1':
     dependencies:
-      '@apidevtools/json-schema-ref-parser': 11.7.3
+      '@jsdevtools/ono': 7.1.3
+      '@types/json-schema': 7.0.15
+      js-yaml: 4.1.0
+
+  '@hey-api/openapi-ts@0.62.1(typescript@5.6.3)':
+    dependencies:
+      '@hey-api/json-schema-ref-parser': 1.0.1
       c12: 2.0.1
-      commander: 12.1.0
+      commander: 13.0.0
       handlebars: 4.7.8
       typescript: 5.6.3
     transitivePeerDependencies:
@@ -6364,7 +6364,7 @@ snapshots:
 
   commander@10.0.1: {}
 
-  commander@12.1.0: {}
+  commander@13.0.0: {}
 
   commander@6.2.1: {}
 
