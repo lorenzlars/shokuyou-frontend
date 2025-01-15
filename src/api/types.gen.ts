@@ -249,6 +249,7 @@ export type CreatePlanMealDto = {
 
 export type CreatePlanDto = {
     name: string;
+    days: number;
     meals?: Array<CreatePlanMealDto>;
 };
 
@@ -304,6 +305,7 @@ export type PlanResponseMealDto = {
 export type PlanResponseDto = {
     id: string;
     name: string;
+    days: number;
     /**
      * The plan meals
      */
@@ -313,6 +315,7 @@ export type PlanResponseDto = {
 export type PlanResponseFlatDto = {
     id: string;
     name: string;
+    days: number;
 };
 
 export type PlanResponsePaginatedSimpleDto = {
@@ -327,6 +330,7 @@ export type PlanRequestMealDto = {
 
 export type PlanRequestDto = {
     name: string;
+    days: number;
     meals?: Array<PlanRequestMealDto>;
 };
 

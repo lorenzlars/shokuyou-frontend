@@ -113,6 +113,7 @@ export const zCreatePlanMealDto = z.object({
 
 export const zCreatePlanDto = z.object({
     name: z.string(),
+    days: z.number(),
     meals: z.array(zCreatePlanMealDto).optional()
 });
 
@@ -138,12 +139,14 @@ export const zPlanResponseMealDto = z.object({
 export const zPlanResponseDto = z.object({
     id: z.string(),
     name: z.string(),
+    days: z.number(),
     meals: z.array(zPlanResponseMealDto).optional()
 });
 
 export const zPlanResponseFlatDto = z.object({
     id: z.string(),
-    name: z.string()
+    name: z.string(),
+    days: z.number()
 });
 
 export const zPlanResponsePaginatedSimpleDto = z.object({
@@ -158,6 +161,7 @@ export const zPlanRequestMealDto = z.object({
 
 export const zPlanRequestDto = z.object({
     name: z.string(),
+    days: z.number(),
     meals: z.array(zPlanRequestMealDto).optional()
 });
 

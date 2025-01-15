@@ -6,6 +6,7 @@ import type { PlanResponseDto } from '@/api'
 export function usePlanForm(initialValues?: Partial<PlanResponseDto>) {
   const schema = object({
     name: string().required().label('Name'),
+    days: number().required().default(7).label('Days'),
     meals: array(
       object({
         dayIndex: number().required(),

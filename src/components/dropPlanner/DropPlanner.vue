@@ -60,6 +60,14 @@ async function onDrop(event: DragEvent, dayIndex: number) {
     modelValue.value.push({ ...value, dayIndex })
   }
 }
+
+function handleDelete(toDelete: T) {
+  const index = modelValue.value.findIndex((value) => value === toDelete)
+
+  if (index !== -1) {
+    modelValue.value.splice(index, 1)
+  }
+}
 </script>
 
 <template>
@@ -82,6 +90,7 @@ async function onDrop(event: DragEvent, dayIndex: number) {
           :key="slotIndex"
           v-bind="{
             value,
+            handleDelete,
             itemProps: {
               draggable: true,
               ondragstart: (event: DragEvent) => startDrag(event, value),
