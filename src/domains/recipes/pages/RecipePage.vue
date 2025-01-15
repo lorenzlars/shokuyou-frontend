@@ -1,9 +1,3 @@
-<template>
-  <div class="py-5">
-    <RecipeForm :initial-values="recipe" @submitted="onSubmitted" />
-  </div>
-</template>
-
 <script lang="ts" setup>
 import { shallowRef } from 'vue'
 import { useRoute, useRouter } from '@kitbag/router'
@@ -13,6 +7,7 @@ import { unwrapResponseData } from '@/components/form'
 import { extractParamProp } from '@/utils/routerUtils.ts'
 import { useMessage } from '@/components/message/useMessage.ts'
 import { useI18n } from 'vue-i18n'
+import PageLayout from '@/components/PageLayout.vue'
 
 const { params } = useRoute()
 const id = extractParamProp(params, 'id')
@@ -37,3 +32,11 @@ if (id) {
   recipe.value = unwrapResponseData(await RecipesService.getRecipe({ path: { id } }))
 }
 </script>
+
+<template>
+  <PageLayout title="Plans">
+    <div class="py-5">
+      <RecipeForm :initial-values="recipe" @submitted="onSubmitted" />
+    </div>
+  </PageLayout>
+</template>

@@ -6,6 +6,9 @@ defineProps<{
   values: T[]
   keyPath: keyof T
 }>()
+const emit = defineEmits<{
+  rowClick: [value: T]
+}>()
 const slots = defineSlots<{
   default(): typeof DataTableColumn
 }>()
@@ -32,7 +35,8 @@ const columns = computed(() => slots?.default())
       <tr
         v-for="value in values"
         :key="value[keyPath] as string"
-        class="bg-neutral-2 even:bg-neutral-1"
+        class="bg-neutral-2 even:bg-neutral-1 hover:bg-neutral-3 even:hover:bg-neutral-3 cursor-pointer"
+        @click="emit('rowClick', value)"
       >
         <td
           v-for="{ props, children } in columns"
