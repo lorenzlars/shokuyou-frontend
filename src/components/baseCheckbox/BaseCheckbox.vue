@@ -17,6 +17,7 @@ function handleKeydown() {
 <template>
   <label class="flex items-center cursor-pointer text-dark">
     <input
+      tabindex="-1"
       type="checkbox"
       v-model="modelValue"
       class="appearance-none m-0 display-none"
