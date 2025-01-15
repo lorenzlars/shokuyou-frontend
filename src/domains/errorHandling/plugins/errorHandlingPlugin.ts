@@ -2,6 +2,7 @@ import type { App, Plugin } from 'vue'
 import { AxiosError, type AxiosResponse } from 'axios'
 import { useErrorHandlingContextProvider } from '@/domains/errorHandling/provider/useErrorHandlingContextProvider.ts'
 import { useMessage } from '@/components/message/useMessage.ts'
+import { useAuthStore } from '@/domains/auth/stores/authStore.ts'
 
 type NestJsError = {
   errors: string
@@ -19,6 +20,13 @@ export const ErrorHandlingPlugin: Plugin = {
 
       if (error instanceof AxiosError) {
         const axiosResponse = error.response as AxiosResponse<NestJsError>
+
+        if (axiosResponse?.status === 401) {
+          const { logout } = useAuthStore()
+
+          logout()
+          window.location.reload()
+        }
 
         if (axiosResponse?.status === 400) {
           return showMessage({ content: axiosResponse.data.message.join('\n'), theme: 'warning' })

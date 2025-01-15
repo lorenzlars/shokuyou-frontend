@@ -48,6 +48,6 @@ const onSubmit = handleSubmit(async (values) => {
       {{ t('general.login') }}
     </BaseButton>
 
-    <small class="m-0 text-danger" v-if="showError">{{ t('errors.loginFailed') }}</small>
+    <strong class="m-0 text-danger" v-if="showError">{{ t('errors.loginFailed') }}</strong>
   </form>
 </template>

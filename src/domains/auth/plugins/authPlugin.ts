@@ -11,16 +11,5 @@ export const AuthPlugin: Plugin = {
 
       return config
     })
-
-    client.instance.interceptors.response.use(undefined, (error) => {
-      const { logout } = useAuthStore()
-
-      if (error.status === 401) {
-        logout()
-        return window.location.reload()
-      }
-
-      return Promise.reject(error)
-    })
   },
 }
