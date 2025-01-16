@@ -334,6 +334,12 @@ export type PlanRequestDto = {
     meals?: Array<PlanRequestMealDto>;
 };
 
+export type ImportType = 'mela';
+
+export type ImportRecipeDto = {
+    url: string;
+};
+
 export type GetRecipesData = {
     body?: never;
     path?: never;
@@ -786,3 +792,35 @@ export type UpdatePlanResponses = {
 };
 
 export type UpdatePlanResponse = UpdatePlanResponses[keyof UpdatePlanResponses];
+
+export type ImportBackupData = {
+    body: {
+        file: Blob | File;
+    };
+    path?: never;
+    query: {
+        type: ImportType;
+    };
+    url: '/v1/data/import/recipes';
+};
+
+export type ImportBackupResponses = {
+    200: unknown;
+};
+
+export type ScrapRecipeData = {
+    body: ImportRecipeDto;
+    path?: never;
+    query?: never;
+    url: '/v1/data/scrap/recipe';
+};
+
+export type ScrapRecipeErrors = {
+    406: unknown;
+};
+
+export type ScrapRecipeResponses = {
+    200: RecipeResponseDto;
+};
+
+export type ScrapRecipeResponse = ScrapRecipeResponses[keyof ScrapRecipeResponses];

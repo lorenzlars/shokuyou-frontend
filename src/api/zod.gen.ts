@@ -165,6 +165,14 @@ export const zPlanRequestDto = z.object({
     meals: z.array(zPlanRequestMealDto).optional()
 });
 
+export const zImportType = z.enum([
+    'mela'
+]);
+
+export const zImportRecipeDto = z.object({
+    url: z.string()
+});
+
 export const zGetRecipesResponse = zRecipePaginatedResponseDto;
 
 export const zCreateRecipeResponse = zRecipeResponseDto;
@@ -196,3 +204,5 @@ export const zCreatePlanResponse = zPlanResponseDto;
 export const zGetPlanResponse = zPlanResponseDto;
 
 export const zUpdatePlanResponse = zPlanResponseDto;
+
+export const zScrapRecipeResponse = zRecipeResponseDto;

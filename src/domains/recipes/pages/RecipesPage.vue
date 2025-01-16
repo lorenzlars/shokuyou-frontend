@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { type GetRecipesData, RecipesService } from '@/api'
+import { DataService, type GetRecipesData, RecipesService } from '@/api'
 import { useRouter } from '@kitbag/router'
 import LazyGrid from '@/components/lazyGrid/LazyGrid.vue'
 import { shallowRef } from 'vue'
@@ -9,6 +9,7 @@ import BaseButton from '@/components/baseButton/BaseButton.vue'
 import { IconPlus } from '@iconify-prerendered/vue-fa-solid'
 import PageLayout from '@/components/PageLayout.vue'
 import { unwrapResponseData } from '@/components/form'
+import FileSelect from '@/components/fileSelect/FileSelect.vue'
 
 const { push } = useRouter()
 const filter = shallowRef<string>()
@@ -18,6 +19,20 @@ async function loadMore(query: GetRecipesData['query']) {
       query,
     }),
   )
+}
+
+async function onImport(file: File) {
+  await DataService.importBackup({
+    query: {
+      type: 'mela',
+    },
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+    body: {
+      file,
+    },
+  })
 }
 </script>
 
@@ -31,6 +46,8 @@ async function loadMore(query: GetRecipesData['query']) {
           <IconPlus />
         </template>
       </BaseButton>
+
+      <FileSelect label="Import" accept="*" @change="onImport" />
     </div>
 
     <LazyGrid :loader="loadMore" :filter v-slot="{ data }">

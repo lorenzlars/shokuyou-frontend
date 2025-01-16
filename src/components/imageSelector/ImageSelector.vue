@@ -13,8 +13,8 @@ withDefaults(
   },
 )
 
-const modelValue = defineModel<File | null>({ required: false })
-const modelValueSrc = defineModel<string>('src', { required: false })
+const modelValue = defineModel<File | null>()
+const modelValueSrc = defineModel<string>('src')
 
 function onFileChange(fileList: FileList) {
   const file = fileList[0]

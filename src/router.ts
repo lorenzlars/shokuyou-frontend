@@ -20,4 +20,9 @@ const router = createRouter([
   }),
 ])
 
+// TODO: Is also broken, like the push function of useRouter. I should switch back to vue-router.
+router.onBeforeRouteLeave(() => {
+  window.scrollTo(0, 0)
+})
+
 export default router

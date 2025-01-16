@@ -1,15 +1,21 @@
 <script lang="ts" setup>
 import { type RecipeFormValues, useRecipeForm } from '@/domains/recipes/composables/useRecipeForm'
-import { type RecipeRequestDto, type RecipeResponseDto } from '@/api'
+import { DataService, type RecipeRequestDto, type RecipeResponseDto } from '@/api'
 import { shallowRef } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useField } from 'vee-validate'
 import { useRecipeService } from '@/domains/recipes/composables/useRecipeService'
 import { useSafeAsyncState } from '@/composables/useSafeAsyncState.ts'
-import { StringFormField, NumberFormField, preprocessValues } from '@/components/form'
+import {
+  StringFormField,
+  NumberFormField,
+  preprocessValues,
+  unwrapResponseData,
+} from '@/components/form'
 import BaseButton from '@/components/baseButton/BaseButton.vue'
 import ImageSelector from '@/components/imageSelector/ImageSelector.vue'
 import IngredientsEditor from '@/domains/recipes/components/IngredientsEditor.vue'
+import BaseInput from '@/components/baseInput/BaseInput.vue'
 
 const emit = defineEmits<{
   submitted: [values?: RecipeRequestDto]
@@ -20,6 +26,8 @@ const props = defineProps<{
 }>()
 
 const isEditMode = shallowRef(!props.initialValues)
+const url = shallowRef<string>()
+
 const { handleSubmit, resetForm } = useRecipeForm(props.initialValues)
 const { deleteRecipe, deleteImage, updateRecipe, uploadImage, updateImage, createRecipe } =
   useRecipeService()
@@ -70,10 +78,27 @@ function onEditToggle() {
     resetForm()
   }
 }
+
+async function onImportUrl(url: string) {
+  const recipe = unwrapResponseData(
+    await DataService.scrapRecipe({
+      body: {
+        url: encodeURI(url),
+      },
+    }),
+  )
+
+  resetForm({
+    values: recipe,
+  })
+}
 </script>
 
 <template>
   <form @submit="onSubmit">
+    <BaseInput class="w-full" v-model="url" placeholder="Recipe url" />
+    <BaseButton label="Import Url" @click="() => onImportUrl(url!)" :disabled="!url" />
+
     <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
       <div class="flex flex-col gap-3">
         <ImageSelector v-model="image" v-model:src="imageUrl" :edit="isEditMode" />
