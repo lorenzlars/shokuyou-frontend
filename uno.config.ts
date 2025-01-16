@@ -65,14 +65,14 @@ export default defineConfig({
     [
       /^border-(.+)\/(\d+)$/,
       ([, color, percentage]) => ({
-        'border-color': `color-mix(in hsl, var(--color-${color}), hsl(0, 0%, 0%) ${(parseInt(percentage) - 100) * -1}%)`,
+        'border-color': `color-mix(in hsl, var(--color-${color}), transparent ${(parseInt(percentage) - 100) * -1}%)`,
       }),
     ],
     // Rule to make bg-{color}/{opacity} compatible with css variables
     [
       /^bg-(.+)\/(\d+)$/,
       ([, color, percentage]) => ({
-        'background-color': `color-mix(in hsl, var(--color-${color}), hsl(0, 0%, 0%) ${(parseInt(percentage) - 100) * -1}%)`,
+        'background-color': `color-mix(in hsl, var(--color-${color}), transparent ${(parseInt(percentage) - 100) * -1}%)`,
       }),
     ],
     // Rules to make gradient colors changeable by opacity
@@ -80,14 +80,14 @@ export default defineConfig({
       /^from-(.+)\/(\d+)$/,
       ([, color, percentage]) => ({
         '--un-gradient-from-position': '0%',
-        '--un-gradient-from': `color-mix(in hsl, var(--color-${color}), hsl(0, 0%, 0%) ${(parseInt(percentage) - 100) * -1}%)`,
+        '--un-gradient-from': `color-mix(in hsl, var(--color-${color}), transparent ${(parseInt(percentage) - 100) * -1}%)`,
       }),
     ],
     [
       /^to-(.+)\/(\d+)$/,
       ([, color, percentage]) => ({
         '--un-gradient-to-position': '100%',
-        '--un-gradient-to': `color-mix(in hsl, var(--color-${color}), hsl(0, 0%, 0%) ${(parseInt(percentage) - 100) * -1}%)`,
+        '--un-gradient-to': `color-mix(in hsl, var(--color-${color}), transparent ${(parseInt(percentage) - 100) * -1}%)`,
       }),
     ],
   ],

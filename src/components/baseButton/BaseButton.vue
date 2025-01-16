@@ -5,9 +5,17 @@ withDefaults(
   defineProps<{
     label?: string
     type?: HTMLButtonElement['type']
-    theme?: 'neutral' | 'accent' | 'info' | 'warning' | 'success' | 'danger' | 'passive'
+    theme?:
+      | 'neutral'
+      | 'accent'
+      | 'info'
+      | 'warning'
+      | 'success'
+      | 'danger'
+      | 'passive'
+      | 'transparent'
     loading?: boolean
-    circle?: boolean
+    rounded?: boolean
     small?: boolean // TODO: Not implemented
     disabled?: boolean
   }>(),
@@ -27,6 +35,7 @@ const themeToClass = {
   danger: 'bg-danger text-dark hover:bg-danger/90 border-none',
   passive:
     'bg-transparent text-neutral-3 hover:bg-neutral-1/90 border-dashed border-neutral-3 border-1',
+  transparent: 'bg-transparent text-dark hover:bg-neutral-2 border-none',
 }
 </script>
 
@@ -37,7 +46,7 @@ const themeToClass = {
     class="font-semibold cursor-pointer transition-bg duration-300"
     :class="[
       themeToClass[theme],
-      `${circle ? 'rounded-full p-0 h-10 w-10' : 'rounded-xl px-4 h-12'}`,
+      `${rounded ? 'rounded-full p-0 h-10 w-10' : 'rounded-xl px-4 h-12'}`,
       `${disabled ? 'cursor-not-allowed' : ''}`,
     ]"
   >
@@ -45,7 +54,7 @@ const themeToClass = {
       <transition name="fade">
         <IconSpinner v-if="loading" class="animate-spin w-4" />
       </transition>
-      <span v-if="!circle" class="mx-3">
+      <span v-if="!rounded && label" class="mx-3">
         <slot>
           {{ label }}
         </slot>

@@ -3,7 +3,7 @@ import BaseButton from '@/components/baseButton/BaseButton.vue'
 
 const props = defineProps<{
   label: string
-  accept: HTMLInputElement['accept']
+  accept?: HTMLInputElement['accept']
 }>()
 const modelValue = defineModel<File>()
 const emit = defineEmits<{
@@ -22,8 +22,11 @@ function onFileChange(fileList: FileList) {
 function onClick() {
   const input = document.createElement('input')
   input.type = 'file'
-  input.accept = props.accept
   input.style.display = 'none'
+
+  if (props.accept) {
+    input.accept = props.accept
+  }
 
   input.addEventListener('change', (event: Event) => {
     const target = event.target as HTMLInputElement

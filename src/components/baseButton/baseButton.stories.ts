@@ -19,7 +19,7 @@ const meta = {
     loading: {
       control: 'boolean',
     },
-    circle: {
+    rounded: {
       control: 'boolean',
     },
   },
@@ -69,7 +69,7 @@ export const Circle: Story = {
     `,
   }),
   args: {
-    circle: true,
+    rounded: true,
   },
 }
 

@@ -93,7 +93,7 @@ async function deletePlan() {
             class="absolute -top-5 -right-5"
             @click="handleDelete(value)"
             theme="danger"
-            circle
+            rounded
           >
             <template #icon>
               <IconTrash />

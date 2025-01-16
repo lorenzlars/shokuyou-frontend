@@ -87,7 +87,7 @@ function onClick() {
       v-if="edit && modelValueSrc"
       @click="onDeleteImage"
       theme="danger"
-      circle
+      rounded
     >
       <template #icon>
         <IconTrash />
