@@ -59,7 +59,15 @@ async function deleteIngredient(id: string) {
     <DataTable :values="ingredients" key-path="id">
       <DataTableColumn path="name" title="Name" />
       <DataTableColumn path="amount" v-slot="{ value }">
-        <BaseButton label="Delete" theme="danger" @click="deleteIngredient(value.id)" />
+        <BaseButton
+          label="Delete"
+          theme="danger"
+          @click="deleteIngredient(value.id)"
+          :disabled="value.recipes.length > 0"
+        />
+      </DataTableColumn>
+      <DataTableColumn title="Used by recipes" path="recipes" v-slot="{ value }">
+        {{ value.recipes.length }}
       </DataTableColumn>
     </DataTable>
   </PageLayout>

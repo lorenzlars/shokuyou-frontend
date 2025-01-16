@@ -72,9 +72,15 @@ export const zIngredientRequestDto = z.object({
     name: z.string()
 });
 
-export const zIngredientResponseDto = z.object({
+export const zIngredientRequestRecipeDto = z.object({
     id: z.string(),
     name: z.string()
+});
+
+export const zIngredientResponseDto = z.object({
+    id: z.string(),
+    name: z.string(),
+    recipes: z.array(zIngredientRequestRecipeDto).optional()
 });
 
 export const zIngredientPaginatedResponseDto = z.object({

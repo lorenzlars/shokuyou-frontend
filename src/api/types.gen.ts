@@ -172,9 +172,15 @@ export type IngredientRequestDto = {
     name: string;
 };
 
+export type IngredientRequestRecipeDto = {
+    id: string;
+    name: string;
+};
+
 export type IngredientResponseDto = {
     id: string;
     name: string;
+    recipes?: Array<IngredientRequestRecipeDto>;
 };
 
 export type IngredientPaginatedResponseDto = {
