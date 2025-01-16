@@ -3,6 +3,7 @@ import type { Meta, StoryObj } from '@storybook/vue3'
 import BaseDialog from './BaseDialog.vue'
 import BaseButton from '@/components/baseButton/BaseButton.vue'
 import { shallowRef } from 'vue'
+import { useDialog } from '@/components/baseDialog/useDialog.ts'
 
 const meta = {
   title: 'Components/Base/BaseDialog',
@@ -10,20 +11,31 @@ const meta = {
   tags: ['autodocs'],
   args: {
     title: 'Dialog',
+    name: 'dialog',
   },
   render: (args) => ({
     components: { BaseDialog, BaseButton },
     setup() {
-      const show = shallowRef(false)
+      const { showDialog } = useDialog(args.name)
+      const message = shallowRef('closed')
 
-      return { args, show }
+      async function show() {
+        message.value = 'open'
+        await showDialog()
+        message.value = 'closed'
+      }
+
+      return { args, show, message }
     },
     template: `
       <div>
-        <BaseDialog v-model:show="show" v-bind="args">
-          content
+        <BaseDialog v-bind="args" >
+          <code>Content</code>
         </BaseDialog>
-        <BaseButton @click="show = true" label="Show" />
+        <BaseButton @click="show" label="Show" />
+        <p>
+          <code>{{ message }}</code>
+        </p>
       </div>
     `,
   }),

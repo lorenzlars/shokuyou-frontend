@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { DataService, type GetRecipesData, RecipesService } from '@/api'
+import { type GetRecipesData, RecipesService } from '@/api'
 import { useRouter } from '@kitbag/router'
 import LazyGrid from '@/components/lazyGrid/LazyGrid.vue'
 import { shallowRef } from 'vue'
@@ -9,10 +9,12 @@ import BaseButton from '@/components/baseButton/BaseButton.vue'
 import { IconPlus } from '@iconify-prerendered/vue-fa-solid'
 import PageLayout from '@/components/PageLayout.vue'
 import { unwrapResponseData } from '@/components/form'
-import FileSelect from '@/components/fileSelect/FileSelect.vue'
+import { useDialog } from '@/components/baseDialog/useDialog.ts'
+import ImportDialog from '@/domains/recipes/components/ImportDialog.vue'
 
 const { push } = useRouter()
 const filter = shallowRef<string>()
+const { showDialog } = useDialog('import')
 async function loadMore(query: GetRecipesData['query']) {
   return unwrapResponseData(
     await RecipesService.getRecipes({
@@ -21,18 +23,11 @@ async function loadMore(query: GetRecipesData['query']) {
   )
 }
 
-async function onImport(file: File) {
-  await DataService.importBackup({
-    query: {
-      type: 'mela',
-    },
-    headers: {
-      'Content-Type': 'multipart/form-data',
-    },
-    body: {
-      file,
-    },
-  })
+async function openImportDialog() {
+  if (await showDialog()) {
+    // TODO: Improve reloading
+    window.location.reload()
+  }
 }
 </script>
 
@@ -47,7 +42,11 @@ async function onImport(file: File) {
         </template>
       </BaseButton>
 
-      <FileSelect label="Import" accept="*" @change="onImport" />
+      <BaseButton label="Import" @click="openImportDialog">
+        <template #icon>
+          <IconPlus />
+        </template>
+      </BaseButton>
     </div>
 
     <LazyGrid :loader="loadMore" :filter v-slot="{ data }">
@@ -57,5 +56,7 @@ async function onImport(file: File) {
         class="@hover:scale-101 @hover:shadow-xl duration-300 transition h-full w-full"
       />
     </LazyGrid>
+
+    <ImportDialog name="import" />
   </PageLayout>
 </template>

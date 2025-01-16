@@ -1,26 +1,34 @@
 <script lang="ts" setup>
 import { IconTimes } from '@iconify-prerendered/vue-fa-solid'
 
-defineProps<{
-  title?: string
+const props = defineProps<{
+  name: string
+  title: string
 }>()
 
 import BaseButton from '@/components/baseButton/BaseButton.vue'
 import { useTemplateRef, watch } from 'vue'
+import { injectDialogState } from '@/components/baseDialog/useDialog.ts'
 
-const showDialog = defineModel<boolean>('show')
+const state = injectDialogState(props.name)
 const dialogElement = useTemplateRef('dialog')
 
 watch(dialogElement, (element) => {
   if (element) {
-    element.addEventListener('close', (event) => {
-      event.preventDefault()
-      showDialog.value = false
+    Array.from(['close', 'cancel']).forEach((eventName) => {
+      element.addEventListener(eventName, (event) => {
+        event.preventDefault()
+
+        if (!state.blocked) {
+          state.show = false
+        }
+      })
     })
 
-    element.addEventListener('cancel', (event) => {
-      event.preventDefault()
-      showDialog.value = false
+    element.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && state.blocked) {
+        event.preventDefault()
+      }
     })
   }
 })
@@ -30,7 +38,7 @@ watch(dialogElement, (element) => {
   <teleport to="body">
     <transition name="slide" @enter="dialogElement?.showModal()">
       <dialog
-        v-if="showDialog"
+        v-if="state.show"
         class="fixed top-20 my-0 min-w-128 rounded-xl p-0 bg-light border-2 border-solid border-neutral-1 text-dark shadow-lg backdrop:bg-dark/10"
         ref="dialog"
       >
@@ -38,7 +46,12 @@ watch(dialogElement, (element) => {
           class="w-full bg-neutral-1 p-2 flex justify-between items-center box-border rounded-t-xl"
         >
           <span class="text-2xl font-bold ml-2">{{ title }}</span>
-          <BaseButton @click="showDialog = false" theme="transparent" rounded>
+          <BaseButton
+            @click="state.show = false"
+            theme="transparent"
+            rounded
+            :disabled="state.blocked"
+          >
             <template #icon>
               <IconTimes />
             </template>
