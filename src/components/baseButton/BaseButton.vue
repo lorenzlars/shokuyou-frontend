@@ -54,11 +54,11 @@ const themeToClass = {
       <transition name="fade">
         <IconSpinner v-if="loading" class="animate-spin w-4" />
       </transition>
-      <span v-if="!rounded && label" class="mx-3">
-        <slot>
+      <slot>
+        <span v-if="label" class="mx-3">
           {{ label }}
-        </slot>
-      </span>
+        </span>
+      </slot>
       <slot name="icon" />
     </span>
   </button>

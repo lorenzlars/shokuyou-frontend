@@ -54,7 +54,11 @@ export const Large: Story = {
   },
 }
 
-export const Circle: Story = {
+export const Rounded: Story = {
+  args: {
+    label: undefined,
+    rounded: true,
+  },
   render: (args) => ({
     components: { BaseButton, IconCheckCircle },
     setup() {
@@ -68,9 +72,6 @@ export const Circle: Story = {
       </BaseButton>
     `,
   }),
-  args: {
-    rounded: true,
-  },
 }
 
 export const IconSlot: Story = {
