@@ -4,12 +4,14 @@ import { authRoute } from '@/domains/auth/routes.ts'
 import { recipesRoute } from '@/domains/recipes/routes.ts'
 import { ingredientsRoute } from '@/domains/ingredients/routes.ts'
 import { plansRoute } from '@/domains/plans/routes.ts'
+import { cartRoute } from '@/domains/cart/routes.ts'
 
 const router = createRouter([
   ...authRoute,
   ...recipesRoute,
   ...ingredientsRoute,
   ...plansRoute,
+  ...cartRoute,
 
   createRoute({
     name: 'catch-all',

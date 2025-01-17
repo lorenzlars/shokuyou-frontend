@@ -31,7 +31,6 @@ await execute()
     </BaseButton>
 
     <DataTable :values="plans" key-path="id" @row-click="(value) => push(`/plans/${value.id}`)">
-      <DataTableColumn path="id" title="Id" />
       <DataTableColumn path="name" title="Name" />
     </DataTable>
   </PageLayout>

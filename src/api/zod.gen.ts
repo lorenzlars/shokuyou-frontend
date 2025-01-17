@@ -59,12 +59,11 @@ export const zRecipeResponseFlatDto = z.object({
 });
 
 export const zRecipePaginatedResponseDto = z.object({
+    total: z.number(),
     page: z.number().default(1),
     pageSize: z.number().default(10),
     orderBy: z.string().optional(),
     sortOrder: zPaginationSortOrder.optional(),
-    filter: z.string().optional(),
-    total: z.number(),
     content: z.array(zRecipeResponseFlatDto)
 });
 
@@ -84,12 +83,11 @@ export const zIngredientResponseDto = z.object({
 });
 
 export const zIngredientPaginatedResponseDto = z.object({
+    total: z.number(),
     page: z.number().default(1),
     pageSize: z.number().default(10),
     orderBy: z.string().optional(),
     sortOrder: zPaginationSortOrder.optional(),
-    filter: z.string().optional(),
-    total: z.number(),
     content: z.array(zIngredientResponseDto)
 });
 
@@ -179,6 +177,32 @@ export const zImportRecipeDto = z.object({
     url: z.string()
 });
 
+export const zProductRequestDto = z.object({
+    name: z.string(),
+    unit: z.string(),
+    amount: z.number()
+});
+
+export const zProductResponseDto = z.object({
+    id: z.string(),
+    name: z.string(),
+    unit: z.string(),
+    amount: z.number()
+});
+
+export const zProductPaginatedResponseDto = z.object({
+    total: z.number(),
+    page: z.number().default(1),
+    pageSize: z.number().default(10),
+    orderBy: z.string().optional(),
+    sortOrder: zPaginationSortOrder.optional(),
+    content: z.array(zProductResponseDto)
+});
+
+export const zCreateScheduledMealDto = z.object({});
+
+export const zUpdateScheduledMealDto = z.object({});
+
 export const zGetRecipesResponse = zRecipePaginatedResponseDto;
 
 export const zCreateRecipeResponse = zRecipeResponseDto;
@@ -212,3 +236,11 @@ export const zGetPlanResponse = zPlanResponseDto;
 export const zUpdatePlanResponse = zPlanResponseDto;
 
 export const zScrapRecipeResponse = zRecipeResponseDto;
+
+export const zGetProductsResponse = zProductPaginatedResponseDto;
+
+export const zCreateProductResponse = zProductResponseDto;
+
+export const zGetProductResponse = zProductResponseDto;
+
+export const zUpdateProductResponse = zProductResponseDto;

@@ -35,13 +35,15 @@ function startDrag(event: DragEvent, value: RecipeResponseDto) {
     <h3 class="m-0">Recipes</h3>
     <BaseInput class="w-full" v-model="filter" placeholder="Search recipe name" />
 
-    <LazyGrid :columns="1" :loader="loadMore" :filter v-slot="{ data }">
-      <RecipeCard
-        :recipe="data"
-        draggable="true"
-        @dragstart="startDrag($event, data)"
-        :data-id="data.id"
-      />
-    </LazyGrid>
+    <div class="max-h-128 overflow-y-auto">
+      <LazyGrid :columns="1" :loader="loadMore" :filter v-slot="{ data }">
+        <RecipeCard
+          :recipe="data"
+          draggable="true"
+          @dragstart="startDrag($event, data)"
+          :data-id="data.id"
+        />
+      </LazyGrid>
+    </div>
   </aside>
 </template>

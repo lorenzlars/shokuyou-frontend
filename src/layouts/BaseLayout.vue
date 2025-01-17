@@ -21,6 +21,10 @@ const menuOptions: MenuOption[] = [
     label: 'Ingredients',
     name: 'ingredients',
   },
+  {
+    label: 'Cart',
+    name: 'cart',
+  },
 ]
 
 function handleLogout() {

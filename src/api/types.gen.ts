@@ -144,6 +144,7 @@ export type RecipeResponseFlatDto = {
 };
 
 export type RecipePaginatedResponseDto = {
+    total: number;
     /**
      * The page number
      */
@@ -160,11 +161,6 @@ export type RecipePaginatedResponseDto = {
      * The sort order
      */
     sortOrder?: PaginationSortOrder;
-    /**
-     * The filter
-     */
-    filter?: string;
-    total: number;
     content: Array<RecipeResponseFlatDto>;
 };
 
@@ -184,6 +180,7 @@ export type IngredientResponseDto = {
 };
 
 export type IngredientPaginatedResponseDto = {
+    total: number;
     /**
      * The page number
      */
@@ -200,11 +197,6 @@ export type IngredientPaginatedResponseDto = {
      * The sort order
      */
     sortOrder?: PaginationSortOrder;
-    /**
-     * The filter
-     */
-    filter?: string;
-    total: number;
     content: Array<IngredientResponseDto>;
 };
 
@@ -346,6 +338,48 @@ export type ImportRecipeDto = {
     url: string;
 };
 
+export type ProductRequestDto = {
+    name: string;
+    unit: string;
+    amount: number;
+};
+
+export type ProductResponseDto = {
+    id: string;
+    name: string;
+    unit: string;
+    amount: number;
+};
+
+export type ProductPaginatedResponseDto = {
+    total: number;
+    /**
+     * The page number
+     */
+    page: number;
+    /**
+     * The page size
+     */
+    pageSize: number;
+    /**
+     * The order by attribute
+     */
+    orderBy?: string;
+    /**
+     * The sort order
+     */
+    sortOrder?: PaginationSortOrder;
+    content: Array<ProductResponseDto>;
+};
+
+export type CreateScheduledMealDto = {
+    [key: string]: unknown;
+};
+
+export type UpdateScheduledMealDto = {
+    [key: string]: unknown;
+};
+
 export type GetRecipesData = {
     body?: never;
     path?: never;
@@ -353,11 +387,11 @@ export type GetRecipesData = {
         /**
          * The page number
          */
-        page: unknown;
+        page: number;
         /**
          * The page size
          */
-        pageSize: unknown;
+        pageSize: number;
         /**
          * The order by attribute
          */
@@ -557,11 +591,11 @@ export type GetIngredientsData = {
         /**
          * The page number
          */
-        page: unknown;
+        page: number;
         /**
          * The page size
          */
-        pageSize: unknown;
+        pageSize: number;
         /**
          * The order by attribute
          */
@@ -830,3 +864,169 @@ export type ScrapRecipeResponses = {
 };
 
 export type ScrapRecipeResponse = ScrapRecipeResponses[keyof ScrapRecipeResponses];
+
+export type GetProductsData = {
+    body?: never;
+    path?: never;
+    query: {
+        /**
+         * The page number
+         */
+        page: number;
+        /**
+         * The page size
+         */
+        pageSize: number;
+        /**
+         * The order by attribute
+         */
+        orderBy?: string;
+        /**
+         * The sort order
+         */
+        sortOrder?: PaginationSortOrder;
+        /**
+         * The filter
+         */
+        filter?: string;
+    };
+    url: '/v1/products';
+};
+
+export type GetProductsResponses = {
+    200: ProductPaginatedResponseDto;
+};
+
+export type GetProductsResponse = GetProductsResponses[keyof GetProductsResponses];
+
+export type CreateProductData = {
+    body: ProductRequestDto;
+    path?: never;
+    query?: never;
+    url: '/v1/products';
+};
+
+export type CreateProductResponses = {
+    /**
+     * Product successfully created
+     */
+    201: ProductResponseDto;
+};
+
+export type CreateProductResponse = CreateProductResponses[keyof CreateProductResponses];
+
+export type DeleteProductData = {
+    body?: never;
+    path: {
+        id: string;
+    };
+    query?: never;
+    url: '/v1/products/{id}';
+};
+
+export type DeleteProductErrors = {
+    404: unknown;
+};
+
+export type DeleteProductResponses = {
+    200: unknown;
+};
+
+export type GetProductData = {
+    body?: never;
+    path: {
+        id: string;
+    };
+    query?: never;
+    url: '/v1/products/{id}';
+};
+
+export type GetProductErrors = {
+    404: unknown;
+};
+
+export type GetProductResponses = {
+    200: ProductResponseDto;
+};
+
+export type GetProductResponse = GetProductResponses[keyof GetProductResponses];
+
+export type UpdateProductData = {
+    body: ProductRequestDto;
+    path: {
+        id: string;
+    };
+    query?: never;
+    url: '/v1/products/{id}';
+};
+
+export type UpdateProductErrors = {
+    404: unknown;
+};
+
+export type UpdateProductResponses = {
+    200: ProductResponseDto;
+};
+
+export type UpdateProductResponse = UpdateProductResponses[keyof UpdateProductResponses];
+
+export type FindAllData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/v1/scheduled-meals';
+};
+
+export type FindAllResponses = {
+    200: unknown;
+};
+
+export type CreateData = {
+    body: CreateScheduledMealDto;
+    path?: never;
+    query?: never;
+    url: '/v1/scheduled-meals';
+};
+
+export type CreateResponses = {
+    201: unknown;
+};
+
+export type RemoveData = {
+    body?: never;
+    path: {
+        id: string;
+    };
+    query?: never;
+    url: '/v1/scheduled-meals/{id}';
+};
+
+export type RemoveResponses = {
+    200: unknown;
+};
+
+export type FindOneData = {
+    body?: never;
+    path: {
+        id: string;
+    };
+    query?: never;
+    url: '/v1/scheduled-meals/{id}';
+};
+
+export type FindOneResponses = {
+    200: unknown;
+};
+
+export type UpdateData = {
+    body: UpdateScheduledMealDto;
+    path: {
+        id: string;
+    };
+    query?: never;
+    url: '/v1/scheduled-meals/{id}';
+};
+
+export type UpdateResponses = {
+    200: unknown;
+};
