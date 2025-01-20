@@ -338,10 +338,33 @@ export type ImportRecipeDto = {
     url: string;
 };
 
-export type ProductRequestDto = {
+export type AddProductRequestType = 'product' | 'recipes';
+
+export type AddProductRequestDto = {
+    type: AddProductRequestType;
     name: string;
     unit: string;
     amount: number;
+};
+
+export type AddRecipesRequestDto = {
+    type: AddProductRequestType;
+    recipeIds: Array<string>;
+};
+
+export type MessageType = 'updatedByProduct' | 'updatedByRecipe';
+
+export type LogEntryDto = {
+    /**
+     * The i18n message key
+     */
+    messageType: MessageType;
+    /**
+     * The i18n message properties
+     */
+    messageProperties?: {
+        [key: string]: unknown;
+    };
 };
 
 export type ProductResponseDto = {
@@ -349,6 +372,11 @@ export type ProductResponseDto = {
     name: string;
     unit: string;
     amount: number;
+    log: Array<LogEntryDto>;
+};
+
+export type AddProductsResponseDto = {
+    products: Array<ProductResponseDto>;
 };
 
 export type ProductPaginatedResponseDto = {
@@ -372,12 +400,38 @@ export type ProductPaginatedResponseDto = {
     content: Array<ProductResponseDto>;
 };
 
-export type CreateScheduledMealDto = {
-    [key: string]: unknown;
+export type ProductRequestDto = {
+    name: string;
+    unit: string;
+    amount: number;
 };
 
-export type UpdateScheduledMealDto = {
-    [key: string]: unknown;
+export type ScheduledMealRequestDto = {
+    recipeId: string;
+    datetime: string;
+};
+
+export type CreateScheduledMealsRequestDto = {
+    meals: Array<ScheduledMealRequestDto>;
+};
+
+export type ScheduledMealResponseDto = {
+    id: string;
+    datetime: string;
+    recipe: RecipeResponseFlatDto;
+};
+
+export type CreateScheduledMealsResponseDto = {
+    meals: Array<ScheduledMealResponseDto>;
+};
+
+export type ScheduledMealResponsePaginatedDto = {
+    total: number;
+    content: Array<ScheduledMealResponseDto>;
+};
+
+export type UpdateScheduledMealRequestDto = {
+    datetime: string;
 };
 
 export type GetRecipesData = {
@@ -900,7 +954,7 @@ export type GetProductsResponses = {
 export type GetProductsResponse = GetProductsResponses[keyof GetProductsResponses];
 
 export type CreateProductData = {
-    body: ProductRequestDto;
+    body: AddProductRequestDto | AddRecipesRequestDto;
     path?: never;
     query?: never;
     url: '/v1/products';
@@ -910,7 +964,7 @@ export type CreateProductResponses = {
     /**
      * Product successfully created
      */
-    201: ProductResponseDto;
+    201: AddProductsResponseDto;
 };
 
 export type CreateProductResponse = CreateProductResponses[keyof CreateProductResponses];
@@ -970,29 +1024,33 @@ export type UpdateProductResponses = {
 
 export type UpdateProductResponse = UpdateProductResponses[keyof UpdateProductResponses];
 
-export type FindAllData = {
+export type GetScheduledMealsData = {
     body?: never;
     path?: never;
     query?: never;
     url: '/v1/scheduled-meals';
 };
 
-export type FindAllResponses = {
-    200: unknown;
+export type GetScheduledMealsResponses = {
+    200: ScheduledMealResponsePaginatedDto;
 };
 
-export type CreateData = {
-    body: CreateScheduledMealDto;
+export type GetScheduledMealsResponse = GetScheduledMealsResponses[keyof GetScheduledMealsResponses];
+
+export type CreateScheduledMealData = {
+    body: CreateScheduledMealsRequestDto;
     path?: never;
     query?: never;
     url: '/v1/scheduled-meals';
 };
 
-export type CreateResponses = {
-    201: unknown;
+export type CreateScheduledMealResponses = {
+    201: CreateScheduledMealsResponseDto;
 };
 
-export type RemoveData = {
+export type CreateScheduledMealResponse = CreateScheduledMealResponses[keyof CreateScheduledMealResponses];
+
+export type DeleteScheduledMealData = {
     body?: never;
     path: {
         id: string;
@@ -1001,11 +1059,15 @@ export type RemoveData = {
     url: '/v1/scheduled-meals/{id}';
 };
 
-export type RemoveResponses = {
+export type DeleteScheduledMealErrors = {
+    404: unknown;
+};
+
+export type DeleteScheduledMealResponses = {
     200: unknown;
 };
 
-export type FindOneData = {
+export type GetScheduledMealData = {
     body?: never;
     path: {
         id: string;
@@ -1014,12 +1076,18 @@ export type FindOneData = {
     url: '/v1/scheduled-meals/{id}';
 };
 
-export type FindOneResponses = {
-    200: unknown;
+export type GetScheduledMealErrors = {
+    404: unknown;
 };
 
-export type UpdateData = {
-    body: UpdateScheduledMealDto;
+export type GetScheduledMealResponses = {
+    200: ScheduledMealResponseDto;
+};
+
+export type GetScheduledMealResponse = GetScheduledMealResponses[keyof GetScheduledMealResponses];
+
+export type UpdateScheduledMealData = {
+    body: UpdateScheduledMealRequestDto;
     path: {
         id: string;
     };
@@ -1027,6 +1095,12 @@ export type UpdateData = {
     url: '/v1/scheduled-meals/{id}';
 };
 
-export type UpdateResponses = {
-    200: unknown;
+export type UpdateScheduledMealErrors = {
+    404: unknown;
 };
+
+export type UpdateScheduledMealResponses = {
+    200: ScheduledMealResponseDto;
+};
+
+export type UpdateScheduledMealResponse = UpdateScheduledMealResponses[keyof UpdateScheduledMealResponses];

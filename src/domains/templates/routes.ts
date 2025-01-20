@@ -4,7 +4,7 @@ import BaseLayout from '@/layouts/BaseLayout.vue'
 import { useAuthMiddleware } from '../auth/middlewares/authMiddleware'
 
 const baseRoute = createRoute({
-  name: 'plans-layout',
+  name: 'templates-layout',
   onBeforeRouteEnter: useAuthMiddleware(),
   component: BaseLayout,
 })
@@ -13,20 +13,20 @@ export const plansRoute = [
   baseRoute,
   createRoute({
     parent: baseRoute,
-    name: 'plans',
-    path: '/plans',
+    name: 'templates',
+    path: '/templates',
     component: defineAsyncComponent(() => import('./pages/PlansPage.vue')),
   }),
   createRoute({
     parent: baseRoute,
-    name: 'plan-create',
-    path: '/plans/create',
+    name: 'template-create',
+    path: '/templates/create',
     component: defineAsyncComponent(() => import('./pages/PlanPage.vue')),
   }),
   createRoute({
     parent: baseRoute,
-    name: 'plan',
-    path: path('/plans/[id]', {
+    name: 'template',
+    path: path('/templates/[id]', {
       id: /* Is UUID */ /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$/,
     }),
     component: defineAsyncComponent(() => import('./pages/PlanPage.vue')),

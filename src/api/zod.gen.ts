@@ -177,17 +177,43 @@ export const zImportRecipeDto = z.object({
     url: z.string()
 });
 
-export const zProductRequestDto = z.object({
+export const zAddProductRequestType = z.enum([
+    'product',
+    'recipes'
+]);
+
+export const zAddProductRequestDto = z.object({
+    type: zAddProductRequestType,
     name: z.string(),
     unit: z.string(),
     amount: z.number()
+});
+
+export const zAddRecipesRequestDto = z.object({
+    type: zAddProductRequestType,
+    recipeIds: z.array(z.string())
+});
+
+export const zMessageType = z.enum([
+    'updatedByProduct',
+    'updatedByRecipe'
+]);
+
+export const zLogEntryDto = z.object({
+    messageType: zMessageType,
+    messageProperties: z.object({}).optional()
 });
 
 export const zProductResponseDto = z.object({
     id: z.string(),
     name: z.string(),
     unit: z.string(),
-    amount: z.number()
+    amount: z.number(),
+    log: z.array(zLogEntryDto)
+});
+
+export const zAddProductsResponseDto = z.object({
+    products: z.array(zProductResponseDto)
 });
 
 export const zProductPaginatedResponseDto = z.object({
@@ -199,9 +225,39 @@ export const zProductPaginatedResponseDto = z.object({
     content: z.array(zProductResponseDto)
 });
 
-export const zCreateScheduledMealDto = z.object({});
+export const zProductRequestDto = z.object({
+    name: z.string(),
+    unit: z.string(),
+    amount: z.number()
+});
 
-export const zUpdateScheduledMealDto = z.object({});
+export const zScheduledMealRequestDto = z.object({
+    recipeId: z.string(),
+    datetime: z.string()
+});
+
+export const zCreateScheduledMealsRequestDto = z.object({
+    meals: z.array(zScheduledMealRequestDto)
+});
+
+export const zScheduledMealResponseDto = z.object({
+    id: z.string(),
+    datetime: z.string(),
+    recipe: zRecipeResponseFlatDto
+});
+
+export const zCreateScheduledMealsResponseDto = z.object({
+    meals: z.array(zScheduledMealResponseDto)
+});
+
+export const zScheduledMealResponsePaginatedDto = z.object({
+    total: z.number(),
+    content: z.array(zScheduledMealResponseDto)
+});
+
+export const zUpdateScheduledMealRequestDto = z.object({
+    datetime: z.string()
+});
 
 export const zGetRecipesResponse = zRecipePaginatedResponseDto;
 
@@ -239,8 +295,16 @@ export const zScrapRecipeResponse = zRecipeResponseDto;
 
 export const zGetProductsResponse = zProductPaginatedResponseDto;
 
-export const zCreateProductResponse = zProductResponseDto;
+export const zCreateProductResponse = zAddProductsResponseDto;
 
 export const zGetProductResponse = zProductResponseDto;
 
 export const zUpdateProductResponse = zProductResponseDto;
+
+export const zGetScheduledMealsResponse = zScheduledMealResponsePaginatedDto;
+
+export const zCreateScheduledMealResponse = zCreateScheduledMealsResponseDto;
+
+export const zGetScheduledMealResponse = zScheduledMealResponseDto;
+
+export const zUpdateScheduledMealResponse = zScheduledMealResponseDto;

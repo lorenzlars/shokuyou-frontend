@@ -23,14 +23,14 @@ await execute()
 </script>
 
 <template>
-  <PageLayout title="Plans">
-    <BaseButton label="Create" @click="push('plan-create')">
+  <PageLayout title="Templates">
+    <BaseButton label="Create" @click="push('template-create')">
       <template #icon>
         <IconPlus />
       </template>
     </BaseButton>
 
-    <DataTable :values="plans" key-path="id" @row-click="(value) => push(`/plans/${value.id}`)">
+    <DataTable :values="plans" key-path="id" @row-click="(value) => push(`/templates/${value.id}`)">
       <DataTableColumn path="name" title="Name" />
     </DataTable>
   </PageLayout>

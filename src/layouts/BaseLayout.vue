@@ -10,8 +10,8 @@ const { logout } = useAuthStore()
 const { push } = useRouter()
 const menuOptions: MenuOption[] = [
   {
-    label: 'Plans',
-    name: 'plans',
+    label: 'Templates',
+    name: 'templates',
   },
   {
     label: 'Recipes',
@@ -24,6 +24,10 @@ const menuOptions: MenuOption[] = [
   {
     label: 'Cart',
     name: 'cart',
+  },
+  {
+    label: 'Plan',
+    name: 'plan',
   },
 ]
 

@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { type PlanResponseDto, PlansService } from '@/api'
-import PlanForm from '@/domains/plans/components/PlanForm.vue'
+import PlanForm from '@/domains/templates/components/PlanForm.vue'
 import { unwrapResponseData } from '@/components/form'
 import { extractParamProp } from '@/utils/routerUtils.ts'
 import { shallowRef } from 'vue'

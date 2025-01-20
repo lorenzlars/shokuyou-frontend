@@ -1,16 +1,18 @@
 <script lang="ts" setup generic="T extends Record<string, unknown>">
 import type DataTableColumn from '@/components/dataTable/DataTableColumn.vue'
 import { computed } from 'vue'
+import DataTableRow from '@/components/dataTable/DataTableRow.vue'
 
 defineProps<{
   values: T[]
   keyPath: keyof T
 }>()
+const slots = defineSlots<{
+  default(): (typeof DataTableColumn)[]
+  details?: (props: { value: T; index: number }) => unknown
+}>()
 const emit = defineEmits<{
   rowClick: [value: T]
-}>()
-const slots = defineSlots<{
-  default(): typeof DataTableColumn
 }>()
 
 const columns = computed(() => slots?.default())
@@ -29,23 +31,21 @@ const columns = computed(() => slots?.default())
         >
           {{ props.title }}
         </th>
+        <th v-if="slots.details" class="p-4" />
       </tr>
     </thead>
     <tbody>
       <tr
-        v-for="value in values"
+        v-for="(value, index) in values"
         :key="value[keyPath] as string"
-        class="bg-neutral-2 even:bg-neutral-1 hover:bg-neutral-3 even:hover:bg-neutral-3 cursor-pointer"
+        class="bg-neutral-2 even:bg-neutral-1 hover:bg-neutral-3 even:hover:bg-neutral-3 cursor-pointer relative"
         @click="emit('rowClick', value)"
       >
-        <td
-          v-for="{ props, children } in columns"
-          :key="props.path"
-          class="p-4 border-b border-neutral-3"
-        >
-          <component v-if="children" :is="children.default" v-bind="{ value }" />
-          <template v-else>{{ value[props.path] }}</template>
-        </td>
+        <DataTableRow :value :index :columns>
+          <template #details="props" v-if="slots.details">
+            <slot name="details" v-bind="props" />
+          </template>
+        </DataTableRow>
       </tr>
     </tbody>
   </table>
