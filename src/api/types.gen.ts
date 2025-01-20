@@ -352,7 +352,7 @@ export type AddRecipesRequestDto = {
     recipeIds: Array<string>;
 };
 
-export type MessageType = 'updatedByProduct' | 'updatedByRecipe';
+export type MessageType = 'updatedByProduct' | 'updatedByRecipe' | 'createdByRecipe' | 'createdByProduct';
 
 export type LogEntryDto = {
     /**
@@ -1027,7 +1027,10 @@ export type UpdateProductResponse = UpdateProductResponses[keyof UpdateProductRe
 export type GetScheduledMealsData = {
     body?: never;
     path?: never;
-    query?: never;
+    query: {
+        from: string;
+        to: string;
+    };
     url: '/v1/scheduled-meals';
 };
 

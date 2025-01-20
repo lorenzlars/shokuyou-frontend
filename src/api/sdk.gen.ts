@@ -315,7 +315,7 @@ export class ProductsService {
 }
 
 export class ScheduledMealsService {
-    public static getScheduledMeals<ThrowOnError extends boolean = false>(options?: Options<GetScheduledMealsData, ThrowOnError>) {
+    public static getScheduledMeals<ThrowOnError extends boolean = false>(options: Options<GetScheduledMealsData, ThrowOnError>) {
         return (options?.client ?? client).get<GetScheduledMealsResponse, unknown, ThrowOnError>({
             ...options,
             url: '/v1/scheduled-meals'

@@ -196,7 +196,9 @@ export const zAddRecipesRequestDto = z.object({
 
 export const zMessageType = z.enum([
     'updatedByProduct',
-    'updatedByRecipe'
+    'updatedByRecipe',
+    'createdByRecipe',
+    'createdByProduct'
 ]);
 
 export const zLogEntryDto = z.object({
