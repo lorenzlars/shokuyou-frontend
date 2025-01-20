@@ -64,8 +64,8 @@ importers:
         specifier: ^3.2.3
         version: 3.2.3(react@18.3.1)(storybook@8.4.7(prettier@3.4.2))
       '@hey-api/openapi-ts':
-        specifier: ^0.60.1
-        version: 0.60.1(typescript@5.6.3)
+        specifier: ^0.62.2
+        version: 0.62.2(typescript@5.6.3)
       '@storybook/addon-essentials':
         specifier: ^8.4.7
         version: 8.4.7(@types/react@19.0.3)(storybook@8.4.7(prettier@3.4.2))
@@ -201,10 +201,6 @@ packages:
 
   '@antfu/utils@0.7.10':
     resolution: {integrity: sha512-+562v9k4aI80m1+VuMHehNJWLOFjBnXn3tdOitzD0il5b7smkSBal4+a3oKiQTbrwMmN/TBUMDvbdoWDehgOww==}
-
-  '@apidevtools/json-schema-ref-parser@11.7.3':
-    resolution: {integrity: sha512-WApSdLdXEBb/1FUPca2lteASewEfpjEYJ8oXZP+0gExK5qSfsEKBKcA+WjY6Q4wvXwyv0+W6Kvc372pSceib9w==}
-    engines: {node: '>= 16'}
 
   '@babel/code-frame@7.26.2':
     resolution: {integrity: sha512-RJlIHRueQgwWitWgF8OdFYGZX328Ax5BCemNGlqHfplnRT9ESi8JkFlvaVYbS+UubVY6dpv87Fs2u5M29iNFVQ==}
@@ -846,12 +842,16 @@ packages:
     peerDependencies:
       axios: '>= 1.0.0 < 2'
 
-  '@hey-api/openapi-ts@0.60.1':
-    resolution: {integrity: sha512-W3fW6pjQ3rwRsmvp9+hDEStyedTWgNjd6PfdVOIegtPBKj3o4ThK3J14kXeqdH2tJXrudfLpXHRp43+ahi4QSg==}
-    engines: {node: ^18.0.0 || >=20.0.0}
+  '@hey-api/json-schema-ref-parser@1.0.1':
+    resolution: {integrity: sha512-dBt0A7op9kf4BcK++x6HBYDmvCvnJUZEGe5QytghPFHnMXPyKwDKomwL/v5e9ERk6E0e1GzL/e/y6pWUso9zrQ==}
+    engines: {node: '>= 16'}
+
+  '@hey-api/openapi-ts@0.62.2':
+    resolution: {integrity: sha512-OWZ8tbuX66TxN23QUCqr5DYmlereaZ6fViqwjj6FDkxv+i8HVTtqgITzIeAizD8P3mykm2uE+HQnoNSya9awKg==}
+    engines: {node: ^18.20.5 || ^20.11.1 || >=22.11.0}
     hasBin: true
     peerDependencies:
-      typescript: ^5.x
+      typescript: ^5.5.3
 
   '@humanfs/core@0.19.1':
     resolution: {integrity: sha512-5DyQ4+1JEUzejeK1JGICcideyfUbGixgS9jNgex5nqkW+cY7WZhxBigmieN5Qnw9ZosSNVC9KQKyb+GUaGyKUA==}
@@ -2012,8 +2012,8 @@ packages:
     resolution: {integrity: sha512-y4Mg2tXshplEbSGzx7amzPwKKOCGuoSRP/CjEdwwk0FOGlUbq6lKuoyDZTNZkmxHdJtp54hdfY/JUrdL7Xfdug==}
     engines: {node: '>=14'}
 
-  commander@12.1.0:
-    resolution: {integrity: sha512-Vw8qHK3bZM9y/P10u3Vib8o/DdkvA2OtPtZvD871QKjy74Wj1WSKFILMPRPSdUSx5RFK1arlJzEtA4PkFgnbuA==}
+  commander@13.0.0:
+    resolution: {integrity: sha512-oPYleIY8wmTVzkvQq10AEok6YcTC4sRUBl8F9gVuwchGVUCTbl/vhLTaQqutuuySYOsu8YTgV+OxKc/8Yvx+mQ==}
     engines: {node: '>=18'}
 
   commander@6.2.1:
@@ -2039,6 +2039,10 @@ packages:
 
   consola@3.3.0:
     resolution: {integrity: sha512-kxltocVQCwQNFvw40dlVRYeAkAvtYjMFZYNlOcsF5wExPpGwPxMwgx4IfDJvBRPtBpnQwItd5WkTaR0ZwT/TmQ==}
+    engines: {node: ^14.18.0 || >=16.10.0}
+
+  consola@3.4.0:
+    resolution: {integrity: sha512-EiPU8G6dQG0GFHNR8ljnZFki/8a+cQwEQ+7wpxdChl02Q8HXlwEZWD5lqAF8vC2sEC3Tehr8hy7vErz88LHyUA==}
     engines: {node: ^14.18.0 || >=16.10.0}
 
   constantinople@4.0.1:
@@ -3121,8 +3125,8 @@ packages:
     engines: {node: '>=10'}
     hasBin: true
 
-  mlly@1.7.3:
-    resolution: {integrity: sha512-xUsx5n/mN0uQf4V548PKQ+YShA4/IW0KI1dZhrNrPCLG+xizETbHTkOa1f8/xut9JRPp8kQuMnz0oqwkTiLo/A==}
+  mlly@1.7.4:
+    resolution: {integrity: sha512-qmdSIPC4bDJXgZTCR7XosJiNKySV7O215tsPtDN9iEO/7q/76b/ijtgRu/+epFXSJhijtTCCGp3DWS549P3xKw==}
 
   mrmime@2.0.0:
     resolution: {integrity: sha512-eu38+hdgojoyq63s+yTpN4XMBdt5l8HhMhc4VKLO9KM5caLIBvUm4thi7fFaxyTmCKeNnXZ5pAlBwCUnhA09uw==}
@@ -3171,6 +3175,9 @@ packages:
 
   node-fetch-native@1.6.4:
     resolution: {integrity: sha512-IhOigYzAKHd244OC0JIMIUrjzctirCmPkaIfhDeGcEETWof5zKYUW7e7MYvChGWh/4CJeXEgsRyGzuF334rOOQ==}
+
+  node-fetch-native@1.6.6:
+    resolution: {integrity: sha512-8Mc2HhqPdlIfedsuZoc3yioPuzp6b+L5jRCRY1QzuWZh2EGJVQrGppC6V6cF0bLdbW0+O2YpqCA25aF/1lvipQ==}
 
   node-releases@2.0.19:
     resolution: {integrity: sha512-xxOWJsBKtzAq7DY0J+DTzuz58K8e7sJbdgwkbMWQe8UYB6ekmsQ45q0M/tJDsGaZmbC+l7n57UV8Hl5tHxO9uw==}
@@ -3316,6 +3323,9 @@ packages:
   pathe@1.1.2:
     resolution: {integrity: sha512-whLdWMYL2TwI08hn8/ZqAbrVemu0LNaNNJZX73O6qaIdCTfXutsLhMkjdENX0qhsQ9uIimo4/aQOmXkoon2nDQ==}
 
+  pathe@2.0.2:
+    resolution: {integrity: sha512-15Ztpk+nov8DR524R4BF7uEuzESgzUEAV4Ah7CUMNGXdE5ELuvxElxGXndBl32vMSsWa1jpNf22Z+Er3sKwq+w==}
+
   pathval@2.0.0:
     resolution: {integrity: sha512-vE7JKRyES09KiunauX7nd2Q9/L7lhok4smP9RZTDeD4MVs72Dp2qNFVz39Nz5a0FVEW0BJR6C0DYrq6unoziZA==}
     engines: {node: '>= 14.16'}
@@ -3361,8 +3371,8 @@ packages:
       typescript:
         optional: true
 
-  pkg-types@1.2.1:
-    resolution: {integrity: sha512-sQoqa8alT3nHjGuTjuKgOnvjo4cljkufdtLMnO2LBP/wRwuDlo1tkaEdMxCRhyGRPacv/ztlZgDPm2b7FAmEvw==}
+  pkg-types@1.3.1:
+    resolution: {integrity: sha512-/Jm5M4RvtBFVkKWRu2BLUTNP8/M2a+UwuAX+ae4770q1qVGtfjG+WTCupoZixokjmHiry8uI+dlY8KXYV5HVVQ==}
 
   polished@4.3.1:
     resolution: {integrity: sha512-OBatVyC/N7SCW/FaDHrSd+vn0o5cS855TOmYi4OkdWUMSJCET/xip//ch8xGUvtr3i44X9LVyWwQlRMTN3pwSA==}
@@ -3514,9 +3524,9 @@ packages:
     resolution: {integrity: sha512-hOS089on8RduqdbhvQ5Z37A0ESjsqz6qnRcffsMU3495FuTdqSm+7bhJ29JvIOsBDEEnan5DPu9t3To9VRlMzA==}
     engines: {node: '>=8.10.0'}
 
-  readdirp@4.0.2:
-    resolution: {integrity: sha512-yDMz9g+VaZkqBYS/ozoBJwaBhTbZo3UNYQHNRw1D3UFQB8oHB4uS/tAODO+ZLjGWmUbKnIlOWO+aaIiAxrUWHA==}
-    engines: {node: '>= 14.16.0'}
+  readdirp@4.1.1:
+    resolution: {integrity: sha512-h80JrZu/MHUZCyHu5ciuoI0+WxsCxzxJTILn6Fs8rxSnFPh+UVHYfeIxK1nVGugMqkfC4vJcBOYbkfkwYK0+gw==}
+    engines: {node: '>= 14.18.0'}
 
   recast@0.23.9:
     resolution: {integrity: sha512-Hx/BGIbwj+Des3+xy5uAtAbdCyqK9y9wbBcDFDYanLS9JnMqf7OeF87HQwUimE87OEc72mr6tkKUKMBBL+hF9Q==}
@@ -4481,12 +4491,6 @@ snapshots:
 
   '@antfu/utils@0.7.10': {}
 
-  '@apidevtools/json-schema-ref-parser@11.7.3':
-    dependencies:
-      '@jsdevtools/ono': 7.1.3
-      '@types/json-schema': 7.0.15
-      js-yaml: 4.1.0
-
   '@babel/code-frame@7.26.2':
     dependencies:
       '@babel/helper-validator-identifier': 7.25.9
@@ -5003,11 +5007,17 @@ snapshots:
     dependencies:
       axios: 1.7.9(debug@4.4.0)
 
-  '@hey-api/openapi-ts@0.60.1(typescript@5.6.3)':
+  '@hey-api/json-schema-ref-parser@1.0.1':
     dependencies:
-      '@apidevtools/json-schema-ref-parser': 11.7.3
+      '@jsdevtools/ono': 7.1.3
+      '@types/json-schema': 7.0.15
+      js-yaml: 4.1.0
+
+  '@hey-api/openapi-ts@0.62.2(typescript@5.6.3)':
+    dependencies:
+      '@hey-api/json-schema-ref-parser': 1.0.1
       c12: 2.0.1
-      commander: 12.1.0
+      commander: 13.0.0
       handlebars: 4.7.8
       typescript: 5.6.3
     transitivePeerDependencies:
@@ -5049,7 +5059,7 @@ snapshots:
       globals: 15.14.0
       kolorist: 1.8.0
       local-pkg: 0.5.1
-      mlly: 1.7.3
+      mlly: 1.7.4
     transitivePeerDependencies:
       - supports-color
 
@@ -6237,11 +6247,11 @@ snapshots:
       dotenv: 16.4.7
       giget: 1.2.3
       jiti: 2.4.2
-      mlly: 1.7.3
+      mlly: 1.7.4
       ohash: 1.1.4
       pathe: 1.1.2
       perfect-debounce: 1.0.0
-      pkg-types: 1.2.1
+      pkg-types: 1.3.1
       rc9: 2.1.2
 
   cac@6.7.14: {}
@@ -6311,7 +6321,7 @@ snapshots:
 
   chokidar@4.0.3:
     dependencies:
-      readdirp: 4.0.2
+      readdirp: 4.1.1
 
   chownr@2.0.0: {}
 
@@ -6321,7 +6331,7 @@ snapshots:
 
   citty@0.1.6:
     dependencies:
-      consola: 3.3.0
+      consola: 3.4.0
 
   clean-stack@2.2.0: {}
 
@@ -6364,7 +6374,7 @@ snapshots:
 
   commander@10.0.1: {}
 
-  commander@12.1.0: {}
+  commander@13.0.0: {}
 
   commander@6.2.1: {}
 
@@ -6382,6 +6392,8 @@ snapshots:
       proto-list: 1.2.4
 
   consola@3.3.0: {}
+
+  consola@3.4.0: {}
 
   constantinople@4.0.1:
     dependencies:
@@ -7042,9 +7054,9 @@ snapshots:
   giget@1.2.3:
     dependencies:
       citty: 0.1.6
-      consola: 3.3.0
+      consola: 3.4.0
       defu: 6.1.4
-      node-fetch-native: 1.6.4
+      node-fetch-native: 1.6.6
       nypm: 0.3.12
       ohash: 1.1.4
       pathe: 1.1.2
@@ -7437,8 +7449,8 @@ snapshots:
 
   local-pkg@0.5.1:
     dependencies:
-      mlly: 1.7.3
-      pkg-types: 1.2.1
+      mlly: 1.7.4
+      pkg-types: 1.3.1
 
   localforage@1.10.0:
     dependencies:
@@ -7556,11 +7568,11 @@ snapshots:
 
   mkdirp@1.0.4: {}
 
-  mlly@1.7.3:
+  mlly@1.7.4:
     dependencies:
       acorn: 8.14.0
-      pathe: 1.1.2
-      pkg-types: 1.2.1
+      pathe: 2.0.2
+      pkg-types: 1.3.1
       ufo: 1.5.4
 
   mrmime@2.0.0: {}
@@ -7611,6 +7623,8 @@ snapshots:
 
   node-fetch-native@1.6.4: {}
 
+  node-fetch-native@1.6.6: {}
+
   node-releases@2.0.19: {}
 
   nopt@7.2.1:
@@ -7654,10 +7668,10 @@ snapshots:
   nypm@0.3.12:
     dependencies:
       citty: 0.1.6
-      consola: 3.3.0
+      consola: 3.4.0
       execa: 8.0.1
       pathe: 1.1.2
-      pkg-types: 1.2.1
+      pkg-types: 1.3.1
       ufo: 1.5.4
 
   object-assign@4.1.1: {}
@@ -7755,6 +7769,8 @@ snapshots:
 
   pathe@1.1.2: {}
 
+  pathe@2.0.2: {}
+
   pathval@2.0.0: {}
 
   pause-stream@0.0.11:
@@ -7787,11 +7803,11 @@ snapshots:
     transitivePeerDependencies:
       - '@vue/composition-api'
 
-  pkg-types@1.2.1:
+  pkg-types@1.3.1:
     dependencies:
       confbox: 0.1.8
-      mlly: 1.7.3
-      pathe: 1.1.2
+      mlly: 1.7.4
+      pathe: 2.0.2
 
   polished@4.3.1:
     dependencies:
@@ -7965,7 +7981,7 @@ snapshots:
     dependencies:
       picomatch: 2.3.1
 
-  readdirp@4.0.2: {}
+  readdirp@4.1.1: {}
 
   recast@0.23.9:
     dependencies:
