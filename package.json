@@ -21,7 +21,7 @@
     "prepare": "husky"
   },
   "dependencies": {
-    "@hey-api/client-axios": "^0.3.4",
+    "@hey-api/client-axios": "^0.5.3",
     "@iconify-prerendered/vue-fa-regular": "^0.28.1722793350",
     "@iconify-prerendered/vue-fa-solid": "^0.28.1722793361",
     "@iconify-prerendered/vue-pepicons-pencil": "^0.28.1722795416",
