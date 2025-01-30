@@ -1,17 +1,15 @@
 <script lang="ts" setup>
 import BaseButton from '@/components/baseButton/BaseButton.vue'
 import PageLayout from '@/components/PageLayout.vue'
-import { useDialog } from '@/components/baseDialog/useDialog.ts'
 import AddIngredientsDialog from '@/domains/plan/components/AddIngredientsDialog.vue'
-import { ProductsService, type ScheduledMealResponseDto, ScheduledMealsService } from '@/api'
+import { MealsService, type ScheduledMealResponseDto } from '@/api'
 import { useAsyncPromise } from '@/composables/useAsyncPromise.ts'
 import { unwrapResponseData } from '@/components/form'
 
-const { showDialog } = useDialog('import-dialog')
 const { execute: loadPlan, data: plan } = useAsyncPromise(
   async () => {
     const response = unwrapResponseData(
-      await ScheduledMealsService.getScheduledMeals({
+      await MealsService.getMeals({
         query: {
           from: new Date(1).toISOString(),
           to: new Date('2025-01-21').toISOString(),
@@ -25,37 +23,39 @@ const { execute: loadPlan, data: plan } = useAsyncPromise(
 )
 
 async function addMeal() {
-  await ScheduledMealsService.createScheduledMeal({
+  await MealsService.createMeal({
     body: {
-      meals: [
-        {
-          recipeId: 'b1903f67-55b6-4e88-9d45-aa3912f012ea',
-          datetime: new Date().toISOString(),
-        },
-      ],
+      recipeId: 'b1903f67-55b6-4e88-9d45-aa3912f012ea',
+      datetime: new Date().toISOString(),
     },
   })
   await loadPlan()
 }
 
 async function addIngredients() {
-  await ProductsService.createProduct({
-    body: {
-      type: 'recipes',
-      recipeIds: ['b1903f67-55b6-4e88-9d45-aa3912f012ea'],
-    },
-  })
+  // await ProductsService.createProduct({
+  //   body: {
+  //     type: 'recipes',
+  //     recipeIds: ['b1903f67-55b6-4e88-9d45-aa3912f012ea'],
+  //   },
+  // })
 }
 
 async function deleteMeal(id: string) {
-  await ScheduledMealsService.deleteScheduledMeal({ path: { id } })
+  await MealsService.deleteMeal({ path: { id } })
   await loadPlan()
 }
 
 async function insertTemplate() {
-  const returnValues = await showDialog()
-
-  console.log(returnValues)
+  // const returnValues = await showDialog()
+  //
+  // if (returnValues) {
+  //   const plan = await TemplatesService.getTemplate({
+  //     path: { id: returnValues.id },
+  //   })
+  //
+  //   const dayIndexMap = new Map<number, PlanResponseMealDto>()
+  // }
 }
 
 await loadPlan()
@@ -70,6 +70,7 @@ await loadPlan()
 
     <div>
       <p v-for="(meal, key) in plan" :key>
+        <span>{{ meal.datetime }}</span>
         <span>{{ meal.recipe.name }}</span>
         <BaseButton label="Delete" @click="deleteMeal(meal.id)" />
       </p>

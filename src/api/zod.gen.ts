@@ -40,10 +40,7 @@ export const zRecipeResponseDto = z.object({
     imageUrl: z.string().optional()
 });
 
-export const zPaginationSortOrder = z.enum([
-    'ASC',
-    'DESC'
-]);
+export const zPaginationSortOrder = z.unknown();
 
 export const zRecipeResponseFlatDto = z.object({
     id: z.string(),
@@ -67,30 +64,6 @@ export const zRecipePaginatedResponseDto = z.object({
     content: z.array(zRecipeResponseFlatDto)
 });
 
-export const zIngredientRequestDto = z.object({
-    name: z.string()
-});
-
-export const zIngredientRequestRecipeDto = z.object({
-    id: z.string(),
-    name: z.string()
-});
-
-export const zIngredientResponseDto = z.object({
-    id: z.string(),
-    name: z.string(),
-    recipes: z.array(zIngredientRequestRecipeDto).optional()
-});
-
-export const zIngredientPaginatedResponseDto = z.object({
-    total: z.number(),
-    page: z.number().default(1),
-    pageSize: z.number().default(10),
-    orderBy: z.string().optional(),
-    sortOrder: zPaginationSortOrder.optional(),
-    content: z.array(zIngredientResponseDto)
-});
-
 export const zAuthRequestDto = z.object({
     username: z.string(),
     password: z.string()
@@ -108,6 +81,20 @@ export const zAuthRegisterRequestDto = z.object({
 export const zUserResponseDto = z.object({
     id: z.string(),
     username: z.string()
+});
+
+export const zIngredientResponseDto = z.object({
+    id: z.string(),
+    name: z.string()
+});
+
+export const zIngredientPaginatedResponseDto = z.object({
+    total: z.number(),
+    page: z.number().default(1),
+    pageSize: z.number().default(10),
+    orderBy: z.string().optional(),
+    sortOrder: zPaginationSortOrder.optional(),
+    content: z.array(zIngredientResponseDto)
 });
 
 export const zCreatePlanMealDto = z.object({
@@ -177,23 +164,6 @@ export const zImportRecipeDto = z.object({
     url: z.string()
 });
 
-export const zAddProductRequestType = z.enum([
-    'product',
-    'recipes'
-]);
-
-export const zAddProductRequestDto = z.object({
-    type: zAddProductRequestType,
-    name: z.string(),
-    unit: z.string(),
-    amount: z.number()
-});
-
-export const zAddRecipesRequestDto = z.object({
-    type: zAddProductRequestType,
-    recipeIds: z.array(z.string())
-});
-
 export const zMessageType = z.enum([
     'updatedByProduct',
     'updatedByRecipe',
@@ -214,10 +184,6 @@ export const zProductResponseDto = z.object({
     log: z.array(zLogEntryDto)
 });
 
-export const zAddProductsResponseDto = z.object({
-    products: z.array(zProductResponseDto)
-});
-
 export const zProductPaginatedResponseDto = z.object({
     total: z.number(),
     page: z.number().default(1),
@@ -235,30 +201,20 @@ export const zProductRequestDto = z.object({
 
 export const zScheduledMealRequestDto = z.object({
     recipeId: z.string(),
-    datetime: z.string()
-});
-
-export const zCreateScheduledMealsRequestDto = z.object({
-    meals: z.array(zScheduledMealRequestDto)
+    datetime: z.string(),
+    done: z.boolean().optional()
 });
 
 export const zScheduledMealResponseDto = z.object({
     id: z.string(),
     datetime: z.string(),
-    recipe: zRecipeResponseFlatDto
-});
-
-export const zCreateScheduledMealsResponseDto = z.object({
-    meals: z.array(zScheduledMealResponseDto)
+    done: z.boolean().optional(),
+    recipe: zRecipeResponseDto
 });
 
 export const zScheduledMealResponsePaginatedDto = z.object({
     total: z.number(),
     content: z.array(zScheduledMealResponseDto)
-});
-
-export const zUpdateScheduledMealRequestDto = z.object({
-    datetime: z.string()
 });
 
 export const zGetRecipesResponse = zRecipePaginatedResponseDto;
@@ -269,44 +225,32 @@ export const zGetRecipeResponse = zRecipeResponseDto;
 
 export const zUpdateRecipeResponse = zRecipeResponseDto;
 
-export const zUploadImageResponse = zRecipeResponseDto;
-
-export const zUpdateImageResponse = zRecipeResponseDto;
-
-export const zGetIngredientsResponse = zIngredientPaginatedResponseDto;
-
-export const zCreateIngredientResponse = zIngredientResponseDto;
-
-export const zGetIngredientResponse = zIngredientResponseDto;
-
-export const zUpdateIngredientsResponse = zIngredientResponseDto;
-
 export const zUserLoginResponse = zAuthResponseDto;
 
 export const zGetProfileResponse = zUserResponseDto;
 
-export const zGetPlansResponse = zPlanResponsePaginatedSimpleDto;
+export const zGetIngredientsResponse = zIngredientPaginatedResponseDto;
+
+export const zGetTemplatesResponse = zPlanResponsePaginatedSimpleDto;
 
 export const zCreatePlanResponse = zPlanResponseDto;
 
-export const zGetPlanResponse = zPlanResponseDto;
+export const zGetTemplateResponse = zPlanResponseDto;
 
-export const zUpdatePlanResponse = zPlanResponseDto;
+export const zUpdateTemplateResponse = zPlanResponseDto;
 
 export const zScrapRecipeResponse = zRecipeResponseDto;
 
 export const zGetProductsResponse = zProductPaginatedResponseDto;
 
-export const zCreateProductResponse = zAddProductsResponseDto;
-
 export const zGetProductResponse = zProductResponseDto;
 
 export const zUpdateProductResponse = zProductResponseDto;
 
-export const zGetScheduledMealsResponse = zScheduledMealResponsePaginatedDto;
+export const zGetMealsResponse = zScheduledMealResponsePaginatedDto;
 
-export const zCreateScheduledMealResponse = zCreateScheduledMealsResponseDto;
+export const zCreateMealResponse = zScheduledMealResponseDto;
 
-export const zGetScheduledMealResponse = zScheduledMealResponseDto;
+export const zGetMealResponse = zScheduledMealResponseDto;
 
-export const zUpdateScheduledMealResponse = zScheduledMealResponseDto;
+export const zUpdateMealResponse = zScheduledMealResponseDto;

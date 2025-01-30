@@ -18,10 +18,6 @@ const menuOptions: MenuOption[] = [
     name: 'recipes',
   },
   {
-    label: 'Ingredients',
-    name: 'ingredients',
-  },
-  {
     label: 'Cart',
     name: 'cart',
   },

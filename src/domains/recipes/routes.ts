@@ -1,4 +1,4 @@
-import { createRoute, path } from '@kitbag/router'
+import { createRoute } from '@kitbag/router'
 import { defineAsyncComponent } from 'vue'
 import BaseLayout from '@/layouts/BaseLayout.vue'
 import { useAuthMiddleware } from '../auth/middlewares/authMiddleware'
@@ -26,9 +26,7 @@ export const recipesRoute = [
   createRoute({
     parent: baseRoute,
     name: 'recipe',
-    path: path('/recipes/[id]', {
-      id: /* Is UUID */ /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$/,
-    }),
+    path: '/recipes/[id]',
     component: defineAsyncComponent(() => import('./pages/RecipePage.vue')),
   }),
 ]

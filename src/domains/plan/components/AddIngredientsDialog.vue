@@ -8,7 +8,7 @@ import { shallowRef } from 'vue'
 import { unwrapResponseData } from '@/components/form'
 import { injectDialogState } from '@/components/baseDialog/useDialog.ts'
 
-type ImportDialogState = {
+export type ImportDialogState = {
   id: string
   start: string
   end: string

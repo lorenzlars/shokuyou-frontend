@@ -28,7 +28,7 @@ async function onSubmitted() {
   }
 }
 
-if (id) {
+if (id !== 'create') {
   recipe.value = unwrapResponseData(await RecipesService.getRecipe({ path: { id } }))
 }
 </script>

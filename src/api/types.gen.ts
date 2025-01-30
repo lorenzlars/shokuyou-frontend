@@ -98,7 +98,7 @@ export type RecipeResponseDto = {
     imageUrl?: string;
 };
 
-export type PaginationSortOrder = 'ASC' | 'DESC';
+export type PaginationSortOrder = 1 | -1;
 
 export type RecipeResponseFlatDto = {
     /**
@@ -164,42 +164,6 @@ export type RecipePaginatedResponseDto = {
     content: Array<RecipeResponseFlatDto>;
 };
 
-export type IngredientRequestDto = {
-    name: string;
-};
-
-export type IngredientRequestRecipeDto = {
-    id: string;
-    name: string;
-};
-
-export type IngredientResponseDto = {
-    id: string;
-    name: string;
-    recipes?: Array<IngredientRequestRecipeDto>;
-};
-
-export type IngredientPaginatedResponseDto = {
-    total: number;
-    /**
-     * The page number
-     */
-    page: number;
-    /**
-     * The page size
-     */
-    pageSize: number;
-    /**
-     * The order by attribute
-     */
-    orderBy?: string;
-    /**
-     * The sort order
-     */
-    sortOrder?: PaginationSortOrder;
-    content: Array<IngredientResponseDto>;
-};
-
 export type AuthRequestDto = {
     /**
      * Username of the user
@@ -238,6 +202,32 @@ export type UserResponseDto = {
      * Username of the user
      */
     username: string;
+};
+
+export type IngredientResponseDto = {
+    id: string;
+    name: string;
+};
+
+export type IngredientPaginatedResponseDto = {
+    total: number;
+    /**
+     * The page number
+     */
+    page: number;
+    /**
+     * The page size
+     */
+    pageSize: number;
+    /**
+     * The order by attribute
+     */
+    orderBy?: string;
+    /**
+     * The sort order
+     */
+    sortOrder?: PaginationSortOrder;
+    content: Array<IngredientResponseDto>;
 };
 
 export type CreatePlanMealDto = {
@@ -338,20 +328,6 @@ export type ImportRecipeDto = {
     url: string;
 };
 
-export type AddProductRequestType = 'product' | 'recipes';
-
-export type AddProductRequestDto = {
-    type: AddProductRequestType;
-    name: string;
-    unit: string;
-    amount: number;
-};
-
-export type AddRecipesRequestDto = {
-    type: AddProductRequestType;
-    recipeIds: Array<string>;
-};
-
 export type MessageType = 'updatedByProduct' | 'updatedByRecipe' | 'createdByRecipe' | 'createdByProduct';
 
 export type LogEntryDto = {
@@ -373,10 +349,6 @@ export type ProductResponseDto = {
     unit: string;
     amount: number;
     log: Array<LogEntryDto>;
-};
-
-export type AddProductsResponseDto = {
-    products: Array<ProductResponseDto>;
 };
 
 export type ProductPaginatedResponseDto = {
@@ -409,29 +381,19 @@ export type ProductRequestDto = {
 export type ScheduledMealRequestDto = {
     recipeId: string;
     datetime: string;
-};
-
-export type CreateScheduledMealsRequestDto = {
-    meals: Array<ScheduledMealRequestDto>;
+    done?: boolean;
 };
 
 export type ScheduledMealResponseDto = {
     id: string;
     datetime: string;
-    recipe: RecipeResponseFlatDto;
-};
-
-export type CreateScheduledMealsResponseDto = {
-    meals: Array<ScheduledMealResponseDto>;
+    done?: boolean;
+    recipe: RecipeResponseDto;
 };
 
 export type ScheduledMealResponsePaginatedDto = {
     total: number;
     content: Array<ScheduledMealResponseDto>;
-};
-
-export type UpdateScheduledMealRequestDto = {
-    datetime: string;
 };
 
 export type GetRecipesData = {
@@ -561,195 +523,6 @@ export type UpdateRecipeResponses = {
 
 export type UpdateRecipeResponse = UpdateRecipeResponses[keyof UpdateRecipeResponses];
 
-export type DeleteImageData = {
-    body?: never;
-    path: {
-        id: string;
-    };
-    query?: never;
-    url: '/v1/recipes/{id}/image';
-};
-
-export type DeleteImageErrors = {
-    /**
-     * No Recipe found to remove the image from
-     */
-    404: unknown;
-};
-
-export type DeleteImageResponses = {
-    /**
-     * Successfully removed the image
-     */
-    200: unknown;
-};
-
-export type UploadImageData = {
-    body: {
-        file: Blob | File;
-    };
-    path: {
-        id: string;
-    };
-    query?: never;
-    url: '/v1/recipes/{id}/image';
-};
-
-export type UploadImageErrors = {
-    /**
-     * No Recipe found to add the image to
-     */
-    404: unknown;
-};
-
-export type UploadImageResponses = {
-    /**
-     * Successfully uploaded the image
-     */
-    200: RecipeResponseDto;
-};
-
-export type UploadImageResponse = UploadImageResponses[keyof UploadImageResponses];
-
-export type UpdateImageData = {
-    body: {
-        file: Blob | File;
-    };
-    path: {
-        id: string;
-    };
-    query?: never;
-    url: '/v1/recipes/{id}/image';
-};
-
-export type UpdateImageErrors = {
-    /**
-     * No Recipe found to update the image at
-     */
-    404: unknown;
-};
-
-export type UpdateImageResponses = {
-    /**
-     * Successfully uploaded the image
-     */
-    200: RecipeResponseDto;
-};
-
-export type UpdateImageResponse = UpdateImageResponses[keyof UpdateImageResponses];
-
-export type GetIngredientsData = {
-    body?: never;
-    path?: never;
-    query: {
-        /**
-         * The page number
-         */
-        page: number;
-        /**
-         * The page size
-         */
-        pageSize: number;
-        /**
-         * The order by attribute
-         */
-        orderBy?: string;
-        /**
-         * The sort order
-         */
-        sortOrder?: PaginationSortOrder;
-        /**
-         * The filter
-         */
-        filter?: string;
-    };
-    url: '/v1/ingredients';
-};
-
-export type GetIngredientsResponses = {
-    200: IngredientPaginatedResponseDto;
-};
-
-export type GetIngredientsResponse = GetIngredientsResponses[keyof GetIngredientsResponses];
-
-export type CreateIngredientData = {
-    body: IngredientRequestDto;
-    path?: never;
-    query?: never;
-    url: '/v1/ingredients';
-};
-
-export type CreateIngredientResponses = {
-    201: IngredientResponseDto;
-};
-
-export type CreateIngredientResponse = CreateIngredientResponses[keyof CreateIngredientResponses];
-
-export type DeleteIngredientsData = {
-    body?: never;
-    path: {
-        id: string;
-    };
-    query?: never;
-    url: '/v1/ingredients/{id}';
-};
-
-export type DeleteIngredientsErrors = {
-    /**
-     * Ingredient not found
-     */
-    404: unknown;
-    /**
-     * Ingredient is in use
-     */
-    409: unknown;
-};
-
-export type DeleteIngredientsResponses = {
-    /**
-     * Successfully deleted the ingredient
-     */
-    200: unknown;
-};
-
-export type GetIngredientData = {
-    body?: never;
-    path: {
-        id: string;
-    };
-    query?: never;
-    url: '/v1/ingredients/{id}';
-};
-
-export type GetIngredientErrors = {
-    404: unknown;
-};
-
-export type GetIngredientResponses = {
-    200: IngredientResponseDto;
-};
-
-export type GetIngredientResponse = GetIngredientResponses[keyof GetIngredientResponses];
-
-export type UpdateIngredientsData = {
-    body: IngredientRequestDto;
-    path: {
-        id: string;
-    };
-    query?: never;
-    url: '/v1/ingredients/{id}';
-};
-
-export type UpdateIngredientsErrors = {
-    404: unknown;
-};
-
-export type UpdateIngredientsResponses = {
-    200: IngredientResponseDto;
-};
-
-export type UpdateIngredientsResponse = UpdateIngredientsResponses[keyof UpdateIngredientsResponses];
-
 export type UserLoginData = {
     body: AuthRequestDto;
     path?: never;
@@ -806,24 +579,79 @@ export type GetProfileResponses = {
 
 export type GetProfileResponse = GetProfileResponses[keyof GetProfileResponses];
 
-export type GetPlansData = {
+export type GetIngredientsData = {
     body?: never;
     path?: never;
-    query?: never;
-    url: '/v1/plans';
+    query: {
+        /**
+         * The page number
+         */
+        page: number;
+        /**
+         * The page size
+         */
+        pageSize: number;
+        /**
+         * The order by attribute
+         */
+        orderBy?: string;
+        /**
+         * The sort order
+         */
+        sortOrder?: PaginationSortOrder;
+        /**
+         * The filter
+         */
+        filter?: string;
+    };
+    url: '/v1/ingredients';
 };
 
-export type GetPlansResponses = {
+export type GetIngredientsResponses = {
+    200: IngredientPaginatedResponseDto;
+};
+
+export type GetIngredientsResponse = GetIngredientsResponses[keyof GetIngredientsResponses];
+
+export type GetTemplatesData = {
+    body?: never;
+    path?: never;
+    query: {
+        /**
+         * The page number
+         */
+        page: number;
+        /**
+         * The page size
+         */
+        pageSize: number;
+        /**
+         * The order by attribute
+         */
+        orderBy?: string;
+        /**
+         * The sort order
+         */
+        sortOrder?: PaginationSortOrder;
+        /**
+         * The filter
+         */
+        filter?: string;
+    };
+    url: '/v1/templates';
+};
+
+export type GetTemplatesResponses = {
     200: PlanResponsePaginatedSimpleDto;
 };
 
-export type GetPlansResponse = GetPlansResponses[keyof GetPlansResponses];
+export type GetTemplatesResponse = GetTemplatesResponses[keyof GetTemplatesResponses];
 
 export type CreatePlanData = {
     body: CreatePlanDto;
     path?: never;
     query?: never;
-    url: '/v1/plans';
+    url: '/v1/templates';
 };
 
 export type CreatePlanResponses = {
@@ -832,60 +660,60 @@ export type CreatePlanResponses = {
 
 export type CreatePlanResponse = CreatePlanResponses[keyof CreatePlanResponses];
 
-export type RemovePlanData = {
+export type RemoveTemplateData = {
     body?: never;
     path: {
         id: string;
     };
     query?: never;
-    url: '/v1/plans/{id}';
+    url: '/v1/templates/{id}';
 };
 
-export type RemovePlanErrors = {
+export type RemoveTemplateErrors = {
     404: unknown;
 };
 
-export type RemovePlanResponses = {
+export type RemoveTemplateResponses = {
     200: unknown;
 };
 
-export type GetPlanData = {
+export type GetTemplateData = {
     body?: never;
     path: {
         id: string;
     };
     query?: never;
-    url: '/v1/plans/{id}';
+    url: '/v1/templates/{id}';
 };
 
-export type GetPlanErrors = {
+export type GetTemplateErrors = {
     404: unknown;
 };
 
-export type GetPlanResponses = {
+export type GetTemplateResponses = {
     200: PlanResponseDto;
 };
 
-export type GetPlanResponse = GetPlanResponses[keyof GetPlanResponses];
+export type GetTemplateResponse = GetTemplateResponses[keyof GetTemplateResponses];
 
-export type UpdatePlanData = {
+export type UpdateTemplateData = {
     body: PlanRequestDto;
     path: {
         id: string;
     };
     query?: never;
-    url: '/v1/plans/{id}';
+    url: '/v1/templates/{id}';
 };
 
-export type UpdatePlanErrors = {
+export type UpdateTemplateErrors = {
     404: unknown;
 };
 
-export type UpdatePlanResponses = {
+export type UpdateTemplateResponses = {
     200: PlanResponseDto;
 };
 
-export type UpdatePlanResponse = UpdatePlanResponses[keyof UpdatePlanResponses];
+export type UpdateTemplateResponse = UpdateTemplateResponses[keyof UpdateTemplateResponses];
 
 export type ImportBackupData = {
     body: {
@@ -953,22 +781,6 @@ export type GetProductsResponses = {
 
 export type GetProductsResponse = GetProductsResponses[keyof GetProductsResponses];
 
-export type CreateProductData = {
-    body: AddProductRequestDto | AddRecipesRequestDto;
-    path?: never;
-    query?: never;
-    url: '/v1/products';
-};
-
-export type CreateProductResponses = {
-    /**
-     * Product successfully created
-     */
-    201: AddProductsResponseDto;
-};
-
-export type CreateProductResponse = CreateProductResponses[keyof CreateProductResponses];
-
 export type DeleteProductData = {
     body?: never;
     path: {
@@ -1024,86 +836,86 @@ export type UpdateProductResponses = {
 
 export type UpdateProductResponse = UpdateProductResponses[keyof UpdateProductResponses];
 
-export type GetScheduledMealsData = {
+export type GetMealsData = {
     body?: never;
     path?: never;
     query: {
         from: string;
         to: string;
     };
-    url: '/v1/scheduled-meals';
+    url: '/v1/meals';
 };
 
-export type GetScheduledMealsResponses = {
+export type GetMealsResponses = {
     200: ScheduledMealResponsePaginatedDto;
 };
 
-export type GetScheduledMealsResponse = GetScheduledMealsResponses[keyof GetScheduledMealsResponses];
+export type GetMealsResponse = GetMealsResponses[keyof GetMealsResponses];
 
-export type CreateScheduledMealData = {
-    body: CreateScheduledMealsRequestDto;
+export type CreateMealData = {
+    body: ScheduledMealRequestDto;
     path?: never;
     query?: never;
-    url: '/v1/scheduled-meals';
+    url: '/v1/meals';
 };
 
-export type CreateScheduledMealResponses = {
-    201: CreateScheduledMealsResponseDto;
+export type CreateMealResponses = {
+    201: ScheduledMealResponseDto;
 };
 
-export type CreateScheduledMealResponse = CreateScheduledMealResponses[keyof CreateScheduledMealResponses];
+export type CreateMealResponse = CreateMealResponses[keyof CreateMealResponses];
 
-export type DeleteScheduledMealData = {
+export type DeleteMealData = {
     body?: never;
     path: {
         id: string;
     };
     query?: never;
-    url: '/v1/scheduled-meals/{id}';
+    url: '/v1/meals/{id}';
 };
 
-export type DeleteScheduledMealErrors = {
+export type DeleteMealErrors = {
     404: unknown;
 };
 
-export type DeleteScheduledMealResponses = {
+export type DeleteMealResponses = {
     200: unknown;
 };
 
-export type GetScheduledMealData = {
+export type GetMealData = {
     body?: never;
     path: {
         id: string;
     };
     query?: never;
-    url: '/v1/scheduled-meals/{id}';
+    url: '/v1/meals/{id}';
 };
 
-export type GetScheduledMealErrors = {
+export type GetMealErrors = {
     404: unknown;
 };
 
-export type GetScheduledMealResponses = {
+export type GetMealResponses = {
     200: ScheduledMealResponseDto;
 };
 
-export type GetScheduledMealResponse = GetScheduledMealResponses[keyof GetScheduledMealResponses];
+export type GetMealResponse = GetMealResponses[keyof GetMealResponses];
 
-export type UpdateScheduledMealData = {
-    body: UpdateScheduledMealRequestDto;
+export type UpdateMealData = {
+    body: ScheduledMealRequestDto;
     path: {
         id: string;
     };
     query?: never;
-    url: '/v1/scheduled-meals/{id}';
+    url: '/v1/meals/{id}';
 };
 
-export type UpdateScheduledMealErrors = {
+export type UpdateMealErrors = {
     404: unknown;
 };
 
-export type UpdateScheduledMealResponses = {
+export type UpdateMealResponses = {
     200: ScheduledMealResponseDto;
 };
 
-export type UpdateScheduledMealResponse = UpdateScheduledMealResponses[keyof UpdateScheduledMealResponses];
+export type UpdateMealResponse = UpdateMealResponses[keyof UpdateMealResponses];

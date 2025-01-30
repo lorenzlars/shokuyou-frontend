@@ -66,7 +66,7 @@ async function loadNextPage(query?: Omit<GetRecipesData['query'], 'page' | 'page
       pageSize: props.pageSize,
       page: state.value?.page ? state.value?.page + 1 : 1,
       orderBy: 'name',
-      sortOrder: 'ASC',
+      sortOrder: 1,
       ...query,
     })
 
